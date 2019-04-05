@@ -1,0 +1,2 @@
+# VillagePeopleCottages
+UEF harjoitus mökkivarausjärjelmästä
