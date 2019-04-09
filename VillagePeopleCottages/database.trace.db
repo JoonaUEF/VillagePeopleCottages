@@ -1,0 +1,1070 @@
+2019-04-09 13:42:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE DATABASE[*] VP "; expected "OR, FORCE, VIEW, ALIAS, SEQUENCE, USER, TRIGGER, ROLE, SCHEMA, CONSTANT, DOMAIN, TYPE, DATATYPE, AGGREGATE, LINKED, MEMORY, CACHED, LOCAL, GLOBAL, TEMP, TEMPORARY, TABLE, SYNONYM, PRIMARY, UNIQUE, HASH, SPATIAL, INDEX"; SQL statement:
+create database vp [42001-197]
+2019-04-09 13:42:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Schema "VP" not found; SQL statement:
+use vp [90079-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.engine.Database.getSchema(Database.java:1808)
+	at org.h2.command.dml.Set.update(Set.java:409)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:42:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE LASKU (
+	LASKU_ID INT PRIMARY KEY,
+	VARAUS_ID INT,
+	ASIAKAS_ID INT,
+	NIMI VARCHAR (60),
+	LAHIOSOITE VARCHAR (40),
+	POSTITOIMIPAIKKA VARCHAR (30),
+	POSTINRO CHAR (5),
+	SUMMA DOUBLE (8,[*]2) NOT NULL,
+	ALV DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (VARAUS_ID) REFERENCES VARAUS (VARAUS_ID) ON DELETE CASCADE,
+	FOREIGN KEY (ASIAKAS_ID) REFERENCES ASIAKAS (ASIAKAS_ID) ON DELETE CASCADE
+ 	) "; expected ")"; SQL statement:
+CREATE TABLE Lasku (
+	lasku_id INT PRIMARY KEY,
+	varaus_id INT,
+	asiakas_id INT,
+	nimi VARCHAR (60),
+	lahiosoite VARCHAR (40),
+	postitoimipaikka VARCHAR (30),
+	postinro CHAR (5),
+	summa DOUBLE (8,2) NOT NULL,
+	alv DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (varaus_id) REFERENCES Varaus (varaus_id) ON DELETE CASCADE,
+	FOREIGN KEY (asiakas_id) REFERENCES Asiakas (asiakas_id) ON DELETE CASCADE
+ 	) [42001-197]
+2019-04-09 13:42:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE PALVELU (
+	PALVELU_ID INT PRIMARY KEY,
+	TOIMIPISTE_ID INT,
+	NIMI VARCHAR (40),
+	TYYPPI INT,
+	KUVAUS VARCHAR (255),
+	HINTA DOUBLE (8,[*]2) NOT NULL,
+	ALV DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (TOIMIPISTE_ID) REFERENCES TOIMIPISTE (TOIMIPISTE_ID) ON DELETE CASCADE
+	) "; expected ")"; SQL statement:
+CREATE TABLE Palvelu (
+	palvelu_id INT PRIMARY KEY,
+	toimipiste_id INT,
+	nimi VARCHAR (40),
+	tyyppi INT,
+	kuvaus VARCHAR (255),
+	hinta DOUBLE (8,2) NOT NULL,
+	alv DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (toimipiste_id) REFERENCES Toimipiste (toimipiste_id) ON DELETE CASCADE
+	) [42001-197]
+2019-04-09 13:42:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PALVELU" not found; SQL statement:
+CREATE TABLE Varauksen_palvelut (
+	varaus_id INT,
+	palvelu_id INT,
+	palvelunvaraus_alku DATETIME,
+        palvelunvaraus_loppu DATETIME,
+	PRIMARY KEY (palvelu_id, varaus_id),
+	FOREIGN KEY (varaus_id) REFERENCES Varaus (varaus_id) ON DELETE CASCADE,
+	FOREIGN KEY (palvelu_id) REFERENCES Palvelu (palvelu_id) ON DELETE CASCADE
+	 ) [42102-197]
+2019-04-09 13:42:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "LASKU" not found; SQL statement:
+CREATE INDEX Lasku_nimi_index
+ ON Lasku(nimi) [42102-197]
+2019-04-09 13:42:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "LASKU" not found; SQL statement:
+CREATE UNIQUE INDEX Lasku_varaus_id_index
+ ON Lasku(varaus_id) [42102-197]
+2019-04-09 13:42:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PALVELU" not found; SQL statement:
+CREATE INDEX Palvelu_nimi_index
+ ON Palvelu(nimi) [42102-197]
+2019-04-09 13:42:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "VARAUKSEN_PALVELUT" not found; SQL statement:
+CREATE INDEX vp_varaus_id_index
+ ON Varauksen_palvelut(varaus_id) [42102-197]
+2019-04-09 13:42:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "VARAUKSEN_PALVELUT" not found; SQL statement:
+CREATE INDEX vp_palvelu_id_index
+ ON Varauksen_palvelut(palvelu_id) [42102-197]
+2019-04-09 13:42:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PALVELU" not found; SQL statement:
+CREATE INDEX  palvelu_toimipiste_id_index
+ ON Palvelu(toimipiste_id) [42102-197]
+2019-04-09 13:42:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "LASKU" not found; SQL statement:
+CREATE INDEX Lasku_asiakas_id_index
+ ON Lasku(asiakas_id) [42102-197]
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "TOIMIPISTE" already exists; SQL statement:
+CREATE TABLE Toimipiste (
+	toimipiste_id INT PRIMARY KEY,
+	nimi VARCHAR (40),
+	lahiosoite VARCHAR (40),
+	postitoimipaikka VARCHAR (30),
+	postinro CHAR (5),
+	email VARCHAR (50),
+	puhelinnro VARCHAR (15)) [42101-197]
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "ASIAKAS" already exists; SQL statement:
+CREATE TABLE Asiakas (
+	asiakas_id INT PRIMARY KEY,
+	etunimi VARCHAR (20),
+	sukunimi VARCHAR (40),
+	lahiosoite VARCHAR (40),
+	postitoimipaikka VARCHAR (30),
+	postinro CHAR (5),
+	email VARCHAR (50),
+	puhelinnro VARCHAR (15)) [42101-197]
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "VARAUS" already exists; SQL statement:
+CREATE TABLE Varaus (
+	varaus_id INT PRIMARY KEY,
+	asiakas_id INT,
+	toimipiste_id INT,
+	varattu_pvm DATETIME,
+	vahvistus_pvm DATETIME,
+	varattu_alkupvm DATETIME,
+	varattu_loppupvm DATETIME,
+	FOREIGN KEY (toimipiste_id) REFERENCES Toimipiste (toimipiste_id) ON DELETE 	CASCADE,
+	FOREIGN KEY (asiakas_id) REFERENCES Asiakas (asiakas_id) ON DELETE CASCADE
+) [42101-197]
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE LASKU (
+	LASKU_ID INT PRIMARY KEY,
+	VARAUS_ID INT,
+	ASIAKAS_ID INT,
+	NIMI VARCHAR (60),
+	LAHIOSOITE VARCHAR (40),
+	POSTITOIMIPAIKKA VARCHAR (30),
+	POSTINRO CHAR (5),
+	SUMMA DOUBLE (8,[*]2) NOT NULL,
+	ALV DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (VARAUS_ID) REFERENCES VARAUS (VARAUS_ID) ON DELETE CASCADE,
+	FOREIGN KEY (ASIAKAS_ID) REFERENCES ASIAKAS (ASIAKAS_ID) ON DELETE CASCADE
+ 	) "; expected ")"; SQL statement:
+CREATE TABLE Lasku (
+	lasku_id INT PRIMARY KEY,
+	varaus_id INT,
+	asiakas_id INT,
+	nimi VARCHAR (60),
+	lahiosoite VARCHAR (40),
+	postitoimipaikka VARCHAR (30),
+	postinro CHAR (5),
+	summa DOUBLE (8,2) NOT NULL,
+	alv DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (varaus_id) REFERENCES Varaus (varaus_id) ON DELETE CASCADE,
+	FOREIGN KEY (asiakas_id) REFERENCES Asiakas (asiakas_id) ON DELETE CASCADE
+ 	) [42001-197]
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE PALVELU (
+	PALVELU_ID INT PRIMARY KEY,
+	TOIMIPISTE_ID INT,
+	NIMI VARCHAR (40),
+	TYYPPI INT,
+	KUVAUS VARCHAR (255),
+	HINTA DOUBLE (8,[*]2) NOT NULL,
+	ALV DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (TOIMIPISTE_ID) REFERENCES TOIMIPISTE (TOIMIPISTE_ID) ON DELETE CASCADE
+	) "; expected ")"; SQL statement:
+CREATE TABLE Palvelu (
+	palvelu_id INT PRIMARY KEY,
+	toimipiste_id INT,
+	nimi VARCHAR (40),
+	tyyppi INT,
+	kuvaus VARCHAR (255),
+	hinta DOUBLE (8,2) NOT NULL,
+	alv DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (toimipiste_id) REFERENCES Toimipiste (toimipiste_id) ON DELETE CASCADE
+	) [42001-197]
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PALVELU" not found; SQL statement:
+CREATE TABLE Varauksen_palvelut (
+	varaus_id INT,
+	palvelu_id INT,
+	palvelunvaraus_alku DATETIME,
+        palvelunvaraus_loppu DATETIME,
+	PRIMARY KEY (palvelu_id, varaus_id),
+	FOREIGN KEY (varaus_id) REFERENCES Varaus (varaus_id) ON DELETE CASCADE,
+	FOREIGN KEY (palvelu_id) REFERENCES Palvelu (palvelu_id) ON DELETE CASCADE
+	 ) [42102-197]
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "TOIMIPISTE_NIMI_INDEX" already exists; SQL statement:
+CREATE INDEX Toimipiste_nimi_index
+ ON Toimipiste(nimi) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "ASIAKAS_SUKUNIMI_INDEX" already exists; SQL statement:
+CREATE INDEX Asiakas_sukunimi_index
+ ON Asiakas(sukunimi) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "ASIAKAS_ETUNIMI_INDEX" already exists; SQL statement:
+CREATE INDEX Asiakas_etunimi_index
+ ON Asiakas(etunimi) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "LASKU" not found; SQL statement:
+CREATE INDEX Lasku_nimi_index
+ ON Lasku(nimi) [42102-197]
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "LASKU" not found; SQL statement:
+CREATE UNIQUE INDEX Lasku_varaus_id_index
+ ON Lasku(varaus_id) [42102-197]
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PALVELU" not found; SQL statement:
+CREATE INDEX Palvelu_nimi_index
+ ON Palvelu(nimi) [42102-197]
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "VARAUKSEN_PALVELUT" not found; SQL statement:
+CREATE INDEX vp_varaus_id_index
+ ON Varauksen_palvelut(varaus_id) [42102-197]
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "VARAUKSEN_PALVELUT" not found; SQL statement:
+CREATE INDEX vp_palvelu_id_index
+ ON Varauksen_palvelut(palvelu_id) [42102-197]
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PALVELU" not found; SQL statement:
+CREATE INDEX  palvelu_toimipiste_id_index
+ ON Palvelu(toimipiste_id) [42102-197]
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "LASKU" not found; SQL statement:
+CREATE INDEX Lasku_asiakas_id_index
+ ON Lasku(asiakas_id) [42102-197]
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "VARAUS_TOIMIPISTE_ID_INDEX" already exists; SQL statement:
+CREATE INDEX  varaus_toimipiste_id_index
+ ON Varaus(toimipiste_id) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:43:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "VARAUS_ASIAKAS_ID_INDEX" already exists; SQL statement:
+CREATE INDEX  varaus_asiakas_id_index
+ ON Varaus(asiakas_id) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE LASKU (
+	LASKU_ID INT PRIMARY KEY,
+	VARAUS_ID INT,
+	ASIAKAS_ID INT,
+	NIMI VARCHAR (60),
+	LAHIOSOITE VARCHAR (40),
+	POSTITOIMIPAIKKA VARCHAR (30),
+	POSTINRO CHAR (5),
+	SUMMA DOUBLE (8,[*]2) NOT NULL,
+	ALV DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (VARAUS_ID) REFERENCES VARAUS (VARAUS_ID) ON DELETE CASCADE,
+	FOREIGN KEY (ASIAKAS_ID) REFERENCES ASIAKAS (ASIAKAS_ID) ON DELETE CASCADE
+ 	) "; expected ")"; SQL statement:
+CREATE TABLE Lasku (
+	lasku_id INT PRIMARY KEY,
+	varaus_id INT,
+	asiakas_id INT,
+	nimi VARCHAR (60),
+	lahiosoite VARCHAR (40),
+	postitoimipaikka VARCHAR (30),
+	postinro CHAR (5),
+	summa DOUBLE (8,2) NOT NULL,
+	alv DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (varaus_id) REFERENCES Varaus (varaus_id) ON DELETE CASCADE,
+	FOREIGN KEY (asiakas_id) REFERENCES Asiakas (asiakas_id) ON DELETE CASCADE
+ 	) [42001-197]
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE PALVELU (
+	PALVELU_ID INT PRIMARY KEY,
+	TOIMIPISTE_ID INT,
+	NIMI VARCHAR (40),
+	TYYPPI INT,
+	KUVAUS VARCHAR (255),
+	HINTA DOUBLE (8,[*]2) NOT NULL,
+	ALV DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (TOIMIPISTE_ID) REFERENCES TOIMIPISTE (TOIMIPISTE_ID) ON DELETE CASCADE
+	) "; expected ")"; SQL statement:
+CREATE TABLE Palvelu (
+	palvelu_id INT PRIMARY KEY,
+	toimipiste_id INT,
+	nimi VARCHAR (40),
+	tyyppi INT,
+	kuvaus VARCHAR (255),
+	hinta DOUBLE (8,2) NOT NULL,
+	alv DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (toimipiste_id) REFERENCES Toimipiste (toimipiste_id) ON DELETE CASCADE
+	) [42001-197]
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PALVELU" not found; SQL statement:
+CREATE TABLE Varauksen_palvelut (
+	varaus_id INT,
+	palvelu_id INT,
+	palvelunvaraus_alku DATETIME,
+        palvelunvaraus_loppu DATETIME,
+	PRIMARY KEY (palvelu_id, varaus_id),
+	FOREIGN KEY (varaus_id) REFERENCES Varaus (varaus_id) ON DELETE CASCADE,
+	FOREIGN KEY (palvelu_id) REFERENCES Palvelu (palvelu_id) ON DELETE CASCADE
+	 ) [42102-197]
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "TOIMIPISTE_NIMI_INDEX" already exists; SQL statement:
+CREATE INDEX Toimipiste_nimi_index
+ ON Toimipiste(nimi) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "ASIAKAS_SUKUNIMI_INDEX" already exists; SQL statement:
+CREATE INDEX Asiakas_sukunimi_index
+ ON Asiakas(sukunimi) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "ASIAKAS_ETUNIMI_INDEX" already exists; SQL statement:
+CREATE INDEX Asiakas_etunimi_index
+ ON Asiakas(etunimi) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "LASKU" not found; SQL statement:
+CREATE INDEX Lasku_nimi_index
+ ON Lasku(nimi) [42102-197]
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "LASKU" not found; SQL statement:
+CREATE UNIQUE INDEX Lasku_varaus_id_index
+ ON Lasku(varaus_id) [42102-197]
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PALVELU" not found; SQL statement:
+CREATE INDEX Palvelu_nimi_index
+ ON Palvelu(nimi) [42102-197]
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "VARAUKSEN_PALVELUT" not found; SQL statement:
+CREATE INDEX vp_varaus_id_index
+ ON Varauksen_palvelut(varaus_id) [42102-197]
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "VARAUKSEN_PALVELUT" not found; SQL statement:
+CREATE INDEX vp_palvelu_id_index
+ ON Varauksen_palvelut(palvelu_id) [42102-197]
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PALVELU" not found; SQL statement:
+CREATE INDEX  palvelu_toimipiste_id_index
+ ON Palvelu(toimipiste_id) [42102-197]
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "LASKU" not found; SQL statement:
+CREATE INDEX Lasku_asiakas_id_index
+ ON Lasku(asiakas_id) [42102-197]
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "VARAUS_TOIMIPISTE_ID_INDEX" already exists; SQL statement:
+CREATE INDEX  varaus_toimipiste_id_index
+ ON Varaus(toimipiste_id) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:45:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "VARAUS_ASIAKAS_ID_INDEX" already exists; SQL statement:
+CREATE INDEX  varaus_asiakas_id_index
+ ON Varaus(asiakas_id) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:46:36 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE LASKU (
+	LASKU_ID INT PRIMARY KEY,
+	VARAUS_ID INT,
+	ASIAKAS_ID INT,
+	NIMI VARCHAR (60),
+	LAHIOSOITE VARCHAR (40),
+	POSTITOIMIPAIKKA VARCHAR (30),
+	POSTINRO CHAR (5),
+	SUMMA DOUBLE (8,[*]2) NOT NULL,
+	ALV DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (VARAUS_ID) REFERENCES VARAUS (VARAUS_ID) ON DELETE CASCADE,
+	FOREIGN KEY (ASIAKAS_ID) REFERENCES ASIAKAS (ASIAKAS_ID) ON DELETE CASCADE
+ 	) "; expected ")"; SQL statement:
+CREATE TABLE Lasku (
+	lasku_id INT PRIMARY KEY,
+	varaus_id INT,
+	asiakas_id INT,
+	nimi VARCHAR (60),
+	lahiosoite VARCHAR (40),
+	postitoimipaikka VARCHAR (30),
+	postinro CHAR (5),
+	summa DOUBLE (8,2) NOT NULL,
+	alv DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (varaus_id) REFERENCES Varaus (varaus_id) ON DELETE CASCADE,
+	FOREIGN KEY (asiakas_id) REFERENCES Asiakas (asiakas_id) ON DELETE CASCADE
+ 	) [42001-197]
+2019-04-09 13:47:48 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE LASKU (
+	LASKU_ID INT PRIMARY KEY,
+	VARAUS_ID INT,
+	ASIAKAS_ID INT,
+	NIMI VARCHAR (60),
+	LAHIOSOITE VARCHAR (40),
+	POSTITOIMIPAIKKA VARCHAR (30),
+	POSTINRO CHAR (5),
+	SUMMA DOUBLE (8,[*]2) NOT NULL,
+	ALV DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (VARAUS_ID) REFERENCES VARAUS (VARAUS_ID) ON DELETE CASCADE,
+	FOREIGN KEY (ASIAKAS_ID) REFERENCES ASIAKAS (ASIAKAS_ID) ON DELETE CASCADE
+ 	) "; expected ")"; SQL statement:
+CREATE TABLE Lasku (
+	lasku_id INT PRIMARY KEY,
+	varaus_id INT,
+	asiakas_id INT,
+	nimi VARCHAR (60),
+	lahiosoite VARCHAR (40),
+	postitoimipaikka VARCHAR (30),
+	postinro CHAR (5),
+	summa DOUBLE (8,2) NOT NULL,
+	alv DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (varaus_id) REFERENCES Varaus (varaus_id) ON DELETE CASCADE,
+	FOREIGN KEY (asiakas_id) REFERENCES Asiakas (asiakas_id) ON DELETE CASCADE
+ 	) [42001-197]
+2019-04-09 13:50:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE PALVELU (
+	PALVELU_ID INT PRIMARY KEY,
+	TOIMIPISTE_ID INT,
+	NIMI VARCHAR (40),
+	TYYPPI INT,
+	KUVAUS VARCHAR (255),
+	HINTA DOUBLE (8,[*]2) NOT NULL,
+	ALV DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (TOIMIPISTE_ID) REFERENCES TOIMIPISTE (TOIMIPISTE_ID) ON DELETE CASCADE
+	) "; expected ")"; SQL statement:
+CREATE TABLE Palvelu (
+	palvelu_id INT PRIMARY KEY,
+	toimipiste_id INT,
+	nimi VARCHAR (40),
+	tyyppi INT,
+	kuvaus VARCHAR (255),
+	hinta DOUBLE (8,2) NOT NULL,
+	alv DOUBLE (8,2) NOT NULL,
+	FOREIGN KEY (toimipiste_id) REFERENCES Toimipiste (toimipiste_id) ON DELETE CASCADE
+	) [42001-197]
+2019-04-09 13:50:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PALVELU" not found; SQL statement:
+CREATE TABLE Varauksen_palvelut (
+	varaus_id INT,
+	palvelu_id INT,
+	palvelunvaraus_alku DATETIME,
+    palvelunvaraus_loppu DATETIME,
+	PRIMARY KEY (palvelu_id, varaus_id),
+	FOREIGN KEY (varaus_id) REFERENCES Varaus (varaus_id) ON DELETE CASCADE,
+	FOREIGN KEY (palvelu_id) REFERENCES Palvelu (palvelu_id) ON DELETE CASCADE
+	 ) [42102-197]
+2019-04-09 13:50:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "TOIMIPISTE_NIMI_INDEX" already exists; SQL statement:
+CREATE INDEX Toimipiste_nimi_index
+ ON Toimipiste(nimi) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:50:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "ASIAKAS_SUKUNIMI_INDEX" already exists; SQL statement:
+CREATE INDEX Asiakas_sukunimi_index
+ ON Asiakas(sukunimi) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:50:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "ASIAKAS_ETUNIMI_INDEX" already exists; SQL statement:
+CREATE INDEX Asiakas_etunimi_index
+ ON Asiakas(etunimi) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:50:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "VARAUS_TOIMIPISTE_ID_INDEX" already exists; SQL statement:
+CREATE INDEX  varaus_toimipiste_id_index
+ ON Varaus(toimipiste_id) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 13:50:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Index "VARAUS_ASIAKAS_ID_INDEX" already exists; SQL statement:
+CREATE INDEX  varaus_asiakas_id_index
+ ON Varaus(asiakas_id) [42111-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.ddl.CreateIndex.update(CreateIndex.java:76)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:102)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:233)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1022)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1009)
+	at org.h2.server.web.WebThread.process(WebThread.java:165)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+2019-04-09 14:02:14 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "TOIMIPISTE" already exists; SQL statement:
+CREATE TABLE Toimipiste (
+	toimipiste_id INT PRIMARY KEY,
+	nimi VARCHAR (40),
+	lahiosoite VARCHAR (40),
+	postitoimipaikka VARCHAR (30),
+	postinro INT,
+	email VARCHAR (50),
+	puhelinnro VARCHAR (15)) [42101-197]
+2019-04-09 15:24:34 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.message.DbException.convert(DbException.java:307)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:95)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2506)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:383)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:364)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2934)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:155)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:100)
+	at org.h2.engine.Database.getPageStore(Database.java:2538)
+	at org.h2.engine.Database.open(Database.java:709)
+	at org.h2.engine.Database.openDatabase(Database.java:286)
+	at org.h2.engine.Database.<init>(Database.java:280)
+	at org.h2.engine.Engine.openSession(Engine.java:66)
+	at org.h2.engine.Engine.openSession(Engine.java:179)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:157)
+	at org.h2.engine.Engine.createSession(Engine.java:140)
+	at org.h2.engine.Engine.createSession(Engine.java:28)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:351)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:103)
+	at org.h2.Driver.connect(Driver.java:69)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at villagepeoplecottages.ToimipisteDao.create(ToimipisteDao.java:27)
+	at villagepeoplecottages.TestiService.createToimipiste(TestiService.java:29)
+	at villagepeoplecottages.TestiController.createToimipiste(TestiController.java:38)
+	at villagepeoplecottages.TestiController.start(TestiController.java:25)
+	at villagepeoplecottages.VillagePeopleCottages.main(VillagePeopleCottages.java:15)
+Caused by: org.h2.jdbc.JdbcSQLException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	... 29 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:870)
+	at org.h2.mvstore.FileStore.open(FileStore.java:173)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:350)
+	... 23 more
+2019-04-09 15:37:09 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Column "TOIMIPISTEID" not found; SQL statement:
+SELECT MAX(toimipisteId) AS maxid FROM Toimipiste; [42122-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:150)
+	at org.h2.expression.Aggregate.optimize(Aggregate.java:462)
+	at org.h2.expression.Alias.optimize(Alias.java:51)
+	at org.h2.command.dml.Select.prepare(Select.java:858)
+	at org.h2.command.Parser.prepareCommand(Parser.java:283)
+	at org.h2.engine.Session.prepareLocal(Session.java:611)
+	at org.h2.engine.Session.prepareCommand(Session.java:549)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1247)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:76)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:304)
+	at villagepeoplecottages.ToimipisteDao.maxId(ToimipisteDao.java:103)
+	at villagepeoplecottages.ToimipisteDao.create(ToimipisteDao.java:32)
+	at villagepeoplecottages.TestiService.createToimipiste(TestiService.java:29)
+	at villagepeoplecottages.TestiController.createToimipiste(TestiController.java:38)
+	at villagepeoplecottages.TestiController.start(TestiController.java:25)
+	at villagepeoplecottages.VillagePeopleCottages.main(VillagePeopleCottages.java:15)
+2019-04-09 15:37:33 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 15:39:56 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 15:40:43 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 15:47:22 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.message.DbException.convert(DbException.java:307)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:95)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2506)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:383)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:364)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2934)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:155)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:100)
+	at org.h2.engine.Database.getPageStore(Database.java:2538)
+	at org.h2.engine.Database.open(Database.java:709)
+	at org.h2.engine.Database.openDatabase(Database.java:286)
+	at org.h2.engine.Database.<init>(Database.java:280)
+	at org.h2.engine.Engine.openSession(Engine.java:66)
+	at org.h2.engine.Engine.openSession(Engine.java:179)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:157)
+	at org.h2.engine.Engine.createSession(Engine.java:140)
+	at org.h2.engine.Engine.createSession(Engine.java:28)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:351)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:103)
+	at org.h2.Driver.connect(Driver.java:69)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at villagepeoplecottages.ToimipisteDao.create(ToimipisteDao.java:27)
+	at villagepeoplecottages.TestiService.createToimipiste(TestiService.java:29)
+	at villagepeoplecottages.TestiController.createToimipiste(TestiController.java:38)
+	at villagepeoplecottages.TestiController.start(TestiController.java:25)
+	at villagepeoplecottages.VillagePeopleCottages.main(VillagePeopleCottages.java:15)
+Caused by: org.h2.jdbc.JdbcSQLException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	... 29 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:870)
+	at org.h2.mvstore.FileStore.open(FileStore.java:173)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:350)
+	... 23 more
+2019-04-09 15:47:39 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 15:49:52 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.message.DbException.convert(DbException.java:307)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:95)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2506)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:383)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:364)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2934)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:155)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:100)
+	at org.h2.engine.Database.getPageStore(Database.java:2538)
+	at org.h2.engine.Database.open(Database.java:709)
+	at org.h2.engine.Database.openDatabase(Database.java:286)
+	at org.h2.engine.Database.<init>(Database.java:280)
+	at org.h2.engine.Engine.openSession(Engine.java:66)
+	at org.h2.engine.Engine.openSession(Engine.java:179)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:157)
+	at org.h2.engine.Engine.createSession(Engine.java:140)
+	at org.h2.engine.Engine.createSession(Engine.java:28)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:351)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:103)
+	at org.h2.Driver.connect(Driver.java:69)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at villagepeoplecottages.ToimipisteDao.create(ToimipisteDao.java:27)
+	at villagepeoplecottages.TestiService.createToimipiste(TestiService.java:29)
+	at villagepeoplecottages.TestiController.createToimipiste(TestiController.java:38)
+	at villagepeoplecottages.TestiController.start(TestiController.java:25)
+	at villagepeoplecottages.VillagePeopleCottages.main(VillagePeopleCottages.java:15)
+Caused by: org.h2.jdbc.JdbcSQLException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	... 29 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:870)
+	at org.h2.mvstore.FileStore.open(FileStore.java:173)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:350)
+	... 23 more
+2019-04-09 15:50:09 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 15:50:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Parameter "#7" is not set; SQL statement:
+INSERT INTO Toimipiste (toimipiste_id, nimi, lahiosoite, postitoimipaikka, postinro, email, puhelinnro) VALUES (?, ?, ?, ?, ?, ?, ?) [90012-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.expression.Parameter.checkSet(Parameter.java:81)
+	at org.h2.command.Prepared.checkParameters(Prepared.java:170)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:101)
+	at org.h2.command.Command.executeUpdate(Command.java:261)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:199)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:153)
+	at villagepeoplecottages.ToimipisteDao.create(ToimipisteDao.java:41)
+	at villagepeoplecottages.TestiService.createToimipiste(TestiService.java:29)
+	at villagepeoplecottages.TestiController.createToimipiste(TestiController.java:38)
+	at villagepeoplecottages.TestiController.start(TestiController.java:25)
+	at villagepeoplecottages.VillagePeopleCottages.main(VillagePeopleCottages.java:15)
+2019-04-09 15:50:35 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 15:51:13 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 15:53:33 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 15:54:26 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 15:55:14 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.message.DbException.convert(DbException.java:307)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:95)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2506)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:383)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:364)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2934)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:155)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:100)
+	at org.h2.engine.Database.getPageStore(Database.java:2538)
+	at org.h2.engine.Database.open(Database.java:709)
+	at org.h2.engine.Database.openDatabase(Database.java:286)
+	at org.h2.engine.Database.<init>(Database.java:280)
+	at org.h2.engine.Engine.openSession(Engine.java:66)
+	at org.h2.engine.Engine.openSession(Engine.java:179)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:157)
+	at org.h2.engine.Engine.createSession(Engine.java:140)
+	at org.h2.engine.Engine.createSession(Engine.java:28)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:351)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:103)
+	at org.h2.Driver.connect(Driver.java:69)
+	at org.h2.server.web.WebServer.getConnection(WebServer.java:733)
+	at org.h2.server.web.WebApp.login(WebApp.java:954)
+	at org.h2.server.web.WebApp.process(WebApp.java:211)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:170)
+	at org.h2.server.web.WebThread.process(WebThread.java:134)
+	at org.h2.server.web.WebThread.run(WebThread.java:90)
+	at java.base/java.lang.Thread.run(Unknown Source)
+Caused by: org.h2.jdbc.JdbcSQLException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	... 29 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:870)
+	at org.h2.mvstore.FileStore.open(FileStore.java:173)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:350)
+	... 23 more
+2019-04-09 15:55:57 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 15:57:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 15:57:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 15:58:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 16:00:19 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 16:00:46 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 16:01:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-197]
+2019-04-09 16:05:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "DROP *[*] FROM TOIMIPISTE "; expected "TABLE, INDEX, USER, SEQUENCE, CONSTANT, TRIGGER, VIEW, ROLE, ALIAS, SCHEMA, ALL, DOMAIN, TYPE, DATATYPE, AGGREGATE, SYNONYM"; SQL statement:
+Drop * FROM TOIMIPISTE [42001-197]
+2019-04-09 16:05:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "DELETE *[*] FROM TOIMIPISTE "; expected "identifier"; SQL statement:
+delete * FROM TOIMIPISTE [42001-197]
+2019-04-09 16:06:21 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.message.DbException.convert(DbException.java:307)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:95)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2506)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:383)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:364)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2934)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:155)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:100)
+	at org.h2.engine.Database.getPageStore(Database.java:2538)
+	at org.h2.engine.Database.open(Database.java:709)
+	at org.h2.engine.Database.openDatabase(Database.java:286)
+	at org.h2.engine.Database.<init>(Database.java:280)
+	at org.h2.engine.Engine.openSession(Engine.java:66)
+	at org.h2.engine.Engine.openSession(Engine.java:179)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:157)
+	at org.h2.engine.Engine.createSession(Engine.java:140)
+	at org.h2.engine.Engine.createSession(Engine.java:28)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:351)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:103)
+	at org.h2.Driver.connect(Driver.java:69)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at villagepeoplecottages.ToimipisteDao.maxId(ToimipisteDao.java:111)
+	at villagepeoplecottages.ToimipisteDao.create(ToimipisteDao.java:27)
+	at villagepeoplecottages.TestiService.createToimipiste(TestiService.java:29)
+	at villagepeoplecottages.TestiController.createToimipiste(TestiController.java:38)
+	at villagepeoplecottages.TestiController.start(TestiController.java:25)
+	at villagepeoplecottages.VillagePeopleCottages.main(VillagePeopleCottages.java:15)
+Caused by: org.h2.jdbc.JdbcSQLException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	... 30 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:870)
+	at org.h2.mvstore.FileStore.open(FileStore.java:173)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:350)
+	... 24 more
+2019-04-09 16:11:47 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.message.DbException.convert(DbException.java:307)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:95)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2506)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:383)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:364)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2934)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:155)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:100)
+	at org.h2.engine.Database.getPageStore(Database.java:2538)
+	at org.h2.engine.Database.open(Database.java:709)
+	at org.h2.engine.Database.openDatabase(Database.java:286)
+	at org.h2.engine.Database.<init>(Database.java:280)
+	at org.h2.engine.Engine.openSession(Engine.java:66)
+	at org.h2.engine.Engine.openSession(Engine.java:179)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:157)
+	at org.h2.engine.Engine.createSession(Engine.java:140)
+	at org.h2.engine.Engine.createSession(Engine.java:28)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:351)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:103)
+	at org.h2.Driver.connect(Driver.java:69)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at villagepeoplecottages.ToimipisteDao.maxId(ToimipisteDao.java:111)
+	at villagepeoplecottages.ToimipisteDao.create(ToimipisteDao.java:27)
+	at villagepeoplecottages.TestiService.createToimipiste(TestiService.java:31)
+	at villagepeoplecottages.TestiController.createToimipiste(TestiController.java:38)
+	at villagepeoplecottages.TestiController.start(TestiController.java:25)
+	at villagepeoplecottages.VillagePeopleCottages.main(VillagePeopleCottages.java:15)
+Caused by: org.h2.jdbc.JdbcSQLException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	... 30 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:870)
+	at org.h2.mvstore.FileStore.open(FileStore.java:173)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:350)
+	... 24 more
+2019-04-09 16:23:57 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.message.DbException.convert(DbException.java:307)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:95)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2506)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:383)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:364)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2934)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:155)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:100)
+	at org.h2.engine.Database.getPageStore(Database.java:2538)
+	at org.h2.engine.Database.open(Database.java:709)
+	at org.h2.engine.Database.openDatabase(Database.java:286)
+	at org.h2.engine.Database.<init>(Database.java:280)
+	at org.h2.engine.Engine.openSession(Engine.java:66)
+	at org.h2.engine.Engine.openSession(Engine.java:179)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:157)
+	at org.h2.engine.Engine.createSession(Engine.java:140)
+	at org.h2.engine.Engine.createSession(Engine.java:28)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:351)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:103)
+	at org.h2.Driver.connect(Driver.java:69)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at villagepeoplecottages.ToimipisteDao.read(ToimipisteDao.java:50)
+	at villagepeoplecottages.TestiService.getToimipiste(TestiService.java:54)
+	at villagepeoplecottages.TestiController.getToimipiste(TestiController.java:47)
+	at villagepeoplecottages.TestiController.start(TestiController.java:29)
+	at villagepeoplecottages.VillagePeopleCottages.main(VillagePeopleCottages.java:15)
+Caused by: org.h2.jdbc.JdbcSQLException: General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]" [50000-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	... 29 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/User/Documents/NetBeansProjects/VillagePeopleCottages/VillagePeopleCottages/database.mv.db [1.4.197/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:870)
+	at org.h2.mvstore.FileStore.open(FileStore.java:173)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:350)
+	... 23 more
+2019-04-09 16:24:22 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column "ID" not found; SQL statement:
+SELECT * FROM Toimipiste WHERE id = ? [42122-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:150)
+	at org.h2.expression.Comparison.optimize(Comparison.java:177)
+	at org.h2.command.dml.Select.prepare(Select.java:861)
+	at org.h2.command.Parser.prepareCommand(Parser.java:283)
+	at org.h2.engine.Session.prepareLocal(Session.java:611)
+	at org.h2.engine.Session.prepareCommand(Session.java:549)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1247)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:76)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:304)
+	at villagepeoplecottages.ToimipisteDao.read(ToimipisteDao.java:52)
+	at villagepeoplecottages.TestiService.getToimipiste(TestiService.java:54)
+	at villagepeoplecottages.TestiController.getToimipiste(TestiController.java:47)
+	at villagepeoplecottages.TestiController.start(TestiController.java:29)
+	at villagepeoplecottages.VillagePeopleCottages.main(VillagePeopleCottages.java:15)

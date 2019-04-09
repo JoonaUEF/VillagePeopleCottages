@@ -12,7 +12,7 @@ package villagepeoplecottages;
 public class VillagePeopleCottages {
        
     public static void main(String[] args) {
-
+        new TestiController().start();
     }
     
 }
