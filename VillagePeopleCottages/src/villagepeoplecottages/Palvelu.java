@@ -10,8 +10,9 @@
  * Luokalla on getter ja setter metodit kaikille muuttujille.
  * 
  * 
- * Tekijä: Lassi Puurunen
- * 8.4.2019
+ * Versiohistoria
+ * 8.4.2019 Tekijä Lassi Puurunen
+ * 10.4.2019 Dao-luokan vaatimat konstruktorit tehty
  */
 
 package villagepeoplecottages;
@@ -23,7 +24,7 @@ public class Palvelu {
     private int palveluId;
     private int toimipisteId;
     private String nimi;
-    private String tyyppi;
+    private int tyyppi;
     private String kuvaus;
     private double hinta;
     private double alv;
@@ -33,7 +34,28 @@ public class Palvelu {
     public Palvelu() {
     }
 
-    public Palvelu(int palveluId, int toimipisteId, String nimi, String tyyppi, 
+    public Palvelu(int toimipisteId, String nimi, int tyyppi, String kuvaus, double hinta, double alv) {
+        this.toimipisteId = toimipisteId;
+        this.nimi = nimi;
+        this.tyyppi = tyyppi;
+        this.kuvaus = kuvaus;
+        this.hinta = hinta;
+        this.alv = alv;
+    }
+
+ 
+    public Palvelu(int toimipisteId, String nimi, int tyyppi, String kuvaus, double hinta, double alv, List<VarauksenPalvelut> palvelunVaraukset) {
+        this.toimipisteId = toimipisteId;
+        this.nimi = nimi;
+        this.tyyppi = tyyppi;
+        this.kuvaus = kuvaus;
+        this.hinta = hinta;
+        this.alv = alv;
+        this.palvelunVaraukset = palvelunVaraukset;
+    }
+    
+    
+    public Palvelu(int palveluId, int toimipisteId, String nimi, int tyyppi, 
             String kuvaus, double hinta, double alv, 
             List<VarauksenPalvelut> palvelunVaraukset) {
         
@@ -71,11 +93,11 @@ public class Palvelu {
         this.nimi = nimi;
     }
 
-    public String getTyyppi() {
+    public int getTyyppi() {
         return tyyppi;
     }
 
-    public void setTyyppi(String tyyppi) {
+    public void setTyyppi(int tyyppi) {
         this.tyyppi = tyyppi;
     }
 

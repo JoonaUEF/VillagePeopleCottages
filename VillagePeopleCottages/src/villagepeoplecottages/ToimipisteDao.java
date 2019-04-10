@@ -3,7 +3,8 @@
  * 
  * 
  * Versiohistoria
- * 9.4.2019 Tekijä: Lassi Puurunen
+ * 9.4.2019 Tiedosto luotu. Lassi Puurunen.
+ * 10.4. CRUD-toiminnallisuus valmiina. Lassi Puurunen.
  *          
  * 
  */
@@ -16,11 +17,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class ToimipisteDao implements Dao<Toimipiste, Integer>{
 
+    
     /**
      * Metodi toimipisteen tallentamiselle tietokantaan.
      * 
@@ -51,6 +52,7 @@ public class ToimipisteDao implements Dao<Toimipiste, Integer>{
         connection.close();
     }
 
+    
     /**
      * Metodi Toimipisteen hakemiselle tietokannasta.
      * 
@@ -77,14 +79,14 @@ public class ToimipisteDao implements Dao<Toimipiste, Integer>{
         
         // Haetaan ensin listaukset toimipisteisiin liittyvistä palveluista ja varauksista
         
-        // ylimmät oikeat listojen muodostimet kommentoitu pois, sillä luokkia 
-        // ja metodeja ei vielä toteutettu,
+        // Ylemmät oikeat listojen muodostimet kommentoitu pois, sillä luokkia 
+        // ja metodeja ei vielä toteutettu.
         // Laitetaan tilalle tyhjät listat.
         
         int toimipisteId = rs.getInt("toimipiste_id");
         
-//        List<Palvelu> palvelut = new PalveluDao().listByToimipisteId(toimipisteId);
-//        List<Varaus> varaukset = new VarausDao().listByToimipisteId(toimipisteId);
+        // List<Palvelu> palvelut = new PalveluDao().listByToimipisteId(toimipisteId);
+        // List<Varaus> varaukset = new VarausDao().listByToimipisteId(toimipisteId);
         
         List<Palvelu> palvelut = new ArrayList<>();
         List<Varaus> varaukset = new ArrayList<>();
@@ -101,25 +103,103 @@ public class ToimipisteDao implements Dao<Toimipiste, Integer>{
         return toimipiste;
     }
 
+    
+    /**
+     * Metodi parametrina annetun toimipisteen päivittämiseksi tietokannassa.
+     * 
+     * @param toimipiste
+     * @return toimipiste
+     * @throws SQLException 
+     */
     @Override
-    public Toimipiste update(Toimipiste object) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public Toimipiste update(Toimipiste toimipiste) throws SQLException {
+        
+        Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
 
-    @Override
-    public void delete(Integer key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        PreparedStatement stmt = connection.prepareStatement("UPDATE Toimipiste"
+            + " SET nimi = ?, lahiosoite = ?, postitoimipaikka = ?, postinro = ?, email = ?, puhelinnro = ?"
+            + " WHERE toimipiste_id = ?");
+        
+        stmt.setString(1, toimipiste.getNimi());
+        stmt.setString(2, toimipiste.getLahiosoite());
+        stmt.setString(3, toimipiste.getPostitoimipaikka());
+        stmt.setString(4, toimipiste.getPostinro());
+        stmt.setString(5, toimipiste.getEmail());
+        stmt.setString(6, toimipiste.getPuhelinnro());
+        stmt.setInt(7, toimipiste.getToimipisteId());
 
-    @Override
-    public List<Toimipiste> list() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        stmt.executeUpdate();
+        stmt.close();
+        connection.close();
+        
+        
+        return toimipiste;
     }
 
     
     /**
-     * Metodi hakee kyseisen tauluun liittyvän suurimman Id:n tietokannasta.
+     * Metodi toimipisteen poistamiseksi tietokannasta.
+     * Metodille syötetään parametrina poistettavan toimisteen id.
+     * 
+     * @param key
+     * @throws SQLException 
+     */
+    @Override
+    public void delete(Integer key) throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
+
+        PreparedStatement stmt = connection.prepareStatement("DELETE FROM Toimipiste"
+            + " WHERE toimipiste_id = ?");
+        
+        stmt.setInt(1, key);
+        
+        stmt.executeUpdate();
+        stmt.close();
+        connection.close();
+    }
+
+    
+    /**
+     * Metodi tietokannan taulussa olevien toimipisteiden listan hakemiseksi.
+     * 
+     * @return List<Toimipiste>
+     * @throws SQLException 
+     */
+    @Override
+    public List<Toimipiste> list() throws SQLException {
+        List<Toimipiste> toimipisteet = new ArrayList<>();
+        
+        Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
+
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Toimipiste");
+        
+        ResultSet rs = stmt.executeQuery();
+        
+        //Jos ei ole rivejä, palautetaan null-viite
+        if(!rs.next()) {
+            return null;
+        }
+        
+        //Lisätään tietokannan taulun rivit listalle olioina
+        do {
+            toimipisteet.add(new Toimipiste(rs.getInt("toimipiste_id"), rs.getString("nimi"),
+                    rs.getString("lahiosoite"), rs.getString("postitoimipaikka"),
+                    rs.getString("postinro"), rs.getString("email"), rs.getString("puhelinnro")));
+        } while (rs.next());
+        
+        rs.close();
+        stmt.close();
+        connection.close();
+        
+        return toimipisteet;
+    }
+
+    
+    
+    
+    /**
      * Tämä metodi on tarkoitettu create-metodin käyttöön.
+     * Metodi hakee kyseisen tauluun liittyvän suurimman Id:n tietokannasta.
      * 
      * Mikäli taulu on tyhjä, metodi palauttaa arvon 0
      * 
