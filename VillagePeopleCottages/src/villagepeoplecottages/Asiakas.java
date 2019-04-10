@@ -9,9 +9,9 @@
  * 
  * Luokalla on getter ja setter metodit kaikille muuttujille.
  * 
- * 
- * Tekijä: Lassi Puurunen
- * 8.4.2019
+ * Versiohistoria
+ * 8.4.2019 Tekijä Lassi Puurunen
+ * 10.4.2019 Dao-luokan vaatimat konstruktorit tehty
  */
 package villagepeoplecottages;
 
@@ -37,6 +37,29 @@ public class Asiakas {
         
     }
 
+    public Asiakas(String etunimi, String sukunimi, String lahiosoite, String postitoimipaikka, String postinro, String email, String puhelinnro) {
+        this.etunimi = etunimi;
+        this.sukunimi = sukunimi;
+        this.lahiosoite = lahiosoite;
+        this.postitoimipaikka = postitoimipaikka;
+        this.postinro = postinro;
+        this.email = email;
+        this.puhelinnro = puhelinnro;
+    }
+
+    
+    public Asiakas(int asiakasId, String etunimi, String sukunimi, String lahiosoite, String postitoimipaikka, String postinro, String email, String puhelinnro) {
+        this.asiakasId = asiakasId;
+        this.etunimi = etunimi;
+        this.sukunimi = sukunimi;
+        this.lahiosoite = lahiosoite;
+        this.postitoimipaikka = postitoimipaikka;
+        this.postinro = postinro;
+        this.email = email;
+        this.puhelinnro = puhelinnro;
+    }
+
+    
     public Asiakas(int asiakasId, String etunimi, String sukunimi, String lahiosoite, 
             String postitoimipaikka, String postinro, String email, String puhelinnro, 
             List<Varaus> varaukset, List<Lasku> laskut) {
@@ -132,5 +155,11 @@ public class Asiakas {
     public void setLaskut(List<Lasku> laskut) {
         this.laskut = laskut;
     }
+
+    @Override
+    public String toString() {
+        return "Asiakas{" + "asiakasId=" + asiakasId + ", etunimi=" + etunimi + ", sukunimi=" + sukunimi + ", lahiosoite=" + lahiosoite + ", postitoimipaikka=" + postitoimipaikka + ", postinro=" + postinro + ", email=" + email + ", puhelinnro=" + puhelinnro + ", varaukset=" + varaukset + ", laskut=" + laskut + '}';
+    }
+    
  
 }

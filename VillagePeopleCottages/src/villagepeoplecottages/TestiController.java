@@ -26,7 +26,22 @@ public class TestiController {
         // Oikeassa ohjelmassa käyttöliitymä käynnistää controllerin eri metodeja
         
         createToimipiste();
-        getToimipiste();
+        
+        //Toimipiste toimipiste = getToimipisteTesti();
+        
+        //toimipiste.setNimi("VillagePeople UpdateTesti");
+        
+        //testiService.updateToimipiste(toimipiste);
+        
+        //System.out.println(getToimipisteTesti());
+        
+        //testiService.deleteToimipiste(1);
+        
+        //System.out.println(getToimipisteTesti());
+        
+        for (Toimipiste toimipiste : testiService.listToimipiste()) {
+            System.out.println(toimipiste);
+        }
  
     }
     
@@ -43,8 +58,9 @@ public class TestiController {
                 postinro, email, puhelinnro);
     }
 
-    public void getToimipiste() throws SQLException{
-        System.out.println(testiService.getToimipiste(1));
+    public Toimipiste getToimipisteTesti() throws SQLException{
+        return testiService.getToimipiste(1);
     }
+    
     
 }
