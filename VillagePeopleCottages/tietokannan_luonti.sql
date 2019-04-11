@@ -1,5 +1,5 @@
 CREATE TABLE Toimipiste (
-	toimipiste_id INT PRIMARY KEY,
+	toimipiste_id INT PRIMARY KEY AUTO_INCREMENT,
 	nimi VARCHAR (40),
 	lahiosoite VARCHAR (40),
 	postitoimipaikka VARCHAR (30),
@@ -8,7 +8,7 @@ CREATE TABLE Toimipiste (
 	puhelinnro VARCHAR (15));
 	
 CREATE TABLE Asiakas (
-	asiakas_id INT PRIMARY KEY,
+	asiakas_id INT PRIMARY KEY AUTO_INCREMENT,
 	etunimi VARCHAR (20),
 	sukunimi VARCHAR (40),
 	lahiosoite VARCHAR (40),
@@ -18,19 +18,19 @@ CREATE TABLE Asiakas (
 	puhelinnro VARCHAR (15));
 	
 CREATE TABLE Varaus (
-	varaus_id INT PRIMARY KEY,
+	varaus_id INT PRIMARY KEY AUTO_INCREMENT,
 	asiakas_id INT,
 	toimipiste_id INT,
 	varattu_pvm DATETIME,
 	vahvistus_pvm DATETIME,
 	varattu_alkupvm DATETIME,
 	varattu_loppupvm DATETIME,
-	FOREIGN KEY (toimipiste_id) REFERENCES Toimipiste (toimipiste_id) ON DELETE 	CASCADE,
+	FOREIGN KEY (toimipiste_id) REFERENCES Toimipiste (toimipiste_id) ON DELETE CASCADE,
 	FOREIGN KEY (asiakas_id) REFERENCES Asiakas (asiakas_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Lasku (
-	lasku_id INT PRIMARY KEY,
+	lasku_id INT PRIMARY KEY AUTO_INCREMENT,
 	varaus_id INT,
 	asiakas_id INT,
 	nimi VARCHAR (60),
@@ -44,7 +44,7 @@ CREATE TABLE Lasku (
  	);
 	
 CREATE TABLE Palvelu (
-	palvelu_id INT PRIMARY KEY,
+	palvelu_id INT PRIMARY KEY AUTO_INCREMENT,
 	toimipiste_id INT,
 	nimi VARCHAR (40),
 	tyyppi INT,
@@ -58,7 +58,7 @@ CREATE TABLE Varauksen_palvelut (
 	varaus_id INT,
 	palvelu_id INT,
 	palvelunvaraus_alku DATETIME,
-    palvelunvaraus_loppu DATETIME,
+    	palvelunvaraus_loppu DATETIME,
 	PRIMARY KEY (palvelu_id, varaus_id),
 	FOREIGN KEY (varaus_id) REFERENCES Varaus (varaus_id) ON DELETE CASCADE,
 	FOREIGN KEY (palvelu_id) REFERENCES Palvelu (palvelu_id) ON DELETE CASCADE
