@@ -31,21 +31,18 @@ public class ToimipisteDao implements Dao<Toimipiste, Integer>{
     @Override
     public void create(Toimipiste toimipiste) throws SQLException {
         
-        int maxId = maxId();
-        
         Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
 
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Toimipiste"
-            + " (toimipiste_id, nimi, lahiosoite, postitoimipaikka, postinro, email, puhelinnro)"
-            + " VALUES (?, ?, ?, ?, ?, ?, ?)");
+            + " (nimi, lahiosoite, postitoimipaikka, postinro, email, puhelinnro)"
+            + " VALUES (?, ?, ?, ?, ?, ?)");
         
-        stmt.setInt(1, maxId + 1);
-        stmt.setString(2, toimipiste.getNimi());
-        stmt.setString(3, toimipiste.getLahiosoite());
-        stmt.setString(4, toimipiste.getPostitoimipaikka());
-        stmt.setString(5, toimipiste.getPostinro());
-        stmt.setString(6, toimipiste.getEmail());
-        stmt.setString(7, toimipiste.getPuhelinnro());
+        stmt.setString(1, toimipiste.getNimi());
+        stmt.setString(2, toimipiste.getLahiosoite());
+        stmt.setString(3, toimipiste.getPostitoimipaikka());
+        stmt.setString(4, toimipiste.getPostinro());
+        stmt.setString(5, toimipiste.getEmail());
+        stmt.setString(6, toimipiste.getPuhelinnro());
 
         stmt.executeUpdate();
         stmt.close();
@@ -192,42 +189,6 @@ public class ToimipisteDao implements Dao<Toimipiste, Integer>{
         connection.close();
         
         return toimipisteet;
-    }
-
-    
-    
-    
-    /**
-     * Tämä metodi on tarkoitettu create-metodin käyttöön.
-     * Metodi hakee kyseisen tauluun liittyvän suurimman Id:n tietokannasta.
-     * 
-     * Mikäli taulu on tyhjä, metodi palauttaa arvon 0
-     * 
-     * @return maxId
-     * @throws SQLException 
-     */
-    private int maxId() throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
-
-        PreparedStatement stmt = connection.prepareStatement("SELECT MAX(toimipiste_Id) FROM Toimipiste");
-        ResultSet rs = stmt.executeQuery();
-        
-        int maxId = 0;
-        
-        // Mikäli tulostaulussa ei ole yhtäkään riviä,
-        // palautetaan 0
-        if(!rs.next()) {
-            return 0;
-        }
-        
-        //Asetetaan maxId:lle rivin 1. arvo
-        maxId = rs.getInt(1);
-        
-        stmt.close();
-        rs.close();
-        connection.close();
-
-        return maxId;
     }
     
 }

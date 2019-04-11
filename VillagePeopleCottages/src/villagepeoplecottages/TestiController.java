@@ -33,7 +33,7 @@ public class TestiController {
         
         //testiService.updateToimipiste(toimipiste);
         
-        //System.out.println(getToimipisteTesti());
+        System.out.println(getToimipisteTesti());
         
         //testiService.deleteToimipiste(1);
         
