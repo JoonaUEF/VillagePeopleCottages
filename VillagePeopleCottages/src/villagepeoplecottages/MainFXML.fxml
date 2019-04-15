@@ -12,7 +12,7 @@
          <children>
             <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
               <tabs>
-                <Tab text="Toimipisteet">
+                <Tab onSelectionChanged="#lataaToimipisteet" text="Toimipisteet">
                      <content>
                         <AnchorPane>
                            <children>
@@ -27,10 +27,14 @@
                                           <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" text="Poista" />
                                        </items>
                                     </ToolBar>
-                                    <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+                                    <TableView fx:id="toimipisteetTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
                                       <columns>
-                                        <TableColumn prefWidth="75.0" text="C1" />
-                                        <TableColumn prefWidth="75.0" text="C2" />
+                                        <TableColumn prefWidth="180.0" text="Nimi" />
+                                        <TableColumn minWidth="6.0" prefWidth="180.0" text="Lähiosoite" />
+                                          <TableColumn prefWidth="130.0" text="Postinumero" />
+                                          <TableColumn minWidth="0.0" prefWidth="130.0" text="Postitoimipaikka" />
+                                          <TableColumn prefWidth="130.0" text="Puhelinnumero" />
+                                          <TableColumn prefWidth="160.0" text="Email" />
                                       </columns>
                                        <opaqueInsets>
                                           <Insets />
