@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="villagepeoplecottages.MainFXMLController">
+   <children>
+      <AnchorPane AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
+              <tabs>
+                <Tab text="Toimipisteet">
+                     <content>
+                        <AnchorPane>
+                           <children>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <items>
+                                          <TextField prefHeight="27.0" prefWidth="130.0" promptText="Haku" />
+                                          <Separator orientation="VERTICAL" />
+                                          <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" text="Lisää uusi" />
+                                        <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" text="Muokkaa" />
+                                          <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" text="Poista" />
+                                       </items>
+                                    </ToolBar>
+                                    <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+                                      <columns>
+                                        <TableColumn prefWidth="75.0" text="C1" />
+                                        <TableColumn prefWidth="75.0" text="C2" />
+                                      </columns>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                </Tab>
+                  <Tab text="Palvelut">
+                     <content>
+                        <AnchorPane>
+                           <children>
+                              <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <items>
+                                    <TextField prefHeight="27.0" prefWidth="130.0" promptText="Haku" />
+                                    <ComboBox prefWidth="160.0" promptText="Valitse toimipiste" />
+                                    <ComboBox prefWidth="160.0" promptText="Valitse palvelutyyppi" />
+                                    <Separator orientation="VERTICAL" />
+                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" text="Lisää uusi" />
+                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" text="Muokkaa" />
+                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" text="Poista" />
+                                 </items>
+                              </ToolBar>
+                              <TableView layoutY="37.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+                                 <columns>
+                                    <TableColumn prefWidth="75.0" text="C1" />
+                                    <TableColumn prefWidth="75.0" text="C2" />
+                                 </columns>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Varaukset">
+                     <content>
+                        <AnchorPane prefHeight="541.0" prefWidth="582.0">
+                           <children>
+                              <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
+                                 <items>
+                                    <TextField prefWidth="130.0" promptText="Haku" />
+                                    <ComboBox prefWidth="160.0" promptText="Valitse toimipiste" />
+                                    <ComboBox prefWidth="160.0" promptText="Valitse palvelutyyppi" />
+                                    <DatePicker prefWidth="130.0" promptText="Mistä päivästä" />
+                                    <DatePicker layoutX="328.0" layoutY="10.0" prefWidth="130.0" promptText="Mihin päivään" />
+                                    <Separator orientation="VERTICAL" />
+                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Lisää uusi" />
+                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Muokkaa" />
+                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Poista" />
+                                 </items>
+                              </ToolBar>
+                              <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+                                 <columns>
+                                    <TableColumn prefWidth="75.0" text="C1" />
+                                    <TableColumn prefWidth="75.0" text="C2" />
+                                 </columns>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Asiakkaat">
+                     <content>
+                        <AnchorPane>
+                           <children>
+                              <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
+                                 <items>
+                                    <TextField prefWidth="130.0" promptText="Haku" />
+                                    <ComboBox prefWidth="160.0" promptText="Valitse toimipiste" />
+                                    <Separator orientation="VERTICAL" />
+                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Lisää uusi" />
+                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Muokkaa" />
+                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Poista" />
+                                 </items>
+                              </ToolBar>
+                              <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+                                 <columns>
+                                    <TableColumn prefWidth="75.0" text="C1" />
+                                    <TableColumn prefWidth="75.0" text="C2" />
+                                 </columns>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Laskut">
+                     <content>
+                        <AnchorPane>
+                           <children>
+                              <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
+                                 <items>
+                                    <TextField prefWidth="130.0" promptText="Haku" />
+                                    <ComboBox prefWidth="160.0" promptText="Valitse toimipiste" />
+                                    <DatePicker prefWidth="130.0" promptText="Päiväys alkaen" />
+                                    <DatePicker layoutX="278.0" layoutY="10.0" prefWidth="130.0" promptText="Päiväys päättyen" />
+                                    <ComboBox prefWidth="100.0" promptText="Laskun tila" />
+                                    <Separator orientation="VERTICAL" />
+                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Lisää uusi" />
+                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Muokkaa" />
+                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Poista" />
+                                 </items>
+                              </ToolBar>
+                              <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+                                 <columns>
+                                    <TableColumn prefWidth="75.0" text="C1" />
+                                    <TableColumn prefWidth="75.0" text="C2" />
+                                 </columns>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane maxHeight="30.0" minHeight="30.0" prefHeight="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <ToolBar AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
+               <items>
+                  <Label text="Tilapalkki">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+               </items>
+            </ToolBar>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

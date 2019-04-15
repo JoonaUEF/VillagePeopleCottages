@@ -3,18 +3,40 @@
  * 
  * Täällä käynnistetään käyttöliittymä.
  * 
- * Tekijä: Lassi Puurunen 8.4.2019
+ * 
+ * Versiohistoria
+ * 8.4.2019 tehnyt Lassi Puurunen
+ * 15.4.2019 päivitetty JavaFX:ään 
+ * 
  * 
  */
 
 package villagepeoplecottages;
 
 import java.sql.SQLException;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class VillagePeopleCottages {
+public class VillagePeopleCottages extends Application {
        
-    public static void main(String[] args) throws SQLException {
-        new TestiController().start();
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("MainFXML.fxml"));
+        
+        Scene scene = new Scene(root);
+        
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
     }
     
 }
