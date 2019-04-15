@@ -7,7 +7,7 @@
 package villagepeoplecottages;
 
 import java.sql.SQLException;
-import java.util.List;
+import javafx.collections.ObservableList;
 
 public class AsiakasDao implements Dao<Asiakas, Integer> {
 
@@ -32,7 +32,7 @@ public class AsiakasDao implements Dao<Asiakas, Integer> {
     }
 
     @Override
-    public List<Asiakas> list() throws SQLException {
+    public ObservableList<Asiakas> list() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
