@@ -9,8 +9,10 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 
 /**
@@ -24,8 +26,14 @@ import javafx.scene.control.TitledPane;
  */
 public class MainFXMLController implements Initializable {
 
-    @FXML
-    private TableView<?> toimipisteetTableView;
+    //Määritetään toimipistetablen tiedot
+    @FXML private TableView<Toimipiste> toimipisteetTableView;
+    @FXML private TableColumn<Toimipiste, String> toimipisteNimiColumn;
+    @FXML private TableColumn<Toimipiste, String> toimipisteLahiosoiteColumn;
+    @FXML private TableColumn<Toimipiste, String> toimipistePostinroColumn;
+    @FXML private TableColumn<Toimipiste, String> toimipistePostitoimipaikkaColumn;
+    @FXML private TableColumn<Toimipiste, String> toimipistePuhelinnumeroColumn;
+    @FXML private TableColumn<Toimipiste, String> toimipisteEmailColumn;
     
     
 
@@ -36,12 +44,32 @@ public class MainFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        // Tehdään toimipiste-näkymälle PropertyValueFactoryt
+        toimipisteNimiColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("nimi"));
+        toimipisteLahiosoiteColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("lahiosoite"));
+        toimipistePostinroColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("postinro"));
+        toimipistePostitoimipaikkaColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("postitoimipaikka"));
+        toimipistePuhelinnumeroColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("puhelinnro"));
+        toimipisteEmailColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("email"));
+        
+        // TODO Tehdään sama muille näkymille
         
     }    
 
+    /**
+     * Siirryttäessä toimipiste-välilehdelle, ladataan tietokannasta toimipisteiden tiedot
+     * 
+     * @param event
+     * @throws SQLException 
+     */
     @FXML
     private void lataaToimipisteet(Event event) {
-
+        
+        try {
+            toimipisteetTableView.setItems(new ToimipisteDao().list());
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

@@ -29,12 +29,12 @@
                                     </ToolBar>
                                     <TableView fx:id="toimipisteetTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
                                       <columns>
-                                        <TableColumn prefWidth="180.0" text="Nimi" />
-                                        <TableColumn minWidth="6.0" prefWidth="180.0" text="Lähiosoite" />
-                                          <TableColumn prefWidth="130.0" text="Postinumero" />
-                                          <TableColumn minWidth="0.0" prefWidth="130.0" text="Postitoimipaikka" />
-                                          <TableColumn prefWidth="130.0" text="Puhelinnumero" />
-                                          <TableColumn prefWidth="160.0" text="Email" />
+                                        <TableColumn fx:id="toimipisteNimiColumn" prefWidth="180.0" text="Nimi" />
+                                        <TableColumn fx:id="toimipisteLahiosoiteColumn" minWidth="6.0" prefWidth="180.0" text="Lähiosoite" />
+                                          <TableColumn fx:id="toimipistePostinroColumn" prefWidth="130.0" text="Postinumero" />
+                                          <TableColumn fx:id="toimipistePostitoimipaikkaColumn" minWidth="0.0" prefWidth="130.0" text="Postitoimipaikka" />
+                                          <TableColumn fx:id="toimipistePuhelinnumeroColumn" prefWidth="130.0" text="Puhelinnumero" />
+                                          <TableColumn fx:id="toimipisteEmailColumn" prefWidth="160.0" text="Email" />
                                       </columns>
                                        <opaqueInsets>
                                           <Insets />
