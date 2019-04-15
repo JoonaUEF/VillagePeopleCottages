@@ -10,6 +10,7 @@
  */
 package villagepeoplecottages;
 
+import com.sun.javafx.collections.ObservableListWrapper;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,6 +18,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 
 public class ToimipisteDao implements Dao<Toimipiste, Integer>{
@@ -163,7 +166,7 @@ public class ToimipisteDao implements Dao<Toimipiste, Integer>{
      * @throws SQLException 
      */
     @Override
-    public List<Toimipiste> list() throws SQLException {
+    public ObservableList<Toimipiste> list() throws SQLException {
         List<Toimipiste> toimipisteet = new ArrayList<>();
         
         Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
@@ -188,7 +191,13 @@ public class ToimipisteDao implements Dao<Toimipiste, Integer>{
         stmt.close();
         connection.close();
         
-        return toimipisteet;
+        //Siirretään luotu lista Observablelistiin.
+        
+        ObservableList<Toimipiste> observableToimipiste = FXCollections.observableArrayList();
+        
+        observableToimipiste.addAll(toimipisteet);
+        
+        return observableToimipiste;
     }
     
 }
