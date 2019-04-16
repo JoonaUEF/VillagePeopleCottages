@@ -23,8 +23,8 @@
                                           <TextField prefHeight="27.0" prefWidth="130.0" promptText="Haku" />
                                           <Separator orientation="VERTICAL" />
                                           <Button fx:id="toimipisteLisaaUusiNappi" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#lisaaUusiToimipiste" prefHeight="25.0" text="Lisää uusi" />
-                                        <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" prefHeight="25.0" text="Muokkaa" />
-                                          <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" prefHeight="25.0" text="Poista" />
+                                        <Button fx:id="toimipisteMuokkaaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" prefHeight="25.0" text="Muokkaa" />
+                                          <Button fx:id="toimipistePoistaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#toimipistePoistaButtonOnAction" prefHeight="25.0" text="Poista" />
                                        </items>
                                     </ToolBar>
                                     <TableView fx:id="toimipisteetTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
