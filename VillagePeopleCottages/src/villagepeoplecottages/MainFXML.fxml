@@ -22,14 +22,14 @@
                                        <items>
                                           <TextField prefHeight="27.0" prefWidth="130.0" promptText="Haku" />
                                           <Separator orientation="VERTICAL" />
-                                          <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" text="Lisää uusi" />
-                                        <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" text="Muokkaa" />
-                                          <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" text="Poista" />
+                                          <Button fx:id="toimipisteLisaaUusiNappi" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#lisaaUusiToimipiste" prefHeight="25.0" text="Lisää uusi" />
+                                        <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" prefHeight="25.0" text="Muokkaa" />
+                                          <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" prefHeight="25.0" text="Poista" />
                                        </items>
                                     </ToolBar>
                                     <TableView fx:id="toimipisteetTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
                                       <columns>
-                                        <TableColumn fx:id="toimipisteNimiColumn" prefWidth="180.0" text="Nimi" />
+                                        <TableColumn fx:id="toimipisteNimiColumn" prefWidth="160.0" text="Nimi" />
                                         <TableColumn fx:id="toimipisteLahiosoiteColumn" minWidth="6.0" prefWidth="180.0" text="Lähiosoite" />
                                           <TableColumn fx:id="toimipistePostinroColumn" prefWidth="130.0" text="Postinumero" />
                                           <TableColumn fx:id="toimipistePostitoimipaikkaColumn" minWidth="0.0" prefWidth="130.0" text="Postitoimipaikka" />
@@ -57,14 +57,18 @@
                                     <ComboBox prefWidth="160.0" promptText="Valitse palvelutyyppi" />
                                     <Separator orientation="VERTICAL" />
                                     <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" text="Lisää uusi" />
-                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" text="Muokkaa" />
-                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" text="Poista" />
+                                    <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" prefHeight="25.0" text="Muokkaa" />
+                                    <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" prefHeight="25.0" text="Poista" />
                                  </items>
                               </ToolBar>
                               <TableView layoutY="37.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
                                  <columns>
-                                    <TableColumn prefWidth="75.0" text="C1" />
-                                    <TableColumn prefWidth="75.0" text="C2" />
+                                    <TableColumn prefWidth="160.0" text="Toimipiste" />
+                                    <TableColumn prefWidth="100.0" text="Palvelutyyppi" />
+                                    <TableColumn prefWidth="160.0" text="Nimi" />
+                                    <TableColumn prefWidth="300.0" text="Kuvaus" />
+                                    <TableColumn prefWidth="75.0" text="Hinta" />
+                                    <TableColumn prefWidth="75.0" text="Alv" />
                                  </columns>
                                  <opaqueInsets>
                                     <Insets />
@@ -87,14 +91,21 @@
                                     <DatePicker layoutX="328.0" layoutY="10.0" prefWidth="130.0" promptText="Mihin päivään" />
                                     <Separator orientation="VERTICAL" />
                                     <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Lisää uusi" />
-                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Muokkaa" />
-                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Poista" />
+                                    <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" text="Muokkaa" />
+                                    <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" text="Poista" />
                                  </items>
                               </ToolBar>
                               <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
                                  <columns>
-                                    <TableColumn prefWidth="75.0" text="C1" />
-                                    <TableColumn prefWidth="75.0" text="C2" />
+                                    <TableColumn prefWidth="120.0" text="Toimipiste" />
+                                    <TableColumn prefWidth="100.0" text="Palvelutyyppi" />
+                                    <TableColumn prefWidth="90.0" text="Varausnumero" />
+                                    <TableColumn prefWidth="98.0" text="Asiakasnumero" />
+                                    <TableColumn prefWidth="100.0" text="Palvelun nimi" />
+                                    <TableColumn prefWidth="92.0" text="Varattu" />
+                                    <TableColumn prefWidth="100.0" text="Vahvistettu" />
+                                    <TableColumn prefWidth="120.0" text="Varauksen alku" />
+                                    <TableColumn prefWidth="120.0" text="Varauksen loppu" />
                                  </columns>
                                  <opaqueInsets>
                                     <Insets />
@@ -111,17 +122,22 @@
                               <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
                                  <items>
                                     <TextField prefWidth="130.0" promptText="Haku" />
-                                    <ComboBox prefWidth="160.0" promptText="Valitse toimipiste" />
                                     <Separator orientation="VERTICAL" />
                                     <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Lisää uusi" />
-                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Muokkaa" />
-                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Poista" />
+                                    <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" text="Muokkaa" />
+                                    <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" text="Poista" />
                                  </items>
                               </ToolBar>
                               <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
                                  <columns>
-                                    <TableColumn prefWidth="75.0" text="C1" />
-                                    <TableColumn prefWidth="75.0" text="C2" />
+                                    <TableColumn prefWidth="95.0" text="Asiakasnumero" />
+                                    <TableColumn prefWidth="118.0" text="Etunimi" />
+                                    <TableColumn prefWidth="116.0" text="Sukunimi" />
+                                    <TableColumn prefWidth="101.0" text="Lähiosoite" />
+                                    <TableColumn prefWidth="88.0" text="Postinumero" />
+                                    <TableColumn prefWidth="118.0" text="Postitoimipaikka" />
+                                    <TableColumn prefWidth="121.0" text="Puhelinnumero" />
+                                    <TableColumn prefWidth="177.0" text="Email" />
                                  </columns>
                                  <opaqueInsets>
                                     <Insets />
@@ -144,8 +160,8 @@
                                     <ComboBox prefWidth="100.0" promptText="Laskun tila" />
                                     <Separator orientation="VERTICAL" />
                                     <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Lisää uusi" />
-                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Muokkaa" />
-                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Poista" />
+                                    <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" text="Muokkaa" />
+                                    <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" text="Poista" />
                                  </items>
                               </ToolBar>
                               <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
