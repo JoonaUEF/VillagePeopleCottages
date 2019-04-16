@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -16,9 +15,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -38,6 +36,9 @@ import javafx.stage.StageStyle;
  */
 public class MainFXMLController implements Initializable {
 
+    //Mainpanen avulla voidaan päänäkymä aktivoida tai deaktivoida muita ikkunoita käsitellessä
+    @FXML private AnchorPane MainPane;
+    
     //Määritetään toimipistenäkymän tiedot
     @FXML private TableView<Toimipiste> toimipisteetTableView;
     @FXML private TableColumn<Toimipiste, String> toimipisteNimiColumn;
@@ -51,10 +52,13 @@ public class MainFXMLController implements Initializable {
     @FXML private Button toimipistePoistaButton;
     
     
+    
 
     
     /**
      * Initializes the controller class.
+     * 
+     * 16.4.2019 Lassi Puurunen
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -86,7 +90,11 @@ public class MainFXMLController implements Initializable {
     }    
     
      
-    // Toimipiste-näkymän metodit
+    /**
+     * Toimipiste-näkymän metodit
+     * 
+     */
+    
     
     /**
      * Siirryttäessä toimipiste-välilehdelle, ladataan tietokannasta toimipisteiden tiedot
@@ -130,9 +138,10 @@ public class MainFXMLController implements Initializable {
 
             stage.initStyle(StageStyle.UTILITY);
             
+            MainPane.setDisable(true);
             //Seuraava komento laittaa säikeen odotustilaan, kunnes lisäysikkuna suljetaan
             stage.showAndWait();
-            
+            MainPane.setDisable(false);
             //Päivitetään toimipistenäkymä
             this.lataaToimipisteet(event);
                         
@@ -141,6 +150,7 @@ public class MainFXMLController implements Initializable {
         }
     }
 
+    
     /**
      * Valitun toimipisteen poisto-toiminto
      * 
