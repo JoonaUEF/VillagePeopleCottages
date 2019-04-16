@@ -59,12 +59,16 @@ public class MainFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        // Tässä aktivoidaan muokkaus ja poistonapit, kun taulusta valitaan rivi
-        // Tämä tulee toteuttaa kaikille päänäkymän tauluille
+        // Luodaan kuuntelija, joka aktivoi tai deaktivoi muokkaus ja poistonapit, kun taulusta valitaan rivi
+        // TODO kaikille päänäkymän tauluille ja napeille
         toimipisteetTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 toimipisteMuokkaaButton.setDisable(false);
                 toimipistePoistaButton.setDisable(false);
+            }
+            if (newSelection == null) {
+                toimipisteMuokkaaButton.setDisable(true);
+                toimipistePoistaButton.setDisable(true);
             }
         });
         
@@ -81,23 +85,7 @@ public class MainFXMLController implements Initializable {
         
     }    
     
-    
-    /**
-     * Tällä metodilla poistetaan kaikkien muokkaus ja poisto-nappien aktiivisuus
-     * Metodia käytetään toiminnallisuuksien yhteydessä, missä taulukon valinta poistuu.
-     * 
-     * TODO: Tähän pitää lisätä kaikkien tulevien muokkaa ja poista nappien toiminnot
-     * 
-     * 16.4.2019 Lassi Puurunen
-     */
-    public void poistaNappienAktivoinnit() {
-        toimipisteMuokkaaButton.setDisable(true);
-        toimipistePoistaButton.setDisable(true);
-    }
-
-    
-    
-    
+     
     // Toimipiste-näkymän metodit
     
     /**
@@ -112,7 +100,6 @@ public class MainFXMLController implements Initializable {
     private void lataaToimipisteet(Event event) {
         
         try {
-            this.poistaNappienAktivoinnit();
             toimipisteetTableView.setItems(new ToimipisteDao().list());
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,7 +132,8 @@ public class MainFXMLController implements Initializable {
             
             //Seuraava komento laittaa säikeen odotustilaan, kunnes lisäysikkuna suljetaan
             stage.showAndWait();
-            this.poistaNappienAktivoinnit();
+            
+            //Päivitetään toimipistenäkymä
             this.lataaToimipisteet(event);
                         
         } catch(Exception e) {
@@ -165,7 +153,6 @@ public class MainFXMLController implements Initializable {
     private void toimipistePoistaButtonOnAction(ActionEvent event) {
         try {
             new ToimipisteDao().delete(toimipisteetTableView.getSelectionModel().getSelectedItem().getToimipisteId());
-            this.poistaNappienAktivoinnit();
             this.lataaToimipisteet(event);
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
