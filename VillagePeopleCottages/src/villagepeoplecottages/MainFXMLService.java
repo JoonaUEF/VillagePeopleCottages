@@ -2,8 +2,6 @@ package villagepeoplecottages;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -83,9 +81,6 @@ public class MainFXMLService {
  
             tv.setItems(new ToimipisteDao().list());
         }
-        
-        
-        tv.refresh();
     }
     
     
@@ -158,8 +153,6 @@ public class MainFXMLService {
             
             tv.setItems(new ToimipisteDao().list());
         }
-        
-        tv.refresh();
     }
 
     
@@ -190,8 +183,6 @@ public class MainFXMLService {
             new ToimipisteDao().delete(((Toimipiste) object).getToimipisteId());
             tv.setItems(new ToimipisteDao().list());
         }
-        
-        tv.refresh();
      
     }
     

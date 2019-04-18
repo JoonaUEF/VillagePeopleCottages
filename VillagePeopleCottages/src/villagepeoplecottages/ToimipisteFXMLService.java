@@ -1,19 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package villagepeoplecottages;
 
 import java.sql.SQLException;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 
 /**
- *
- * @author User
+ * ToimipisteFXMLService
+ * 
+ * Toimintoja ToimipisteFXMLController:lle
+ * 
+ * 
+ * 18.4.2019 Lassi Puurunen
+ * 
  */
 
 

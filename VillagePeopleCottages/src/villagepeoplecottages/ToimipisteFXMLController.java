@@ -1,27 +1,24 @@
 package villagepeoplecottages;
 
-import com.sun.org.apache.xerces.internal.dom.ParentNode;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 /**
  * FXML Controller class
  *
- * @author User
+ * 18.4.2019 Lassi Puurunen
  */
 public class ToimipisteFXMLController implements Initializable {
 
+    // Ladataan Service käyttöön
     private ToimipisteFXMLService tfxmls = new ToimipisteFXMLService();
     
     // Controllerille tuleva olio initData:ssa
@@ -73,7 +70,7 @@ public class ToimipisteFXMLController implements Initializable {
     /**
      * haeTietoLomakkeelta
      * 
-     * Metodi palauttaa olion, jossa on lomakkeen tiedot
+     * Metodi palauttaa olion, jossa on lomakkeelle taytetyt tiedot
      * 
      * 18.4.2019 Lassi Puurunen
      * 
