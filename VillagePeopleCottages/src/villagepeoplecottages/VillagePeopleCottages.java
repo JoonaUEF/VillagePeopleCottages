@@ -7,6 +7,7 @@
  * Versiohistoria
  * 8.4.2019 tehnyt Lassi Puurunen
  * 15.4.2019 päivitetty JavaFX:ään 
+ * 18.4.2019 Lisätty title
  * 
  * 
  */
@@ -29,6 +30,7 @@ public class VillagePeopleCottages extends Application {
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
+        stage.setTitle("VillagePeopleCottages");
         stage.show();
     }
     
