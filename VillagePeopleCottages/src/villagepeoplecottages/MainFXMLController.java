@@ -1,5 +1,6 @@
 package villagepeoplecottages;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -33,13 +34,18 @@ import javafx.stage.StageStyle;
  * 16.4.2019 Toimipisteen lisäys-toiminto lisätty. Lassi Puurunen
  * 16.4.2019 Toimipisteen poisto-toiminto lisätty, poisto ja muokkaus -nappien aktivointi ja deaktivointi. Lassi Puurunen
  * 
+ * 
  */
+
 public class MainFXMLController implements Initializable {
 
-    //Mainpanen avulla voidaan päänäkymä aktivoida tai deaktivoida muita ikkunoita käsitellessä
-    @FXML private AnchorPane MainPane;
+    // Määritetään MainFXMLService käyttöön
+    private MainFXMLService mfxmls = new MainFXMLService();
+        
+    // Mainpanen avulla voidaan päänäkymä aktivoida tai deaktivoida muita ikkunoita käsitellessä
+    @FXML private AnchorPane mainPane;
     
-    //Määritetään toimipistenäkymän tiedot
+    // Määritetään toimipistenäkymän tiedot
     @FXML private TableView<Toimipiste> toimipisteetTableView;
     @FXML private TableColumn<Toimipiste, String> toimipisteNimiColumn;
     @FXML private TableColumn<Toimipiste, String> toimipisteLahiosoiteColumn;
@@ -47,9 +53,10 @@ public class MainFXMLController implements Initializable {
     @FXML private TableColumn<Toimipiste, String> toimipistePostitoimipaikkaColumn;
     @FXML private TableColumn<Toimipiste, String> toimipistePuhelinnumeroColumn;
     @FXML private TableColumn<Toimipiste, String> toimipisteEmailColumn;
-    @FXML private Button toimipisteLisaaUusiNappi;
+    @FXML private Button toimipisteLisaaUusiButton;
     @FXML private Button toimipisteMuokkaaButton;
     @FXML private Button toimipistePoistaButton;
+
     
     
     
@@ -58,12 +65,15 @@ public class MainFXMLController implements Initializable {
     /**
      * Initializes the controller class.
      * 
+     * 
      * 16.4.2019 Lassi Puurunen
      */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         // Luodaan kuuntelija, joka aktivoi tai deaktivoi muokkaus ja poistonapit, kun taulusta valitaan rivi
+        //
         // TODO kaikille päänäkymän tauluille ja napeille
         toimipisteetTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -90,8 +100,11 @@ public class MainFXMLController implements Initializable {
     }    
     
      
+    
+    
+    
     /**
-     * Toimipiste-näkymän metodit
+     * Toimipiste-näkymän metodit alkavat tästä
      * 
      */
     
@@ -99,71 +112,87 @@ public class MainFXMLController implements Initializable {
     /**
      * Siirryttäessä toimipiste-välilehdelle, ladataan tietokannasta toimipisteiden tiedot
      * 
+     * 
      * 15.4. 2019 Lassi Puurunen
      * 
      * @param event
      * @throws SQLException 
      */
+    
     @FXML
-    private void lataaToimipisteet(Event event) {
-        
+    private void toimipisteOnSelectionChanged(Event event) {
+
         try {
             toimipisteetTableView.setItems(new ToimipisteDao().list());
+            toimipisteetTableView.refresh();
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 
+
+    
     /**
-     * Uuden toimipisteen lisäys
+     * Toimipistenäkymän
+     * Lisää uusi - napin toiminto
      * 
-     * Metodi avaa LisaaToimipisteFXML-ikkunan
      * 
      * 16.4. 2019 Lassi Puurunen
+     * 18.4. 2019 Päivitetty käyttämään Service-luokkaa
      * 
      * @param event 
      */
+    
     @FXML
-    private void lisaaUusiToimipiste(ActionEvent event) {
-        
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ToimipisteFXML.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Lisää toimipiste");
-            stage.setScene(new Scene(root1));
-            stage.setAlwaysOnTop(true);
-            stage.setResizable(false);
+    private void toimipisteLisaaUusiButtonOnAction(ActionEvent event) {
 
-            stage.initStyle(StageStyle.UTILITY);
-            
-            MainPane.setDisable(true);
-            //Seuraava komento laittaa säikeen odotustilaan, kunnes lisäysikkuna suljetaan
-            stage.showAndWait();
-            MainPane.setDisable(false);
-            //Päivitetään toimipistenäkymä
-            this.lataaToimipisteet(event);
-                        
-        } catch(Exception e) {
-            e.printStackTrace();
+        try {
+            mfxmls.lisaaUusiButton(new Toimipiste(), toimipisteetTableView, mainPane);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
+
+   
+
+    /**
+     * Toimipistenäkymän
+     * Muokkaa-napin toiminto
+     * 
+     * 
+     * 18.4. Lassi Puurunen
+     * 
+     * @param event 
+     */
+    
+    @FXML
+    private void toimipisteMuokkaaButtonOnAction(ActionEvent event) {
+        
+    }
+    
+
 
     
     /**
-     * Valitun toimipisteen poisto-toiminto
+     * Toimipisteen näkymän
+     * Poista-napin toiminto
      * 
      * 
      * 16.4.2019 Lassi Puurunen
      * 
      * @param event 
      */
+    
     @FXML
     private void toimipistePoistaButtonOnAction(ActionEvent event) {
+   
         try {
-            new ToimipisteDao().delete(toimipisteetTableView.getSelectionModel().getSelectedItem().getToimipisteId());
-            this.lataaToimipisteet(event);
+            mfxmls.poistaButton(toimipisteetTableView);
+            
+            
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
