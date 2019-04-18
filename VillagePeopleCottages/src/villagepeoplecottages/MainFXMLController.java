@@ -66,30 +66,12 @@ public class MainFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        // Luodaan kuuntelija, joka aktivoi tai deaktivoi muokkaus ja poistonapit, kun taulusta valitaan rivi
-        //
-        // TODO kaikille päänäkymän tauluille ja napeille
-        toimipisteetTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                toimipisteMuokkaaButton.setDisable(false);
-                toimipistePoistaButton.setDisable(false);
-            }
-            if (newSelection == null) {
-                toimipisteMuokkaaButton.setDisable(true);
-                toimipistePoistaButton.setDisable(true);
-            }
-        });
+        // Tehdään kuuntelijat
+        this.listeners();
         
-        
-        // Tehdään toimipiste-näkymälle PropertyValueFactoryt. Näiden avulla näkymä osaa käyttää objekteja.
-        toimipisteNimiColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("nimi"));
-        toimipisteLahiosoiteColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("lahiosoite"));
-        toimipistePostinroColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("postinro"));
-        toimipistePostitoimipaikkaColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("postitoimipaikka"));
-        toimipistePuhelinnumeroColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("puhelinnro"));
-        toimipisteEmailColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("email"));
-        
-        // TODO Tehdään sama muille näkymille
+        // Tehdään PropertyValueFactory:t, joiden avulla oliot yhdistetään
+        // tableView:hin
+        this.propertyValueFactories();
         
     }    
     
@@ -115,9 +97,10 @@ public class MainFXMLController implements Initializable {
     @FXML
     private void toimipisteOnSelectionChanged(Event event) {
 
+        // Haetaan näkymään tiedot tietokannasta
+        
         try {
             toimipisteetTableView.setItems(new ToimipisteDao().list());
-            toimipisteetTableView.refresh();
             
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -140,6 +123,8 @@ public class MainFXMLController implements Initializable {
     @FXML
     private void toimipisteLisaaUusiButtonOnAction(ActionEvent event) {
 
+        // Lisätään uusi toimipiste
+        
         try {
             mfxmls.lisaaUusiButton(new Toimipiste(), toimipisteetTableView, mainPane);
             
@@ -165,6 +150,9 @@ public class MainFXMLController implements Initializable {
     
     @FXML
     private void toimipisteMuokkaaButtonOnAction(ActionEvent event) {
+        
+        // Muokataan valittua toimipistettä
+        
         try {
             mfxmls.muokkaaButton(toimipisteetTableView.getSelectionModel().getSelectedItem(), toimipisteetTableView, mainPane);
             
@@ -189,12 +177,62 @@ public class MainFXMLController implements Initializable {
     @FXML
     private void toimipistePoistaButtonOnAction(ActionEvent event) {
    
+        // Poistetaan valittu toimipiste
+        
         try {
             mfxmls.poistaButton(toimipisteetTableView);
  
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    
+    
+    
+    // Yleismetodeja
+    
+    
+    /**
+     * Täällä käynnistetään kuuntelijat
+     * 
+     * 18.4.2019 Lassi Puurunen
+     */
+    
+    private void listeners() {
+        
+        // Luodaan kuuntelija, joka aktivoi tai deaktivoi muokkaus ja poistonapit, 
+        // kun taulusta valitaan rivi
+        //
+        // TODO kaikille päänäkymän tauluille
+        
+        toimipisteetTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                toimipisteMuokkaaButton.setDisable(false);
+                toimipistePoistaButton.setDisable(false);
+            }
+            if (newSelection == null) {
+                toimipisteMuokkaaButton.setDisable(true);
+                toimipistePoistaButton.setDisable(true);
+            }
+        });
+        
+        //TODO haku- ja rajaustoimintojen kuuntelijat
+        
+    }
+
+    private void propertyValueFactories() {
+        
+        // Tehdään toimipiste-näkymälle PropertyValueFactoryt. Näiden avulla näkymä osaa käyttää objekteja.
+        
+        toimipisteNimiColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("nimi"));
+        toimipisteLahiosoiteColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("lahiosoite"));
+        toimipistePostinroColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("postinro"));
+        toimipistePostitoimipaikkaColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("postitoimipaikka"));
+        toimipistePuhelinnumeroColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("puhelinnro"));
+        toimipisteEmailColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("email"));
+        
+        // TODO Tehdään sama muille näkymille
     }
 
     
