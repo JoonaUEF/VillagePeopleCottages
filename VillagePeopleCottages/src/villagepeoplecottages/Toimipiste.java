@@ -10,8 +10,10 @@
  * Luokalla on getter ja setter metodit kaikille muuttujille.
  * 
  * 
- * Tekijä: Lassi Puurunen
- * 8.4.2019
+ * Versiohistoria
+ * 8.4.2019 tekijä Lassi Puurunen
+ * 10.4. 2019 lisätty konstruktori ilman viittauslistoja
+ * 
  */
 package villagepeoplecottages;
 
@@ -24,7 +26,7 @@ public class Toimipiste {
     private String nimi;
     private String lahiosoite;
     private String postitoimipaikka;
-    private int postinro;
+    private String postinro;
     private String email;
     private String puhelinnro;
     
@@ -35,8 +37,27 @@ public class Toimipiste {
 
     }
 
+    public Toimipiste(String nimi, String lahiosoite, String postitoimipaikka, String postinro, String email, String puhelinnro) {
+        this.nimi = nimi;
+        this.lahiosoite = lahiosoite;
+        this.postitoimipaikka = postitoimipaikka;
+        this.postinro = postinro;
+        this.email = email;
+        this.puhelinnro = puhelinnro;
+    }
+
+    public Toimipiste(int toimipisteId, String nimi, String lahiosoite, String postitoimipaikka, String postinro, String email, String puhelinnro) {
+        this.toimipisteId = toimipisteId;
+        this.nimi = nimi;
+        this.lahiosoite = lahiosoite;
+        this.postitoimipaikka = postitoimipaikka;
+        this.postinro = postinro;
+        this.email = email;
+        this.puhelinnro = puhelinnro;
+    }
+
     public Toimipiste(int toimipisteId, String nimi, String lahiosoite, 
-            String postitoimipaikka, int postinro, String email, String puhelinnro, 
+            String postitoimipaikka, String postinro, String email, String puhelinnro, 
             List<Palvelu> palvelut, List<Varaus> varaukset) {
         
         this.toimipisteId = toimipisteId;
@@ -84,11 +105,11 @@ public class Toimipiste {
         this.postitoimipaikka = postitoimipaikka;
     }
 
-    public int getPostinro() {
+    public String getPostinro() {
         return postinro;
     }
 
-    public void setPostinro(int postinro) {
+    public void setPostinro(String postinro) {
         this.postinro = postinro;
     }
 
@@ -123,6 +144,12 @@ public class Toimipiste {
     public void setVaraukset(List<Varaus> varaukset) {
         this.varaukset = varaukset;
     }
+
+    @Override
+    public String toString() {
+        return "Toimipiste{" + "toimipisteId=" + toimipisteId + ", nimi=" + nimi + ", lahiosoite=" + lahiosoite + ", postitoimipaikka=" + postitoimipaikka + ", postinro=" + postinro + ", email=" + email + ", puhelinnro=" + puhelinnro + ", palvelut=" + palvelut + ", varaukset=" + varaukset + '}';
+    }
+    
     
     
 }

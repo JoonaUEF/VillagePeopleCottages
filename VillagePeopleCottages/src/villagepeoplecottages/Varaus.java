@@ -10,8 +10,9 @@
  * Luokalla on getter ja setter metodit kaikille muuttujille.
  * 
  * 
- * Tekijä: Lassi Puurunen
- * 8.4.2019
+ * Versiohistoria
+ * 8.4.2019 Tekijä Lassi Puurunen
+ * 10.4.2019 Dao-luokan vaatimat konstruktorit tehty
  */
 
 package villagepeoplecottages;
@@ -31,15 +32,36 @@ public class Varaus {
     private Date varattuLoppupvm;
     
     private List<VarauksenPalvelut> varauksenPalvelut;
-    private List<Lasku> laskut;
+    private List<Lasku> varauksenLaskut;
 
     public Varaus() {
 
     }
 
+    public Varaus(int asiakasId, int toimipisteId, Date varattuPvm, Date vahvistusPvm, Date varattuAlkupvm, Date varattuLoppupvm) {
+        this.asiakasId = asiakasId;
+        this.toimipisteId = toimipisteId;
+        this.varattuPvm = varattuPvm;
+        this.vahvistusPvm = vahvistusPvm;
+        this.varattuAlkupvm = varattuAlkupvm;
+        this.varattuLoppupvm = varattuLoppupvm;
+    }
+
+    
+    public Varaus(int varausId, int asiakasId, int toimipisteId, Date varattuPvm, Date vahvistusPvm, Date varattuAlkupvm, Date varattuLoppupvm) {
+        this.varausId = varausId;
+        this.asiakasId = asiakasId;
+        this.toimipisteId = toimipisteId;
+        this.varattuPvm = varattuPvm;
+        this.vahvistusPvm = vahvistusPvm;
+        this.varattuAlkupvm = varattuAlkupvm;
+        this.varattuLoppupvm = varattuLoppupvm;
+    }
+
+    
     public Varaus(int varausId, int asiakasId, int toimipisteId, Date varattuPvm, 
             Date vahvistusPvm, Date varattuAlkupvm, Date varattuLoppupvm, 
-            List<VarauksenPalvelut> varauksenPalvelut, List<Lasku> laskut) {
+            List<VarauksenPalvelut> varauksenPalvelut, List<Lasku> varauksenLaskut) {
         
         this.varausId = varausId;
         this.asiakasId = asiakasId;
@@ -49,7 +71,7 @@ public class Varaus {
         this.varattuAlkupvm = varattuAlkupvm;
         this.varattuLoppupvm = varattuLoppupvm;
         this.varauksenPalvelut = varauksenPalvelut;
-        this.laskut = laskut;
+        this.varauksenLaskut = varauksenLaskut;
     }
 
     
@@ -119,11 +141,17 @@ public class Varaus {
     }
 
     public List<Lasku> getLaskut() {
-        return laskut;
+        return varauksenLaskut;
     }
 
-    public void setLaskut(List<Lasku> laskut) {
-        this.laskut = laskut;
+    public void setLaskut(List<Lasku> varauksenLaskut) {
+        this.varauksenLaskut = varauksenLaskut;
+    }
+
+    @Override
+    public String toString() {
+        return "Varaus{" + "varausId=" + varausId + ", asiakasId=" + asiakasId + ", toimipisteId=" + toimipisteId + ", varattuPvm=" + varattuPvm + ", vahvistusPvm=" + vahvistusPvm + ", varattuAlkupvm=" + varattuAlkupvm + ", varattuLoppupvm=" + varattuLoppupvm + ", varauksenPalvelut=" + varauksenPalvelut + ", varauksenLaskut=" + varauksenLaskut + '}';
     }
  
+    
 }
