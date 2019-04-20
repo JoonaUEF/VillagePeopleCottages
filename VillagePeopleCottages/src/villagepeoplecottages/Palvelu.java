@@ -43,6 +43,15 @@ public class Palvelu {
         this.alv = alv;
     }
 
+    public Palvelu(int palveluId, int toimipisteId, String nimi, int tyyppi, String kuvaus, double hinta, double alv) {
+      this.palveluId = palveluId;
+      this.toimipisteId = toimipisteId;
+      this.nimi = nimi;
+      this.tyyppi = tyyppi;
+      this.kuvaus = kuvaus;
+      this.hinta = hinta;
+      this.alv = alv;
+  }
  
     public Palvelu(int toimipisteId, String nimi, int tyyppi, String kuvaus, double hinta, double alv, List<VarauksenPalvelut> palvelunVaraukset) {
         this.toimipisteId = toimipisteId;
