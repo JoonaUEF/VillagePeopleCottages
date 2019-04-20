@@ -20,7 +20,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * FXML Controller class
  *
- * @author Lassi Puurunen
+ * @author Lassi Puurunen, Joona Honkanen
  * 
  * Versiohistoria
  * 
@@ -29,7 +29,7 @@ import javafx.scene.layout.AnchorPane;
  * 16.4.2019 Toimipisteen lisäys-toiminto lisätty. Lassi Puurunen
  * 16.4.2019 Toimipisteen poisto-toiminto lisätty, poisto ja muokkaus -nappien aktivointi ja deaktivointi. Lassi Puurunen
  * 18.4.2019 Päivitetty käyttämään MainFXMLService -luokkaa. Lassi Puurunen
- * 
+ * 20.4.2019 Palvelun TableView, lisäys ja poisto-toiminnot lisätty. Joona Honkanen
  * 
  */
 
@@ -53,7 +53,17 @@ public class MainFXMLController implements Initializable {
     @FXML private Button toimipisteMuokkaaButton;
     @FXML private Button toimipistePoistaButton;
     
-    
+    // Määritetään palvelunäkymän tiedot
+    @FXML private TableView<Palvelu> palvelutTableView;
+    @FXML private TableColumn<Palvelu, Integer> palveluToimipisteIdColumn;
+    @FXML private TableColumn<Palvelu, String> palveluNimiColumn;
+    @FXML private TableColumn<Palvelu, Integer> palveluTyyppiColumn;
+    @FXML private TableColumn<Palvelu, String> palveluKuvausColumn;
+    @FXML private TableColumn<Palvelu, Double> palveluHintaColumn;
+    @FXML private TableColumn<Palvelu, Double> palveluAlvColumn;
+    @FXML private Button palveluLisaaUusiButton;
+    @FXML private Button palveluMuokkaaButton;
+    @FXML private Button palveluPoistaButton;
 
     
     /**
@@ -187,7 +197,113 @@ public class MainFXMLController implements Initializable {
         }
     }
 
+    /**
+     * Palvelu-näkymän metodit alkavat tästä
+     * 
+     */
     
+    
+    /**
+     * Siirryttäessä palvelu-välilehdelle, ladataan tietokannasta palveluiden tiedot
+     * 
+     * 
+     * 20.4. 2019 Joona Honkanen
+     * 
+     * @param event
+     * @throws SQLException 
+     */
+    
+    @FXML
+    private void palveluOnSelectionChanged(Event event) {
+
+        // Haetaan näkymään tiedot tietokannasta
+        
+        try {
+            palvelutTableView.setItems(new PalveluDao().list());
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+    
+    /**
+     * Palvelunäkymän
+     * Lisää uusi - napin toiminto
+     * 
+     * 
+     * 20.4. 2019 Joona Honkanen
+     * 
+     * @param event 
+     */
+    
+    @FXML
+    private void palveluLisaaUusiButtonOnAction(ActionEvent event) {
+
+        // Lisätään uusi toimipiste
+        
+        try {
+            mfxmls.lisaaUusiButton(new Palvelu(), palvelutTableView, mainPane);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+   
+
+    /**
+     * Palvelunäkymän
+     * Muokkaa-napin toiminto
+     * 
+     * 
+     * 20.4. Joona Honkanen
+     * 
+     * @param event 
+     */
+    
+    @FXML
+    private void palveluMuokkaaButtonOnAction(ActionEvent event) {
+        
+        // Muokataan valittua palvelua
+        
+        try {
+            mfxmls.muokkaaButton(palvelutTableView.getSelectionModel().getSelectedItem(), palvelutTableView, mainPane);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+
+    /**
+     * Palvelun näkymän
+     * Poista-napin toiminto
+     * 
+     * 
+     * 20.4.2019 Joona Honkanen
+     * 
+     * @param event 
+     */
+    
+    @FXML
+    private void palveluPoistaButtonOnAction(ActionEvent event) {
+   
+        // Poistetaan valittu palvelu
+        
+        try {
+            mfxmls.poistaButton(palvelutTableView);
+ 
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     
     // Yleismetodeja
@@ -197,6 +313,7 @@ public class MainFXMLController implements Initializable {
      * Täällä käynnistetään kuuntelijat
      * 
      * 18.4.2019 Lassi Puurunen
+     * 20.4.2019 Palvelut lisätty. Joona Honkanen
      */
     
     private void listeners() {
@@ -217,6 +334,18 @@ public class MainFXMLController implements Initializable {
             }
         });
         
+        
+        palvelutTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                palveluMuokkaaButton.setDisable(false);
+                palveluPoistaButton.setDisable(false);
+            }
+            if (newSelection == null) {
+                palveluMuokkaaButton.setDisable(true);
+                palveluPoistaButton.setDisable(true);
+            }
+        });
+        
         //TODO haku- ja rajaustoimintojen kuuntelijat
         
     }
@@ -232,6 +361,13 @@ public class MainFXMLController implements Initializable {
         toimipistePuhelinnumeroColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("puhelinnro"));
         toimipisteEmailColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("email"));
         
+        palveluNimiColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("nimi"));
+        palveluToimipisteIdColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Integer>("toimipisteId"));
+        palveluTyyppiColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Integer>("tyyppi"));
+        palveluKuvausColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("kuvaus"));
+        palveluHintaColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("hinta"));
+        palveluAlvColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("alv"));
+
         // TODO Tehdään sama muille näkymille
     }
 
