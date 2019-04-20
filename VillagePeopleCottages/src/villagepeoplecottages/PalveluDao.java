@@ -119,6 +119,8 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
         stmt.setString(4, palvelu.getKuvaus());
         stmt.setDouble(5, palvelu.getHinta());
         stmt.setDouble(6, palvelu.getAlv());
+        stmt.setInt(7, palvelu.getPalveluId());
+        
 
         stmt.executeUpdate();
         stmt.close();
