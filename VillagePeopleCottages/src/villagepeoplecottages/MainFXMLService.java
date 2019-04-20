@@ -44,6 +44,10 @@ public class MainFXMLService {
             fxmlLoader = new FXMLLoader(getClass().getResource("ToimipisteFXML.fxml"));
         }
         
+        else if (object instanceof Palvelu) {
+          
+          fxmlLoader = new FXMLLoader(getClass().getResource("PalveluFXML.fxml"));
+        }
         
         Parent root1 = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
@@ -56,6 +60,10 @@ public class MainFXMLService {
         if (object instanceof Toimipiste) {
             
             stage.setTitle("Lisää toimipiste");
+        }
+        else if (object instanceof Palvelu) {
+          
+          stage.setTitle("Lisää palvelu");
         }
         
         //Muita asetuksia        
@@ -81,6 +89,11 @@ public class MainFXMLService {
  
             tv.setItems(new ToimipisteDao().list());
         }
+        
+        else if (object instanceof Palvelu) {
+          
+          tv.setItems(new PalveluDao().list());
+      }
     }
     
     
@@ -108,6 +121,11 @@ public class MainFXMLService {
             fxmlLoader = new FXMLLoader(getClass().getResource("ToimipisteFXML.fxml"));
         }
         
+        else if (object instanceof Palvelu) {
+          
+          fxmlLoader = new FXMLLoader(getClass().getResource("PalveluFXML.fxml"));
+        }
+        
         Parent root1 = (Parent) fxmlLoader.load();
         
         // Ladataan objektin luokan mukainen nimi stagelle
@@ -126,6 +144,16 @@ public class MainFXMLService {
             ToimipisteFXMLController controller = fxmlLoader.getController();
             controller.initData(object);
    
+        }
+        
+        else if (object instanceof Palvelu) {
+
+          stage.setTitle("Muokkaa palvelua");
+          
+          //Lähetään objekti controllerille
+          PalveluFXMLController controller = fxmlLoader.getController();
+          controller.initData(object);
+          
         }
         
         //Muita asetuksia   
@@ -152,6 +180,11 @@ public class MainFXMLService {
         if (object instanceof Toimipiste) {
             
             tv.setItems(new ToimipisteDao().list());
+        }
+        
+        else if (object instanceof Palvelu) {
+          
+          tv.setItems(new PalveluDao().list());
         }
     }
 
@@ -182,6 +215,12 @@ public class MainFXMLService {
             
             new ToimipisteDao().delete(((Toimipiste) object).getToimipisteId());
             tv.setItems(new ToimipisteDao().list());
+        }
+        
+        if (object instanceof Palvelu) {
+          
+          new PalveluDao().delete(((Palvelu) object).getPalveluId());
+          tv.setItems(new PalveluDao().list());
         }
      
     }
