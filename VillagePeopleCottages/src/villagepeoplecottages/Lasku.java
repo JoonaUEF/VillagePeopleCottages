@@ -10,8 +10,9 @@
  * Luokalla on getter ja setter metodit kaikille muuttujille.
  * 
  * 
- * Tekijä: Lassi Puurunen
- * 8.4.2019
+ * Versiohistoria
+ * 8.4.2019 Tekijä Lassi Puurunen
+ * 10.4.2019 Dao-luokan vaatimat konstruktorit tehty
  */
 
 package villagepeoplecottages;
@@ -31,6 +32,18 @@ public class Lasku {
     public Lasku() {
     }
 
+    public Lasku(int varausId, int asiakasId, String nimi, String lahiosoite, String postitoimipaikka, String postinro, double summa, double alv) {
+        this.varausId = varausId;
+        this.asiakasId = asiakasId;
+        this.nimi = nimi;
+        this.lahiosoite = lahiosoite;
+        this.postitoimipaikka = postitoimipaikka;
+        this.postinro = postinro;
+        this.summa = summa;
+        this.alv = alv;
+    }
+
+    
     public Lasku(int laskuId, int varausId, int asiakasId, String nimi, 
             String lahiosoite, String postitoimipaikka, String postinro, 
             double summa, double alv) {
@@ -116,6 +129,11 @@ public class Lasku {
 
     public void setAlv(double alv) {
         this.alv = alv;
+    }
+
+    @Override
+    public String toString() {
+        return "Lasku{" + "laskuId=" + laskuId + ", varausId=" + varausId + ", asiakasId=" + asiakasId + ", nimi=" + nimi + ", lahiosoite=" + lahiosoite + ", postitoimipaikka=" + postitoimipaikka + ", postinro=" + postinro + ", summa=" + summa + ", alv=" + alv + '}';
     }
     
     
