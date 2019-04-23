@@ -182,8 +182,8 @@ public class Palvelu {
 
     // Toimipisteen nimi haetaan Daon avulla.
     
-    public String getToimipisteNimi() throws SQLException {
-        return new ToimipisteDao().read(this.toimipisteId).getNimi();
+    public String getToimipisteNimi()  {
+        return this.toimipiste.getNimi();
     }
 
     public void setToimipiste(Toimipiste toimipiste) {

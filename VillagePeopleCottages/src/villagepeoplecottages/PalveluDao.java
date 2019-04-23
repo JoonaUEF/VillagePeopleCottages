@@ -186,6 +186,11 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
         stmt.close();
         connection.close();
         
+        // Päivitetään listan palveluille toimipisteet
+        for (Palvelu palvelu : palvelut) {
+            palvelu.setToimipiste(new ToimipisteDao().read(palvelu.getToimipisteId()));
+        }
+        
         //Siirretään luotu lista Observablelistiin.
         
         ObservableList<Palvelu> observablePalvelu = FXCollections.observableArrayList();
