@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -123,11 +124,8 @@ public class ToimipisteFXMLController implements Initializable {
         if (!vanhaToimipiste.getNimi().isEmpty()) {
             palvelutVarauksetAnchorPane.setDisable(false);
             
-            try {
-                palvelutTableView.setItems(new PalveluDao().listByToimipisteId(vanhaToimipiste.getToimipisteId()));
-            } catch (SQLException ex) {
-                Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            palvelutTableView.setItems((ObservableList<Palvelu>) vanhaToimipiste.getPalvelut());
+
         }
         
     }
@@ -196,7 +194,7 @@ public class ToimipisteFXMLController implements Initializable {
 
     @FXML
     private void palveluLisaaUusiButtonOnAction(ActionEvent event) {
-        // Lisätään uusi toimipiste
+        // Lisätään uusi palvelu toimipisteelle
         
         try {
             if (vanhaToimipiste != null) {
