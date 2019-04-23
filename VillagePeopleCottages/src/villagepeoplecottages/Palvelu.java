@@ -133,6 +133,10 @@ public class Palvelu {
     public void setAlv(double alv) {
         this.alv = alv;
     }
+    
+    public double getHintaAlv() {
+        return hinta + alv;
+    }
 
     public List<VarauksenPalvelut> getPalvelunVaraukset() {
         return palvelunVaraukset;
