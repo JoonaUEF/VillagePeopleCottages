@@ -127,7 +127,7 @@ public class Varaus {
 
     @Override
     public String toString() {
-        return "Varaus{" + "varausId=" + varausId + ", asiakasId=" + asiakasId + ", toimipisteId=" + toimipisteId + ", varattuPvm=" + varattuPvm + ", vahvistusPvm=" + vahvistusPvm + ", varattuAlkupvm=" + varattuAlkupvm + ", varattuLoppupvm=" + varattuLoppupvm + ", varauksenPalvelut=" + varauksenPalvelut + ", varauksenLaskut=" + varauksenLaskut + '}';
+        return "Varaus{" + "varausId=" + varausId + ", asiakasId=" + asiakasId + ", toimipisteId=" + toimipisteId + ", varattuPvm=" + varattuPvm + ", vahvistusPvm=" + vahvistusPvm +  ", varauksenPalvelut=" + varauksenPalvelut + ", varauksenLaskut=" + varauksenLaskut + '}';
     }
  
     
