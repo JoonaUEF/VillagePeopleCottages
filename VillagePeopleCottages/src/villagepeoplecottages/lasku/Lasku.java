@@ -18,6 +18,9 @@
 
 package villagepeoplecottages.lasku;
 
+import villagepeoplecottages.asiakas.Asiakas;
+import villagepeoplecottages.varaus.Varaus;
+
 public class Lasku {
 
     private int laskuId;
@@ -30,6 +33,9 @@ public class Lasku {
     private String postinro;
     private double summa;
     private double alv;
+    
+    private Asiakas asiakas;
+    private Varaus varaus;
 
     public Lasku() {
     }
@@ -140,6 +146,23 @@ public class Lasku {
     public void setTila(int tila) {
         this.tila = tila;
     }
+
+    public Asiakas getAsiakas() {
+        return asiakas;
+    }
+
+    public void setAsiakas(Asiakas asiakas) {
+        this.asiakas = asiakas;
+    }
+
+    public Varaus getVaraus() {
+        return varaus;
+    }
+
+    public void setVaraus(Varaus varaus) {
+        this.varaus = varaus;
+    }
+    
     
     
 
