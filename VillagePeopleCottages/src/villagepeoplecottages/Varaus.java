@@ -31,7 +31,7 @@ public class Varaus {
     private Date varattuAlkupvm;
     private Date varattuLoppupvm;
     
-    private List<VarauksenPalvelut> varauksenPalvelut;
+    private List<PalveluVaraus> varauksenPalvelut;
     private List<Lasku> varauksenLaskut;
 
     public Varaus() {
@@ -61,7 +61,7 @@ public class Varaus {
     
     public Varaus(int varausId, int asiakasId, int toimipisteId, Date varattuPvm, 
             Date vahvistusPvm, Date varattuAlkupvm, Date varattuLoppupvm, 
-            List<VarauksenPalvelut> varauksenPalvelut, List<Lasku> varauksenLaskut) {
+            List<PalveluVaraus> varauksenPalvelut, List<Lasku> varauksenLaskut) {
         
         this.varausId = varausId;
         this.asiakasId = asiakasId;
@@ -132,11 +132,11 @@ public class Varaus {
         this.varattuLoppupvm = varattuLoppupvm;
     }
 
-    public List<VarauksenPalvelut> getVarauksenPalvelut() {
+    public List<PalveluVaraus> getVarauksenPalvelut() {
         return varauksenPalvelut;
     }
 
-    public void setVarauksenPalvelut(List<VarauksenPalvelut> varauksenPalvelut) {
+    public void setVarauksenPalvelut(List<PalveluVaraus> varauksenPalvelut) {
         this.varauksenPalvelut = varauksenPalvelut;
     }
 
