@@ -23,8 +23,6 @@ CREATE TABLE Varaus (
 	toimipiste_id INT,
 	varattu_pvm DATETIME,
 	vahvistus_pvm DATETIME,
-	varattu_alkupvm DATETIME,
-	varattu_loppupvm DATETIME,
 	FOREIGN KEY (toimipiste_id) REFERENCES Toimipiste (toimipiste_id) ON DELETE CASCADE,
 	FOREIGN KEY (asiakas_id) REFERENCES Asiakas (asiakas_id) ON DELETE CASCADE
 );
@@ -33,6 +31,7 @@ CREATE TABLE Lasku (
 	lasku_id INT PRIMARY KEY AUTO_INCREMENT,
 	varaus_id INT,
 	asiakas_id INT,
+        tila INT,
 	nimi VARCHAR (60),
 	lahiosoite VARCHAR (40),
 	postitoimipaikka VARCHAR (30),
@@ -54,11 +53,11 @@ CREATE TABLE Palvelu (
 	FOREIGN KEY (toimipiste_id) REFERENCES Toimipiste (toimipiste_id) ON DELETE CASCADE
 	);
 	
-CREATE TABLE Varauksen_palvelut (
+CREATE TABLE PalveluVaraus (
 	varaus_id INT,
 	palvelu_id INT,
-	palvelunvaraus_alku DATETIME,
-    	palvelunvaraus_loppu DATETIME,
+	alku DATETIME,
+    	loppu DATETIME,
 	PRIMARY KEY (palvelu_id, varaus_id),
 	FOREIGN KEY (varaus_id) REFERENCES Varaus (varaus_id) ON DELETE CASCADE,
 	FOREIGN KEY (palvelu_id) REFERENCES Palvelu (palvelu_id) ON DELETE CASCADE
