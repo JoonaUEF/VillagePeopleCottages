@@ -55,7 +55,7 @@ public class MainFXMLController implements Initializable {
     
     // Määritetään palvelunäkymän tiedot
     @FXML private TableView<Palvelu> palvelutTableView;
-    @FXML private TableColumn<Palvelu, Integer> palveluToimipisteIdColumn;
+    @FXML private TableColumn<Palvelu, String> palveluToimipisteNimiColumn;
     @FXML private TableColumn<Palvelu, String> palveluNimiColumn;
     @FXML private TableColumn<Palvelu, String> palveluTyyppiColumn;
     @FXML private TableColumn<Palvelu, String> palveluKuvausColumn;
@@ -514,7 +514,7 @@ public class MainFXMLController implements Initializable {
         toimipisteEmailColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("email"));
         
         palveluNimiColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("nimi"));
-        palveluToimipisteIdColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Integer>("toimipisteId"));
+        palveluToimipisteNimiColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("toimipisteNimi"));
         palveluTyyppiColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("tyyppiString"));
         palveluKuvausColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("kuvaus"));
         palveluHintaColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("hinta"));

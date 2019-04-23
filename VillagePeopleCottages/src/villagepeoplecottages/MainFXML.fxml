@@ -72,7 +72,7 @@
                               </ToolBar>
                               <TableView fx:id="palvelutTableView" layoutY="37.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
                                  <columns>
-                                    <TableColumn fx:id="palveluToimipisteIdColumn" prefWidth="160.0" text="Toimipiste" />
+                                    <TableColumn fx:id="palveluToimipisteNimiColumn" prefWidth="160.0" text="Toimipiste" />
                                     <TableColumn fx:id="palveluTyyppiColumn" prefWidth="100.0" text="Palvelutyyppi" />
                                     <TableColumn fx:id="palveluNimiColumn" prefWidth="160.0" text="Nimi" />
                                     <TableColumn fx:id="palveluKuvausColumn" prefWidth="300.0" text="Kuvaus" />
