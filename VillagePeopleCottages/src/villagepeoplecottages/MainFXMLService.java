@@ -1,14 +1,8 @@
 package villagepeoplecottages;
 
-import villagepeoplecottages.toimipiste.Toimipiste;
-import villagepeoplecottages.toimipiste.ToimipisteDao;
-import villagepeoplecottages.toimipiste.ToimipisteFXMLController;
-import villagepeoplecottages.palvelu.PalveluFXMLController;
-import villagepeoplecottages.palvelu.Palvelu;
-import villagepeoplecottages.palvelu.PalveluDao;
-import villagepeoplecottages.asiakas.AsiakasDao;
-import villagepeoplecottages.asiakas.AsiakasFXMLController;
-import villagepeoplecottages.asiakas.Asiakas;
+import villagepeoplecottages.toimipiste.*;
+import villagepeoplecottages.palvelu.*;
+import villagepeoplecottages.asiakas.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import javafx.fxml.FXMLLoader;
@@ -50,16 +44,16 @@ public class MainFXMLService {
         
         if (object instanceof Toimipiste) {
             
-            fxmlLoader = new FXMLLoader(getClass().getResource("ToimipisteFXML.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("toimipiste/ToimipisteFXML.fxml"));
         }
         
         else if (object instanceof Palvelu) {
           
-          fxmlLoader = new FXMLLoader(getClass().getResource("PalveluFXML.fxml"));
+          fxmlLoader = new FXMLLoader(getClass().getResource("palvelu/PalveluFXML.fxml"));
         }
         else if (object instanceof Asiakas) {
             
-            fxmlLoader = new FXMLLoader(getClass().getResource("AsiakasFXML.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("asiakas/AsiakasFXML.fxml"));
           }
         Parent root1 = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
@@ -138,17 +132,17 @@ public class MainFXMLService {
         
         if (object instanceof Toimipiste) {
             
-            fxmlLoader = new FXMLLoader(getClass().getResource("ToimipisteFXML.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("toimipiste/ToimipisteFXML.fxml"));
         }
         
         else if (object instanceof Palvelu) {
           
-          fxmlLoader = new FXMLLoader(getClass().getResource("PalveluFXML.fxml"));
+          fxmlLoader = new FXMLLoader(getClass().getResource("palvelu/PalveluFXML.fxml"));
         }
         
         else if (object instanceof Asiakas) {
             
-            fxmlLoader = new FXMLLoader(getClass().getResource("AsiakasFXML.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("asiakas/AsiakasFXML.fxml"));
           }
         
         Parent root1 = (Parent) fxmlLoader.load();
