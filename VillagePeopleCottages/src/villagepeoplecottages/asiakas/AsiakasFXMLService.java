@@ -1,4 +1,4 @@
-package villagepeoplecottages;
+package villagepeoplecottages.asiakas;
 
 import java.sql.SQLException;
 

@@ -1,5 +1,9 @@
-package villagepeoplecottages;
+package villagepeoplecottages.toimipiste;
 
+import villagepeoplecottages.palveluvaraus.PalveluVaraus;
+import villagepeoplecottages.palvelu.PalveluFXMLController;
+import villagepeoplecottages.palvelu.Palvelu;
+import villagepeoplecottages.palvelu.PalveluDao;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;

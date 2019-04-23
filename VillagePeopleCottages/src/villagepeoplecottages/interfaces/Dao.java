@@ -4,7 +4,7 @@
  * Tekijä: Lassi Puurunen 8.4.2019
  * 
  */
-package villagepeoplecottages;
+package villagepeoplecottages.interfaces;
 
 import java.sql.SQLException;
 import javafx.collections.ObservableList;

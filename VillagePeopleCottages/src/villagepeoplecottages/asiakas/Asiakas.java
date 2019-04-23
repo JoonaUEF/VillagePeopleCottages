@@ -13,10 +13,12 @@
  * 8.4.2019 Tekijä Lassi Puurunen
  * 10.4.2019 Dao-luokan vaatimat konstruktorit tehty
  */
-package villagepeoplecottages;
+package villagepeoplecottages.asiakas;
 
 import java.util.ArrayList;
 import java.util.List;
+import villagepeoplecottages.lasku.Lasku;
+import villagepeoplecottages.varaus.Varaus;
 
 
 public class Asiakas {

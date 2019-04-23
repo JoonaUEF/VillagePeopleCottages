@@ -8,8 +8,11 @@
  *          
  * 
  */
-package villagepeoplecottages;
+package villagepeoplecottages.toimipiste;
 
+import villagepeoplecottages.interfaces.Dao;
+import villagepeoplecottages.palvelu.Palvelu;
+import villagepeoplecottages.palvelu.PalveluDao;
 import com.sun.javafx.collections.ObservableListWrapper;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import villagepeoplecottages.varaus.Varaus;
+import villagepeoplecottages.varaus.VarausDao;
 
 
 public class ToimipisteDao implements Dao<Toimipiste, Integer>{

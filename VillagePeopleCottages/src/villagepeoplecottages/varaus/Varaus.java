@@ -15,8 +15,10 @@
  * 10.4.2019 Dao-luokan vaatimat konstruktorit tehty
  */
 
-package villagepeoplecottages;
+package villagepeoplecottages.varaus;
 
+import villagepeoplecottages.palveluvaraus.PalveluVaraus;
+import villagepeoplecottages.lasku.Lasku;
 import java.util.Date;
 import java.util.List;
 

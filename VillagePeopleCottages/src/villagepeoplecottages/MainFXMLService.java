@@ -1,5 +1,14 @@
 package villagepeoplecottages;
 
+import villagepeoplecottages.toimipiste.Toimipiste;
+import villagepeoplecottages.toimipiste.ToimipisteDao;
+import villagepeoplecottages.toimipiste.ToimipisteFXMLController;
+import villagepeoplecottages.palvelu.PalveluFXMLController;
+import villagepeoplecottages.palvelu.Palvelu;
+import villagepeoplecottages.palvelu.PalveluDao;
+import villagepeoplecottages.asiakas.AsiakasDao;
+import villagepeoplecottages.asiakas.AsiakasFXMLController;
+import villagepeoplecottages.asiakas.Asiakas;
 import java.io.IOException;
 import java.sql.SQLException;
 import javafx.fxml.FXMLLoader;

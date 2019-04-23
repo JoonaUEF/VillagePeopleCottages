@@ -15,11 +15,13 @@
  * 10.4.2019 Dao-luokan vaatimat konstruktorit tehty
  */
 
-package villagepeoplecottages;
+package villagepeoplecottages.palvelu;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import villagepeoplecottages.palveluvaraus.PalveluVaraus;
+import villagepeoplecottages.toimipiste.Toimipiste;
 
 public class Palvelu {
     

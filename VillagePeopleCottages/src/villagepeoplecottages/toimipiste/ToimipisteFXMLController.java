@@ -1,5 +1,7 @@
-package villagepeoplecottages;
+package villagepeoplecottages.toimipiste;
 
+import villagepeoplecottages.palveluvaraus.PalveluVaraus;
+import villagepeoplecottages.palvelu.Palvelu;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -21,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import villagepeoplecottages.MainFXMLController;
 
 /**
  * FXML Controller class
