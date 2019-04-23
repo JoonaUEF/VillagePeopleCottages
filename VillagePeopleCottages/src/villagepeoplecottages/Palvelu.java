@@ -17,6 +17,7 @@
 
 package villagepeoplecottages;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Palvelu {
@@ -29,7 +30,9 @@ public class Palvelu {
     private double hinta;
     private double alv;
     
-    private List<VarauksenPalvelut> palvelunVaraukset;
+    private List<PalveluVaraus> palvelunVaraukset;
+    
+    final private String[] tyypit = {"Majoitus", "Lisäpalvelu"}; 
 
     public Palvelu() {
     }
@@ -53,7 +56,7 @@ public class Palvelu {
       this.alv = alv;
   }
  
-    public Palvelu(int toimipisteId, String nimi, int tyyppi, String kuvaus, double hinta, double alv, List<VarauksenPalvelut> palvelunVaraukset) {
+    public Palvelu(int toimipisteId, String nimi, int tyyppi, String kuvaus, double hinta, double alv, List<PalveluVaraus> palvelunVaraukset) {
         this.toimipisteId = toimipisteId;
         this.nimi = nimi;
         this.tyyppi = tyyppi;
@@ -66,7 +69,7 @@ public class Palvelu {
     
     public Palvelu(int palveluId, int toimipisteId, String nimi, int tyyppi, 
             String kuvaus, double hinta, double alv, 
-            List<VarauksenPalvelut> palvelunVaraukset) {
+            List<PalveluVaraus> palvelunVaraukset) {
         
         this.palveluId = palveluId;
         this.toimipisteId = toimipisteId;
@@ -138,12 +141,21 @@ public class Palvelu {
         return hinta + alv;
     }
 
-    public List<VarauksenPalvelut> getPalvelunVaraukset() {
+    public List<PalveluVaraus> getPalvelunVaraukset() {
         return palvelunVaraukset;
     }
 
-    public void setPalvelunVaraukset(List<VarauksenPalvelut> palvelunVaraukset) {
+    public void setPalvelunVaraukset(List<PalveluVaraus> palvelunVaraukset) {
         this.palvelunVaraukset = palvelunVaraukset;
+    }
+    
+    // Muuttaa tyypin Stringiksi
+    public String getTyyppiString() {
+        return tyypit[this.tyyppi];
+    }
+
+    public String[] getTyypit() {
+        return tyypit;
     }
     
     
