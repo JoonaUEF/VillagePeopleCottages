@@ -93,7 +93,7 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
         stmt.close();
         rs.close();
         connection.close();
-
+      
         return palvelu;
     }
 
@@ -179,7 +179,7 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
         do {
             palvelut.add(new Palvelu(rs.getInt("palvelu_id"), rs.getInt("toimipiste_id"), rs.getString("nimi"),
                     rs.getInt("tyyppi"), rs.getString("kuvaus"),
-                    rs.getDouble("hinta"), rs.getDouble("alv")));
+                    rs.getDouble("hinta"), rs.getDouble("alv")));     
         } while (rs.next());
         
         rs.close();
