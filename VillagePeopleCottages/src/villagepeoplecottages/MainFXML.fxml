@@ -78,7 +78,7 @@
                                     <TableColumn fx:id="palveluKuvausColumn" prefWidth="300.0" text="Kuvaus" />
                                     <TableColumn fx:id="palveluHintaColumn" prefWidth="75.0" text="Hinta" />
                                     <TableColumn fx:id="palveluAlvColumn" prefWidth="75.0" text="Alv" />
-                                    <TableColumn fx:id="palveluAlvColumn1" prefWidth="75.0" text="Hinta+Alv" />
+                                    <TableColumn fx:id="palveluHintaAlvColumn" prefWidth="75.0" text="Hinta+Alv" />
                                  </columns>
                                  <opaqueInsets>
                                     <Insets />
@@ -90,7 +90,7 @@
                   </Tab>
                   <Tab text="Varaukset">
                      <content>
-                        <AnchorPane prefHeight="541.0" prefWidth="582.0">
+                        <AnchorPane prefHeight="541.0">
                            <children>
                               <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
                                  <items>
