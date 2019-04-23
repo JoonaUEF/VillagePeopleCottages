@@ -4,7 +4,7 @@
  * Tekijä: Lassi Puurunen 8.4.2019
  * 
  */
-package villagepeoplecottages;
+package villagepeoplecottages.asiakas;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,6 +16,9 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import villagepeoplecottages.interfaces.Dao;
+import villagepeoplecottages.lasku.Lasku;
+import villagepeoplecottages.varaus.Varaus;
 
 public class AsiakasDao implements Dao<Asiakas, Integer> {
 

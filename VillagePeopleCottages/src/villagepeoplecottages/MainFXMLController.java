@@ -1,5 +1,11 @@
 package villagepeoplecottages;
 
+import villagepeoplecottages.toimipiste.Toimipiste;
+import villagepeoplecottages.toimipiste.ToimipisteDao;
+import villagepeoplecottages.palvelu.Palvelu;
+import villagepeoplecottages.palvelu.PalveluDao;
+import villagepeoplecottages.asiakas.AsiakasDao;
+import villagepeoplecottages.asiakas.Asiakas;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;

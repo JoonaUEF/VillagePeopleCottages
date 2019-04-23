@@ -16,7 +16,7 @@
  * 23.4.2019 Laskun tila lisätty
  */
 
-package villagepeoplecottages;
+package villagepeoplecottages.lasku;
 
 public class Lasku {
 

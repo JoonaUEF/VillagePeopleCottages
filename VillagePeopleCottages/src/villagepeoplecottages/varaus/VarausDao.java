@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package villagepeoplecottages;
+package villagepeoplecottages.varaus;
 
+import villagepeoplecottages.varaus.Varaus;
+import villagepeoplecottages.palveluvaraus.PalveluVaraus;
+import villagepeoplecottages.interfaces.Dao;
+import villagepeoplecottages.lasku.Lasku;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

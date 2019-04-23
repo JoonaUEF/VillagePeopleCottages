@@ -1,4 +1,4 @@
-package villagepeoplecottages;
+package villagepeoplecottages.palvelu;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
 import javafx.stage.Stage;
+import villagepeoplecottages.toimipiste.Toimipiste;
 
 /**
  * FXML Controller class

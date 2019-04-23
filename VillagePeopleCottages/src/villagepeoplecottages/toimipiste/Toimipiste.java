@@ -15,10 +15,12 @@
  * 10.4. 2019 lisätty konstruktori ilman viittauslistoja
  * 
  */
-package villagepeoplecottages;
+package villagepeoplecottages.toimipiste;
 
+import villagepeoplecottages.palvelu.Palvelu;
 import java.util.List;
 import javafx.collections.ObservableList;
+import villagepeoplecottages.varaus.Varaus;
 
 
 public class Toimipiste {

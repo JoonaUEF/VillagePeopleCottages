@@ -16,7 +16,7 @@
  * 23.4. Päivitetty uuden tietokantamallin mukaiseksi. Lassi Puurunen
  */
 
-package villagepeoplecottages;
+package villagepeoplecottages.palveluvaraus;
 
 import java.util.Date;
 
