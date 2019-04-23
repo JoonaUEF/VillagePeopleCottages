@@ -4,6 +4,7 @@
  * 
  * Versiohistoria
  * 20.4.19 Tiedosto luotu ToimipisteDaon pohjalta. Joona Honkanen.
+ * 23.4.19 Lisätty listByToimipisteId(). Lassi Puurunen
  * 
  * 
  */
@@ -83,7 +84,7 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
         
         int palveluId = rs.getInt("palvelu_id");
         // List<VarauksenPalvelut> varauksenPalvelut = new VaraustenPalveluDao().listByToimipisteId(toimipisteId);
-        List<VarauksenPalvelut> varauksenPalvelut = new ArrayList<>();
+        List<PalveluVaraus> varauksenPalvelut = new ArrayList<>();
 
         Palvelu palvelu = new Palvelu(palveluId, rs.getInt("toimipiste_id"), 
             rs.getString("nimi"),rs.getInt("tyyppi"), rs.getString("kuvaus"), 
@@ -166,6 +167,42 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
         Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
 
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Palvelu");
+        
+        ResultSet rs = stmt.executeQuery();
+        
+        //Jos ei ole rivejä, palautetaan null-viite
+        if(!rs.next()) {
+            return null;
+        }
+        
+        //Lisätään tietokannan taulun rivit listalle olioina
+        do {
+            palvelut.add(new Palvelu(rs.getInt("palvelu_id"), rs.getInt("toimipiste_id"), rs.getString("nimi"),
+                    rs.getInt("tyyppi"), rs.getString("kuvaus"),
+                    rs.getDouble("hinta"), rs.getDouble("alv")));
+        } while (rs.next());
+        
+        rs.close();
+        stmt.close();
+        connection.close();
+        
+        //Siirretään luotu lista Observablelistiin.
+        
+        ObservableList<Palvelu> observablePalvelu = FXCollections.observableArrayList();
+        
+        observablePalvelu.addAll(palvelut);
+        
+        return observablePalvelu;
+    }
+
+    public ObservableList<Palvelu> listByToimipisteId(int toimipisteId) throws SQLException {
+        List<Palvelu> palvelut = new ArrayList<>();
+        
+        Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
+
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Palvelu WHERE toimipiste_id = ?");
+        
+        stmt.setInt(1, toimipisteId);
         
         ResultSet rs = stmt.executeQuery();
         
