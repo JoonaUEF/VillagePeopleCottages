@@ -4,6 +4,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -61,7 +63,7 @@ public class PalveluFXMLController implements Initializable {
 
       return null;
     };
-    TextFormatter<String> toimipisteTextFormatter = new TextFormatter<>(intFilter);
+
     TextFormatter<String> tyyppiTextFormatter = new TextFormatter<>(intFilter);
     UnaryOperator<Change> doubleFilter = change -> {
       String text = change.getText();
@@ -75,7 +77,7 @@ public class PalveluFXMLController implements Initializable {
     TextFormatter<String> hintaTextFormatter = new TextFormatter<>(doubleFilter);
     TextFormatter<String> alvTextFormatter = new TextFormatter<>(doubleFilter);
 
-    toimipisteTextField.setTextFormatter(toimipisteTextFormatter);
+
     tyyppiTextField.setTextFormatter(tyyppiTextFormatter);
     hintaTextField.setTextFormatter(hintaTextFormatter);
     alvTextField.setTextFormatter(alvTextFormatter);
@@ -92,13 +94,25 @@ public class PalveluFXMLController implements Initializable {
    * @param object
    */
   public void initData(Object object) {
-    this.vanhaPalvelu = (Palvelu) object;
-    toimipisteTextField.textProperty().set(String.valueOf(vanhaPalvelu.getToimipisteId()));
-    nimiTextField.textProperty().set(vanhaPalvelu.getNimi());
-    tyyppiTextField.textProperty().set(String.valueOf(vanhaPalvelu.getTyyppi()));
-    kuvausTextField.textProperty().set(vanhaPalvelu.getKuvaus());
-    hintaTextField.textProperty().set(String.valueOf(vanhaPalvelu.getHinta()));
-    alvTextField.textProperty().set(String.valueOf(vanhaPalvelu.getAlv()));
+    
+    if (object instanceof Palvelu) {
+        
+        this.vanhaPalvelu = (Palvelu) object;
+        toimipisteTextField.textProperty().set(String.valueOf(vanhaPalvelu.getToimipisteId()));
+        nimiTextField.textProperty().set(vanhaPalvelu.getNimi());
+        tyyppiTextField.textProperty().set(vanhaPalvelu.getTyyppiString());
+        kuvausTextField.textProperty().set(vanhaPalvelu.getKuvaus());
+        hintaTextField.textProperty().set(String.valueOf(vanhaPalvelu.getHinta()));
+        alvTextField.textProperty().set(String.valueOf(vanhaPalvelu.getAlv()));
+    }  
+    
+    if (object instanceof Toimipiste) {
+        try {
+            toimipisteTextField.setText(new ToimipisteDao().read(((Toimipiste) object).getToimipisteId()).getNimi());
+        } catch (SQLException ex) {
+            Logger.getLogger(PalveluFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
   }
 
