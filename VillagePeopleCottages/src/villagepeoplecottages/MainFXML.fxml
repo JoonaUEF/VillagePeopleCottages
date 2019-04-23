@@ -124,7 +124,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Asiakkaat">
+                  <Tab onSelectionChanged="#asiakasOnSelectionChanged" text="Asiakkaat">
                      <content>
                         <AnchorPane>
                            <children>
@@ -132,13 +132,22 @@
                                  <items>
                                     <TextField prefWidth="130.0" promptText="Haku" />
                                     <Separator orientation="VERTICAL" />
-                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Lisää uusi" />
-                                    <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" text="Muokkaa" />
-                                    <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" text="Poista" />
+                                    <Button fx:id="asiakasLisaaUusiButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#asiakasLisaaUusiButtonOnAction" text="Lisää uusi" />
+                                    <Button fx:id="asiakasMuokkaaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#asiakasMuokkaaButtonOnAction" text="Muokkaa" />
+                                    <Button fx:id="asiakasPoistaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#asiakasPoistaButtonOnAction" text="Poista" />
                                  </items>
                               </ToolBar>
-                              <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+                              <TableView fx:id="asiakkaatTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
                                  <columns>
+
+                                    <TableColumn prefWidth="95.0" text="Asiakasnumero" />
+                                    <TableColumn fx:id="asiakasEtunimiColumn" prefWidth="118.0" text="Etunimi" />
+                                    <TableColumn fx:id="asiakasSukunimiColumn" prefWidth="116.0" text="Sukunimi" />
+                                    <TableColumn fx:id="asiakasLahiosoiteColumn" prefWidth="101.0" text="Lähiosoite" />
+                                    <TableColumn fx:id="asiakasPostinroColumn" prefWidth="88.0" text="Postinumero" />
+                                    <TableColumn fx:id="asiakasPostitoimipaikkaColumn" prefWidth="118.0" text="Postitoimipaikka" />
+                                    <TableColumn fx:id="asiakasPuhelinnumeroColumn" prefWidth="121.0" text="Puhelinnumero" />
+                                    <TableColumn fx:id="asiakasEmailColumn" prefWidth="177.0" text="Email" />
                                     <TableColumn prefWidth="95.0" text="AsiakasId" />
                                     <TableColumn prefWidth="118.0" text="Etunimi" />
                                     <TableColumn prefWidth="116.0" text="Sukunimi" />
@@ -147,6 +156,7 @@
                                     <TableColumn prefWidth="118.0" text="Postitoimipaikka" />
                                     <TableColumn prefWidth="152.0" text="Email" />
                                     <TableColumn prefWidth="146.0" text="Puhelinnumero" />
+
                                  </columns>
                                  <opaqueInsets>
                                     <Insets />
