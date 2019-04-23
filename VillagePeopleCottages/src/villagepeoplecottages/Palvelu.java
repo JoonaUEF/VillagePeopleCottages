@@ -33,8 +33,6 @@ public class Palvelu {
     
     private Toimipiste toimipiste;
     
-    private String toimipisteNimi;
-    
     private List<PalveluVaraus> palvelunVaraukset;
     
     final private String[] tyypit = {"Majoitus", "Lisäpalvelu"}; 
@@ -61,7 +59,7 @@ public class Palvelu {
       this.alv = alv;
   }
  
-    public Palvelu(int toimipisteId, String nimi, int tyyppi, String kuvaus, double hinta, double alv, List<PalveluVaraus> palvelunVaraukset) {
+    public Palvelu(int toimipisteId, String nimi, int tyyppi, String kuvaus, double hinta, double alv, List<PalveluVaraus> palvelunVaraukset) throws SQLException {
         this.toimipisteId = toimipisteId;
         this.nimi = nimi;
         this.tyyppi = tyyppi;
@@ -74,7 +72,7 @@ public class Palvelu {
     
     public Palvelu(int palveluId, int toimipisteId, String nimi, int tyyppi, 
             String kuvaus, double hinta, double alv, 
-            List<PalveluVaraus> palvelunVaraukset) {
+            List<PalveluVaraus> palvelunVaraukset) throws SQLException {
         
         this.palveluId = palveluId;
         this.toimipisteId = toimipisteId;
@@ -85,6 +83,19 @@ public class Palvelu {
         this.alv = alv;
         this.palvelunVaraukset = palvelunVaraukset;
     }
+
+    public Palvelu(int palveluId, int toimipisteId, String nimi, int tyyppi, String kuvaus, double hinta, double alv, Toimipiste toimipiste) {
+        this.palveluId = palveluId;
+        this.toimipisteId = toimipisteId;
+        this.nimi = nimi;
+        this.tyyppi = tyyppi;
+        this.kuvaus = kuvaus;
+        this.hinta = hinta;
+        this.alv = alv;
+        this.toimipiste = toimipiste;
+    }
+    
+    
 
     public int getPalveluId() {
         return palveluId;
@@ -162,14 +173,24 @@ public class Palvelu {
     public String[] getTyypit() {
         return tyypit;
     }
+    
+    // Toimipisteen getteri palauttaa tiedon tietokannasta
 
-    public Toimipiste getToimipiste() throws SQLException {
-        return new ToimipisteDao().read(this.toimipisteId);
+    public Toimipiste getToimipiste()  {
+        return this.toimipiste;
     }
 
+    // Toimipisteen nimi haetaan Daon avulla.
+    
     public String getToimipisteNimi() throws SQLException {
-        return getToimipiste().getNimi();
+        return new ToimipisteDao().read(this.toimipisteId).getNimi();
     }
+
+    public void setToimipiste(Toimipiste toimipiste) {
+        this.toimipiste = toimipiste;
+    }
+    
+    
     
     
 
