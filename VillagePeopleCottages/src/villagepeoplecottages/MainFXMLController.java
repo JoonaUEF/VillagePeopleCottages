@@ -65,6 +65,18 @@ public class MainFXMLController implements Initializable {
     @FXML private Button palveluMuokkaaButton;
     @FXML private Button palveluPoistaButton;
 
+    // Määritetään asiakasnäkymän tiedot
+    @FXML private TableView<Asiakas> asiakkaatTableView;
+    @FXML private TableColumn<Asiakas, String> asiakasEtunimiColumn;
+    @FXML private TableColumn<Asiakas, String> asiakasSukunimiColumn;
+    @FXML private TableColumn<Asiakas, String> asiakasLahiosoiteColumn;
+    @FXML private TableColumn<Asiakas, String> asiakasPostinroColumn;
+    @FXML private TableColumn<Asiakas, String> asiakasPostitoimipaikkaColumn;
+    @FXML private TableColumn<Asiakas, String> asiakasPuhelinnumeroColumn;
+    @FXML private TableColumn<Asiakas, String> asiakasEmailColumn;
+    @FXML private Button asiakasLisaaUusiButton;
+    @FXML private Button asiakasMuokkaaButton;
+    @FXML private Button asiakasPoistaButton;
     
     /**
      * Initializes the controller class.
@@ -304,7 +316,117 @@ public class MainFXMLController implements Initializable {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    /**
+     * Asiakas-näkymän metodit alkavat tästä
+     * 
+     */
     
+    
+    /**
+     * Siirryttäessä asiakas-välilehdelle, ladataan tietokannasta asiakasiden tiedot
+     * 
+     * 
+     * 15.4. 2019 Lassi Puurunen
+     * 
+     * @param event
+     * @throws SQLException 
+     */
+    
+    @FXML
+    private void asiakasOnSelectionChanged(Event event) {
+
+        // Haetaan näkymään tiedot tietokannasta
+        
+        try {
+            asiakkaatTableView.setItems(new AsiakasDao().list());
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+    
+    /**
+     * Asiakasnäkymän
+     * Lisää uusi - napin toiminto
+     * 
+     * 
+     * 16.4. 2019 Lassi Puurunen
+     * 18.4. 2019 Päivitetty käyttämään Service-luokkaa
+     * 
+     * @param event 
+     */
+    
+    @FXML
+    private void asiakasLisaaUusiButtonOnAction(ActionEvent event) {
+
+        // Lisätään uusi asiakas
+        
+        try {
+            mfxmls.lisaaUusiButton(new Asiakas(), asiakkaatTableView, mainPane);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+   
+
+    /**
+     * Asiakasnäkymän
+     * Muokkaa-napin toiminto
+     * 
+     * 
+     * 18.4. Lassi Puurunen
+     * 
+     * @param event 
+     */
+    
+    @FXML
+    private void asiakasMuokkaaButtonOnAction(ActionEvent event) {
+        
+        // Muokataan valittua asiakasttä
+        
+        try {
+            mfxmls.muokkaaButton(asiakkaatTableView.getSelectionModel().getSelectedItem(), asiakkaatTableView, mainPane);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+
+    /**
+     * Asiakas näkymän
+     * Poista-napin toiminto
+     * 
+     * 
+     * 16.4.2019 Lassi Puurunen
+     * 
+     * @param event 
+     */
+    
+    @FXML
+    private void asiakasPoistaButtonOnAction(ActionEvent event) {
+   
+        // Poistetaan valittu asiakas
+        
+        try {
+            mfxmls.poistaButton(asiakkaatTableView);
+ 
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
     
     // Yleismetodeja
     
@@ -345,7 +467,17 @@ public class MainFXMLController implements Initializable {
                 palveluPoistaButton.setDisable(true);
             }
         });
-        
+
+        asiakkaatTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                asiakasMuokkaaButton.setDisable(false);
+                asiakasPoistaButton.setDisable(false);
+            }
+            if (newSelection == null) {
+            	asiakasMuokkaaButton.setDisable(true);
+            	asiakasPoistaButton.setDisable(true);
+            }
+        });
         //TODO haku- ja rajaustoimintojen kuuntelijat
         
     }
@@ -367,6 +499,14 @@ public class MainFXMLController implements Initializable {
         palveluKuvausColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("kuvaus"));
         palveluHintaColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("hinta"));
         palveluAlvColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("alv"));
+
+        asiakasEtunimiColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("etunimi"));
+        asiakasSukunimiColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("sukunimi"));
+        asiakasLahiosoiteColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("lahiosoite"));
+        asiakasPostinroColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("postinro"));
+        asiakasPostitoimipaikkaColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("postitoimipaikka"));
+        asiakasPuhelinnumeroColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("puhelinnro"));
+        asiakasEmailColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("email"));
 
         // TODO Tehdään sama muille näkymille
     }

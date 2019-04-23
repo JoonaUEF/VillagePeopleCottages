@@ -48,7 +48,10 @@ public class MainFXMLService {
           
           fxmlLoader = new FXMLLoader(getClass().getResource("PalveluFXML.fxml"));
         }
-        
+        else if (object instanceof Asiakas) {
+            
+            fxmlLoader = new FXMLLoader(getClass().getResource("AsiakasFXML.fxml"));
+          }
         Parent root1 = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
                 
@@ -65,6 +68,10 @@ public class MainFXMLService {
           
           stage.setTitle("Lisää palvelu");
         }
+        else if (object instanceof Asiakas) {
+            
+            stage.setTitle("Lisää asiakas");
+          }
         
         //Muita asetuksia        
         stage.setScene(new Scene(root1));
@@ -93,7 +100,11 @@ public class MainFXMLService {
         else if (object instanceof Palvelu) {
           
           tv.setItems(new PalveluDao().list());
-      }
+        }
+        else if (object instanceof Asiakas) {
+            
+            tv.setItems(new AsiakasDao().list());
+        }
     }
     
     
@@ -126,6 +137,11 @@ public class MainFXMLService {
           fxmlLoader = new FXMLLoader(getClass().getResource("PalveluFXML.fxml"));
         }
         
+        else if (object instanceof Asiakas) {
+            
+            fxmlLoader = new FXMLLoader(getClass().getResource("AsiakasFXML.fxml"));
+          }
+        
         Parent root1 = (Parent) fxmlLoader.load();
         
         // Ladataan objektin luokan mukainen nimi stagelle
@@ -156,6 +172,16 @@ public class MainFXMLService {
           
         }
         
+        else if (object instanceof Asiakas) {
+
+            stage.setTitle("Muokkaa asiakasta");
+            
+            //Lähetään objekti controllerille
+            AsiakasFXMLController controller = fxmlLoader.getController();
+            controller.initData(object);
+            
+          }
+
         //Muita asetuksia   
         
         stage.setScene(new Scene(root1));
@@ -186,6 +212,10 @@ public class MainFXMLService {
           
           tv.setItems(new PalveluDao().list());
         }
+        else if (object instanceof Asiakas) {
+            
+            tv.setItems(new AsiakasDao().list());
+          }
     }
 
     
@@ -222,6 +252,11 @@ public class MainFXMLService {
           new PalveluDao().delete(((Palvelu) object).getPalveluId());
           tv.setItems(new PalveluDao().list());
         }
+        if (object instanceof Asiakas) {
+            
+            new AsiakasDao().delete(((Asiakas) object).getAsiakasId());
+            tv.setItems(new AsiakasDao().list());
+          }
      
     }
     
