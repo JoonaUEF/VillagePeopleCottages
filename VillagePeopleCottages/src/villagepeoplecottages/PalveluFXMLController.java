@@ -107,11 +107,9 @@ public class PalveluFXMLController implements Initializable {
     }  
     
     if (object instanceof Toimipiste) {
-        try {
-            toimipisteTextField.setText(new ToimipisteDao().read(((Toimipiste) object).getToimipisteId()).getNimi());
-        } catch (SQLException ex) {
-            Logger.getLogger(PalveluFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        toimipisteTextField.setText(((Toimipiste) object).getNimi());
+ 
     }
 
   }

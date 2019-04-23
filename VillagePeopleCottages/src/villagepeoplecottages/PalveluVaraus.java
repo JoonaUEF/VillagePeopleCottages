@@ -1,8 +1,8 @@
  /**
- * VarauksenPalvelut -olioluokka
+ * PalveluVaraus -olioluokka
  * 
- * Luokan ilmentämä olio sisältää varauksen sisältämien palveluiden tiedot 
- * tietokannasta. Tiedot olioon haetaan tietokannasta VarauksenPalvelutDao 
+ * Luokan ilmentämä olio sisältää palveluvarauksien tiedot 
+ * tietokannasta. Tiedot olioon haetaan tietokannasta PalveluVarausDao 
  * -luokan avulla.
  * 
  * Luokalla on konstruktori ilman parametreja, sekä konstruktori kaikilla
@@ -13,6 +13,7 @@
  * 
  * Tekijä: Lassi Puurunen
  * 8.4.2019
+ * 23.4. Päivitetty uuden tietokantamallin mukaiseksi. Lassi Puurunen
  */
 
 package villagepeoplecottages;

@@ -18,6 +18,7 @@
 package villagepeoplecottages;
 
 import java.util.List;
+import javafx.collections.ObservableList;
 
 
 public class Toimipiste {
@@ -30,8 +31,8 @@ public class Toimipiste {
     private String email;
     private String puhelinnro;
     
-    private List<Palvelu> palvelut;
-    private List<Varaus> varaukset;
+    private ObservableList<Palvelu> palvelut;
+    private ObservableList<Varaus> varaukset;
 
     public Toimipiste() {
 
@@ -58,7 +59,7 @@ public class Toimipiste {
 
     public Toimipiste(int toimipisteId, String nimi, String lahiosoite, 
             String postitoimipaikka, String postinro, String email, String puhelinnro, 
-            List<Palvelu> palvelut, List<Varaus> varaukset) {
+            ObservableList<Palvelu> palvelut, ObservableList<Varaus> varaukset) {
         
         this.toimipisteId = toimipisteId;
         this.nimi = nimi;
@@ -133,7 +134,7 @@ public class Toimipiste {
         return palvelut;
     }
 
-    public void setPalvelut(List<Palvelu> palvelut) {
+    public void setPalvelut(ObservableList<Palvelu> palvelut) {
         this.palvelut = palvelut;
     }
 
@@ -141,7 +142,7 @@ public class Toimipiste {
         return varaukset;
     }
 
-    public void setVaraukset(List<Varaus> varaukset) {
+    public void setVaraukset(ObservableList<Varaus> varaukset) {
         this.varaukset = varaukset;
     }
 

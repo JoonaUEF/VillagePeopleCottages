@@ -85,11 +85,9 @@ public class ToimipisteDao implements Dao<Toimipiste, Integer>{
         
         int toimipisteId = rs.getInt("toimipiste_id");
         
-        // List<Palvelu> palvelut = new PalveluDao().listByToimipisteId(toimipisteId);
-        // List<Varaus> varaukset = new VarausDao().listByToimipisteId(toimipisteId);
-        
-        List<Palvelu> palvelut = new ArrayList<>();
-        List<Varaus> varaukset = new ArrayList<>();
+        ObservableList<Palvelu> palvelut = new PalveluDao().listByToimipisteId(toimipisteId);
+        ObservableList<Varaus> varaukset = new VarausDao().listByToimipisteId(toimipisteId);
+
 
         Toimipiste toimipiste = new Toimipiste(toimipisteId, rs.getString("nimi"), 
                 rs.getString("lahiosoite"), rs.getString("postitoimipaikka"), 
