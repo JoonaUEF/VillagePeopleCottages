@@ -13,6 +13,7 @@
  * Versiohistoria
  * 8.4.2019 Tekijä Lassi Puurunen
  * 10.4.2019 Dao-luokan vaatimat konstruktorit tehty
+ * 23.4.2019 Laskun tila lisätty
  */
 
 package villagepeoplecottages;
@@ -22,6 +23,7 @@ public class Lasku {
     private int laskuId;
     private int varausId;
     private int asiakasId;
+    private int tila;
     private String nimi;
     private String lahiosoite;
     private String postitoimipaikka;
@@ -32,7 +34,7 @@ public class Lasku {
     public Lasku() {
     }
 
-    public Lasku(int varausId, int asiakasId, String nimi, String lahiosoite, String postitoimipaikka, String postinro, double summa, double alv) {
+    public Lasku(int varausId, int asiakasId, int tila, String nimi, String lahiosoite, String postitoimipaikka, String postinro, double summa, double alv) {
         this.varausId = varausId;
         this.asiakasId = asiakasId;
         this.nimi = nimi;
@@ -44,7 +46,7 @@ public class Lasku {
     }
 
     
-    public Lasku(int laskuId, int varausId, int asiakasId, String nimi, 
+    public Lasku(int laskuId, int varausId, int asiakasId, int tila, String nimi, 
             String lahiosoite, String postitoimipaikka, String postinro, 
             double summa, double alv) {
         
@@ -130,6 +132,16 @@ public class Lasku {
     public void setAlv(double alv) {
         this.alv = alv;
     }
+
+    public int getTila() {
+        return tila;
+    }
+
+    public void setTila(int tila) {
+        this.tila = tila;
+    }
+    
+    
 
     @Override
     public String toString() {

@@ -28,8 +28,6 @@ public class Varaus {
     private int toimipisteId;
     private Date varattuPvm;
     private Date vahvistusPvm;
-    private Date varattuAlkupvm;
-    private Date varattuLoppupvm;
     
     private List<PalveluVaraus> varauksenPalvelut;
     private List<Lasku> varauksenLaskut;
@@ -38,29 +36,26 @@ public class Varaus {
 
     }
 
-    public Varaus(int asiakasId, int toimipisteId, Date varattuPvm, Date vahvistusPvm, Date varattuAlkupvm, Date varattuLoppupvm) {
+    public Varaus(int asiakasId, int toimipisteId, Date varattuPvm, Date vahvistusPvm) {
         this.asiakasId = asiakasId;
         this.toimipisteId = toimipisteId;
         this.varattuPvm = varattuPvm;
         this.vahvistusPvm = vahvistusPvm;
-        this.varattuAlkupvm = varattuAlkupvm;
-        this.varattuLoppupvm = varattuLoppupvm;
+
     }
 
     
-    public Varaus(int varausId, int asiakasId, int toimipisteId, Date varattuPvm, Date vahvistusPvm, Date varattuAlkupvm, Date varattuLoppupvm) {
+    public Varaus(int varausId, int asiakasId, int toimipisteId, Date varattuPvm, Date vahvistusPvm) {
         this.varausId = varausId;
         this.asiakasId = asiakasId;
         this.toimipisteId = toimipisteId;
         this.varattuPvm = varattuPvm;
         this.vahvistusPvm = vahvistusPvm;
-        this.varattuAlkupvm = varattuAlkupvm;
-        this.varattuLoppupvm = varattuLoppupvm;
     }
 
     
     public Varaus(int varausId, int asiakasId, int toimipisteId, Date varattuPvm, 
-            Date vahvistusPvm, Date varattuAlkupvm, Date varattuLoppupvm, 
+            Date vahvistusPvm, 
             List<PalveluVaraus> varauksenPalvelut, List<Lasku> varauksenLaskut) {
         
         this.varausId = varausId;
@@ -68,8 +63,6 @@ public class Varaus {
         this.toimipisteId = toimipisteId;
         this.varattuPvm = varattuPvm;
         this.vahvistusPvm = vahvistusPvm;
-        this.varattuAlkupvm = varattuAlkupvm;
-        this.varattuLoppupvm = varattuLoppupvm;
         this.varauksenPalvelut = varauksenPalvelut;
         this.varauksenLaskut = varauksenLaskut;
     }
@@ -116,22 +109,6 @@ public class Varaus {
         this.vahvistusPvm = vahvistusPvm;
     }
 
-    public Date getVarattuAlkupvm() {
-        return varattuAlkupvm;
-    }
-
-    public void setVarattuAlkupvm(Date varattuAlkupvm) {
-        this.varattuAlkupvm = varattuAlkupvm;
-    }
-
-    public Date getVarattuLoppupvm() {
-        return varattuLoppupvm;
-    }
-
-    public void setVarattuLoppupvm(Date varattuLoppupvm) {
-        this.varattuLoppupvm = varattuLoppupvm;
-    }
-
     public List<PalveluVaraus> getVarauksenPalvelut() {
         return varauksenPalvelut;
     }
@@ -150,7 +127,7 @@ public class Varaus {
 
     @Override
     public String toString() {
-        return "Varaus{" + "varausId=" + varausId + ", asiakasId=" + asiakasId + ", toimipisteId=" + toimipisteId + ", varattuPvm=" + varattuPvm + ", vahvistusPvm=" + vahvistusPvm + ", varattuAlkupvm=" + varattuAlkupvm + ", varattuLoppupvm=" + varattuLoppupvm + ", varauksenPalvelut=" + varauksenPalvelut + ", varauksenLaskut=" + varauksenLaskut + '}';
+        return "Varaus{" + "varausId=" + varausId + ", asiakasId=" + asiakasId + ", toimipisteId=" + toimipisteId + ", varattuPvm=" + varattuPvm + ", vahvistusPvm=" + vahvistusPvm +  ", varauksenPalvelut=" + varauksenPalvelut + ", varauksenLaskut=" + varauksenLaskut + '}';
     }
  
     
