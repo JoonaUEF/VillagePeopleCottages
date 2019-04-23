@@ -17,6 +17,7 @@
 
 package villagepeoplecottages;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,10 @@ public class Palvelu {
     private String kuvaus;
     private double hinta;
     private double alv;
+    
+    private Toimipiste toimipiste;
+    
+    private String toimipisteNimi;
     
     private List<PalveluVaraus> palvelunVaraukset;
     
@@ -157,6 +162,21 @@ public class Palvelu {
     public String[] getTyypit() {
         return tyypit;
     }
+
+    public Toimipiste getToimipiste() throws SQLException {
+        return new ToimipisteDao().read(this.toimipisteId);
+    }
+
+    public String getToimipisteNimi() throws SQLException {
+        return getToimipiste().getNimi();
+    }
+    
+    
+
+
+
+    
+    
     
     
 }
