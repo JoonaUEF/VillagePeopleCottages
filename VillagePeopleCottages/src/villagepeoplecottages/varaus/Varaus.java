@@ -21,6 +21,8 @@ import villagepeoplecottages.palveluvaraus.PalveluVaraus;
 import villagepeoplecottages.lasku.Lasku;
 import java.util.Date;
 import java.util.List;
+import villagepeoplecottages.asiakas.Asiakas;
+import villagepeoplecottages.toimipiste.Toimipiste;
 
 
 public class Varaus {
@@ -31,8 +33,11 @@ public class Varaus {
     private Date varattuPvm;
     private Date vahvistusPvm;
     
-    private List<PalveluVaraus> varauksenPalvelut;
-    private List<Lasku> varauksenLaskut;
+    private List<PalveluVaraus> palvelut;
+    private List<Lasku> laskut;
+    
+    private Asiakas asiakas;
+    private Toimipiste toimipiste;
 
     public Varaus() {
 
@@ -65,8 +70,8 @@ public class Varaus {
         this.toimipisteId = toimipisteId;
         this.varattuPvm = varattuPvm;
         this.vahvistusPvm = vahvistusPvm;
-        this.varauksenPalvelut = varauksenPalvelut;
-        this.varauksenLaskut = varauksenLaskut;
+        this.palvelut = varauksenPalvelut;
+        this.laskut = varauksenLaskut;
     }
 
     
@@ -111,25 +116,44 @@ public class Varaus {
         this.vahvistusPvm = vahvistusPvm;
     }
 
-    public List<PalveluVaraus> getVarauksenPalvelut() {
-        return varauksenPalvelut;
+    public List<PalveluVaraus> getPalvelut() {
+        return palvelut;
     }
 
-    public void setVarauksenPalvelut(List<PalveluVaraus> varauksenPalvelut) {
-        this.varauksenPalvelut = varauksenPalvelut;
+    public void setPalvelut(List<PalveluVaraus> varauksenPalvelut) {
+        this.palvelut = varauksenPalvelut;
     }
 
     public List<Lasku> getLaskut() {
-        return varauksenLaskut;
+        return laskut;
     }
 
     public void setLaskut(List<Lasku> varauksenLaskut) {
-        this.varauksenLaskut = varauksenLaskut;
+        this.laskut = varauksenLaskut;
     }
+
+
+    public Asiakas getAsiakas() {
+        return asiakas;
+    }
+
+    public void setAsiakas(Asiakas asiakas) {
+        this.asiakas = asiakas;
+    }
+
+    public Toimipiste getToimipiste() {
+        return toimipiste;
+    }
+
+    public void setToimipiste(Toimipiste toimipiste) {
+        this.toimipiste = toimipiste;
+    }
+    
+    
 
     @Override
     public String toString() {
-        return "Varaus{" + "varausId=" + varausId + ", asiakasId=" + asiakasId + ", toimipisteId=" + toimipisteId + ", varattuPvm=" + varattuPvm + ", vahvistusPvm=" + vahvistusPvm +  ", varauksenPalvelut=" + varauksenPalvelut + ", varauksenLaskut=" + varauksenLaskut + '}';
+        return "Varaus{" + "varausId=" + varausId + ", asiakasId=" + asiakasId + ", toimipisteId=" + toimipisteId + ", varattuPvm=" + varattuPvm + ", vahvistusPvm=" + vahvistusPvm +  ", varauksenPalvelut=" + palvelut + ", varauksenLaskut=" + laskut + '}';
     }
  
     
