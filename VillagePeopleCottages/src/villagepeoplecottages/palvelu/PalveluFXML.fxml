@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="300.0" maxWidth="400.0" minHeight="250.0" minWidth="250.0" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="villagepeoplecottages.PalveluFXMLController">
+<AnchorPane maxHeight="300.0" maxWidth="400.0" minHeight="250.0" minWidth="250.0" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="villagepeoplecottages.palvelu.PalveluFXMLController">
    <children>
       <GridPane AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0">
         <columnConstraints>
