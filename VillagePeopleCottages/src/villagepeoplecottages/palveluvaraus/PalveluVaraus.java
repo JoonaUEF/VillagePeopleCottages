@@ -19,6 +19,8 @@
 package villagepeoplecottages.palveluvaraus;
 
 import java.util.Date;
+import villagepeoplecottages.palvelu.Palvelu;
+import villagepeoplecottages.varaus.Varaus;
 
 
 public class PalveluVaraus {
@@ -27,6 +29,9 @@ public class PalveluVaraus {
     private int palveluId;
     private Date palvelunVarausAlku;
     private Date palvelunVarausLoppu;
+    
+    private Palvelu palvelu;
+    private Varaus varaus;
 
     public PalveluVaraus() {
     }
