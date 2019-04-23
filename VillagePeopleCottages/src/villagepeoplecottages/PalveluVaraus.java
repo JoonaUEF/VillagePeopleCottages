@@ -20,17 +20,17 @@ package villagepeoplecottages;
 import java.util.Date;
 
 
-public class VarauksenPalvelut {
+public class PalveluVaraus {
     
     private int VarausId;
     private int palveluId;
     private Date palvelunVarausAlku;
     private Date palvelunVarausLoppu;
 
-    public VarauksenPalvelut() {
+    public PalveluVaraus() {
     }
 
-    public VarauksenPalvelut(int VarausId, int palveluId, Date palvelunVarausAlku, Date palvelunVarausLoppu) {
+    public PalveluVaraus(int VarausId, int palveluId, Date palvelunVarausAlku, Date palvelunVarausLoppu) {
         this.VarausId = VarausId;
         this.palveluId = palveluId;
         this.palvelunVarausAlku = palvelunVarausAlku;

@@ -57,13 +57,15 @@ public class MainFXMLController implements Initializable {
     @FXML private TableView<Palvelu> palvelutTableView;
     @FXML private TableColumn<Palvelu, Integer> palveluToimipisteIdColumn;
     @FXML private TableColumn<Palvelu, String> palveluNimiColumn;
-    @FXML private TableColumn<Palvelu, Integer> palveluTyyppiColumn;
+    @FXML private TableColumn<Palvelu, String> palveluTyyppiColumn;
     @FXML private TableColumn<Palvelu, String> palveluKuvausColumn;
     @FXML private TableColumn<Palvelu, Double> palveluHintaColumn;
     @FXML private TableColumn<Palvelu, Double> palveluAlvColumn;
+    @FXML private TableColumn<Palvelu, Double> palveluHintaAlvColumn;
     @FXML private Button palveluLisaaUusiButton;
     @FXML private Button palveluMuokkaaButton;
     @FXML private Button palveluPoistaButton;
+    
 
     // Määritetään asiakasnäkymän tiedot
     @FXML private TableView<Asiakas> asiakkaatTableView;
@@ -495,10 +497,11 @@ public class MainFXMLController implements Initializable {
         
         palveluNimiColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("nimi"));
         palveluToimipisteIdColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Integer>("toimipisteId"));
-        palveluTyyppiColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Integer>("tyyppi"));
+        palveluTyyppiColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("tyyppiString"));
         palveluKuvausColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("kuvaus"));
         palveluHintaColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("hinta"));
         palveluAlvColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("alv"));
+        palveluHintaAlvColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("hintaAlv"));
 
         asiakasEtunimiColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("etunimi"));
         asiakasSukunimiColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("sukunimi"));
