@@ -69,6 +69,7 @@ public class MainFXMLController implements Initializable {
 
     // Määritetään asiakasnäkymän tiedot
     @FXML private TableView<Asiakas> asiakkaatTableView;
+    @FXML private TableColumn<Asiakas, Integer> asiakasIdColumn;
     @FXML private TableColumn<Asiakas, String> asiakasEtunimiColumn;
     @FXML private TableColumn<Asiakas, String> asiakasSukunimiColumn;
     @FXML private TableColumn<Asiakas, String> asiakasLahiosoiteColumn;
@@ -79,6 +80,7 @@ public class MainFXMLController implements Initializable {
     @FXML private Button asiakasLisaaUusiButton;
     @FXML private Button asiakasMuokkaaButton;
     @FXML private Button asiakasPoistaButton;
+    
     
     /**
      * Initializes the controller class.
@@ -503,6 +505,7 @@ public class MainFXMLController implements Initializable {
         palveluAlvColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("alv"));
         palveluHintaAlvColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("hintaAlv"));
 
+        asiakasIdColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, Integer>("asiakasId"));
         asiakasEtunimiColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("etunimi"));
         asiakasSukunimiColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("sukunimi"));
         asiakasLahiosoiteColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("lahiosoite"));
