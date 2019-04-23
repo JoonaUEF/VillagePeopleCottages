@@ -34,7 +34,7 @@ public class ToimipisteFXMLController implements Initializable {
     private ToimipisteFXMLService tfxmls = new ToimipisteFXMLService();
     
     // Controllerille tuleva olio initData:ssa
-    private Toimipiste vanhaToimipiste;
+    private Toimipiste muokattavaToimipiste;
 
     
     //yläosion toiminnot
@@ -95,8 +95,7 @@ public class ToimipisteFXMLController implements Initializable {
         // Tehdään PropertyValueFactory:t, joiden avulla oliot yhdistetään
         // tableView:hin
         this.propertyValueFactories();
-        
-        
+            
     }    
 
     
@@ -110,23 +109,23 @@ public class ToimipisteFXMLController implements Initializable {
      * @param object 
      */
     public void initData(Object object) {
-        this.vanhaToimipiste = (Toimipiste)object;
-        nimiTextField.textProperty().set(vanhaToimipiste.getNimi());
-        lahiosoiteTextField.textProperty().set(vanhaToimipiste.getLahiosoite());
-        postinumeroTextField.textProperty().set(vanhaToimipiste.getPostinro());
-        postitoimipaikkaTextField.textProperty().set(vanhaToimipiste.getPostitoimipaikka());
-        puhelinnumeroTextField.textProperty().set(vanhaToimipiste.getPuhelinnro());
-        emailTextField.textProperty().set(vanhaToimipiste.getEmail());
+        this.muokattavaToimipiste = (Toimipiste)object;
+        nimiTextField.textProperty().set(muokattavaToimipiste.getNimi());
+        lahiosoiteTextField.textProperty().set(muokattavaToimipiste.getLahiosoite());
+        postinumeroTextField.textProperty().set(muokattavaToimipiste.getPostinro());
+        postitoimipaikkaTextField.textProperty().set(muokattavaToimipiste.getPostitoimipaikka());
+        puhelinnumeroTextField.textProperty().set(muokattavaToimipiste.getPuhelinnro());
+        emailTextField.textProperty().set(muokattavaToimipiste.getEmail());
         
         //Jos Controlleri saa syötteenä vanhan toimipisteen, aktivoidaan alapaneeli.
         //Lisäksi ladataan tiedot tauluihin
         
-        if (!vanhaToimipiste.getNimi().isEmpty()) {
+        if (!muokattavaToimipiste.getNimi().isEmpty()) {
             palvelutVarauksetAnchorPane.setDisable(false);
             
-            palvelutTableView.setItems((ObservableList<Palvelu>) vanhaToimipiste.getPalvelut());
-
         }
+        
+        palvelutTableView.setItems(muokattavaToimipiste.getPalvelut());
         
     }
     
@@ -165,7 +164,7 @@ public class ToimipisteFXMLController implements Initializable {
     @FXML
     private void tallennaButtonOnAction(ActionEvent event) throws SQLException {
         
-        tfxmls.tallennaButton(vanhaToimipiste, haeTietoLomakkeelta());
+        tfxmls.tallennaButton(muokattavaToimipiste, haeTietoLomakkeelta());
         
         //sulje ikkuna
         this.peruutaButtonOnAction(event);
@@ -197,8 +196,8 @@ public class ToimipisteFXMLController implements Initializable {
         // Lisätään uusi palvelu toimipisteelle
         
         try {
-            if (vanhaToimipiste != null) {
-                tfxmls.lisaaUusiButton(vanhaToimipiste, new Palvelu(), palvelutTableView, mainPane);
+            if (muokattavaToimipiste != null) {
+                tfxmls.lisaaUusiButton(muokattavaToimipiste, new Palvelu(), palvelutTableView, mainPane);
                 
             }
             
@@ -215,7 +214,7 @@ public class ToimipisteFXMLController implements Initializable {
         // Muokataan valittua palvelua
         
         try {
-            tfxmls.muokkaaButton(vanhaToimipiste, palvelutTableView.getSelectionModel().getSelectedItem(), palvelutTableView, mainPane);
+            tfxmls.muokkaaButton(muokattavaToimipiste, palvelutTableView.getSelectionModel().getSelectedItem(), palvelutTableView, mainPane);
             
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -231,12 +230,7 @@ public class ToimipisteFXMLController implements Initializable {
 
     @FXML
     private void palveluTabOnSelectionChanged(Event event) {
-        try {
-            palvelutTableView.setItems(new PalveluDao().listByToimipisteId(vanhaToimipiste.getToimipisteId()));
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+ 
     }
 
 

@@ -170,6 +170,7 @@ public class MainFXMLController implements Initializable {
      * 
      * 
      * 18.4. Lassi Puurunen
+     * 23.4. Uusi versio. Lassi Puurunen
      * 
      * @param event 
      */
@@ -177,16 +178,31 @@ public class MainFXMLController implements Initializable {
     @FXML
     private void toimipisteMuokkaaButtonOnAction(ActionEvent event) {
         
-        // Muokataan valittua toimipistettä
+        // Haetaan valitun objektin tiedot kokonaisuudessaan tietokannasta
+        
+        Toimipiste valittu = toimipisteetTableView.getSelectionModel().getSelectedItem();
+        
+
+        // Päivitetään uuteen
+        Toimipiste muokattava = new Toimipiste();
         
         try {
-            mfxmls.muokkaaButton(toimipisteetTableView.getSelectionModel().getSelectedItem(), toimipisteetTableView, mainPane);
+
+            muokattava = new ToimipisteDao().read(valittu.getToimipisteId());
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // Muokataan valittua toimipistettä
+        try {
             
+            mfxmls.muokkaaButton(muokattava, toimipisteetTableView, mainPane);
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+            
     }
     
 

@@ -130,7 +130,7 @@ public class Toimipiste {
         this.puhelinnro = puhelinnro;
     }
 
-    public List<Palvelu> getPalvelut() {
+    public ObservableList<Palvelu> getPalvelut() {
         return palvelut;
     }
 
@@ -138,7 +138,7 @@ public class Toimipiste {
         this.palvelut = palvelut;
     }
 
-    public List<Varaus> getVaraukset() {
+    public ObservableList<Varaus> getVaraukset() {
         return varaukset;
     }
 
