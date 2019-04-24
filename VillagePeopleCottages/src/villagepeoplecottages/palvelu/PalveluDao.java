@@ -97,6 +97,10 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
         rs.close();
         connection.close();
       
+        // Lisätään palveluun kuuluva toimipiste
+        
+        palvelu.setToimipiste(new ToimipisteDao().read(palvelu.getToimipisteId()));
+        
         return palvelu;
     }
 
@@ -229,6 +233,8 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
         rs.close();
         stmt.close();
         connection.close();
+        
+        
         
         //Siirretään luotu lista Observablelistiin.
         
