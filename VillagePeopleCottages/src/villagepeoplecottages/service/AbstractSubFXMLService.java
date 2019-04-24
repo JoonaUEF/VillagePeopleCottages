@@ -2,10 +2,7 @@ package villagepeoplecottages.service;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -19,7 +16,6 @@ import villagepeoplecottages.palveluvaraus.PalveluVaraus;
 import villagepeoplecottages.palveluvaraus.PalveluVarausDao;
 import villagepeoplecottages.toimipiste.Toimipiste;
 import villagepeoplecottages.toimipiste.ToimipisteDao;
-import villagepeoplecottages.toimipiste.ToimipisteFXMLService;
 import villagepeoplecottages.varaus.Varaus;
 import villagepeoplecottages.varaus.VarausDao;
 
