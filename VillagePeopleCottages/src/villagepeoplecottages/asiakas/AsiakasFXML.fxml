@@ -32,19 +32,19 @@
         </rowConstraints>
          <children>
             <Label text="Etunimi" />
+            <Label text="Sukunimi" GridPane.rowIndex="1" />
             <Label text="Lähiosoite" GridPane.rowIndex="2" />
             <Label text="Postinumero" GridPane.rowIndex="3" />
             <Label text="Postitoimipaikka" GridPane.rowIndex="4" />
             <Label text="Puhelinnumero" GridPane.rowIndex="5" />
             <Label text="Email" GridPane.rowIndex="6" />
             <TextField fx:id="etunimiTextField" GridPane.columnIndex="1" />
+            <TextField fx:id="sukunimiTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="lahiosoiteTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="postinumeroTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="postitoimipaikkaTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="puhelinnumeroTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="emailTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label text="Sukunimi" GridPane.rowIndex="1" />
-            <TextField fx:id="sukunimiTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
