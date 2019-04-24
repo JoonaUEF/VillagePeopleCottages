@@ -1,5 +1,7 @@
 package villagepeoplecottages;
 
+import villagepeoplecottages.service.AbstractMainFXMLService;
+        
 import villagepeoplecottages.toimipiste.Toimipiste;
 import villagepeoplecottages.toimipiste.ToimipisteDao;
 import villagepeoplecottages.palvelu.Palvelu;
@@ -140,7 +142,6 @@ public class MainFXMLController implements Initializable {
     }
 
 
-    
     /**
      * Toimipistenäkymän
      * Lisää uusi - napin toiminto
@@ -183,29 +184,13 @@ public class MainFXMLController implements Initializable {
     
     @FXML
     private void toimipisteMuokkaaButtonOnAction(ActionEvent event) {
-        
-        // Haetaan valitun objektin tiedot kokonaisuudessaan tietokannasta
-        
-        Toimipiste valittu = toimipisteetTableView.getSelectionModel().getSelectedItem();
-        
-
-        // Päivitetään uuteen
-        Toimipiste muokattava = new Toimipiste();
-        
-        try {
-
-            muokattava = new ToimipisteDao().read(valittu.getToimipisteId());
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+     
         // Muokataan valittua toimipistettä
         try {
             
-            mfxmls.muokkaaButton(muokattava, toimipisteetTableView, mainPane);
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+            mfxmls.muokkaaButton(toimipisteetTableView, mainPane);
+            
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
             
@@ -310,11 +295,9 @@ public class MainFXMLController implements Initializable {
         // Muokataan valittua palvelua
         
         try {
-            mfxmls.muokkaaButton(palvelutTableView.getSelectionModel().getSelectedItem(), palvelutTableView, mainPane);
+            mfxmls.muokkaaButton(palvelutTableView, mainPane);
             
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -419,11 +402,9 @@ public class MainFXMLController implements Initializable {
         // Muokataan valittua asiakasttä
         
         try {
-            mfxmls.muokkaaButton(asiakkaatTableView.getSelectionModel().getSelectedItem(), asiakkaatTableView, mainPane);
+            mfxmls.muokkaaButton(asiakkaatTableView, mainPane);
             
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -509,16 +490,16 @@ public class MainFXMLController implements Initializable {
     }
 
     private void propertyValueFactories() {
-        
+    
         // Tehdään toimipiste-näkymälle PropertyValueFactoryt. Näiden avulla näkymä osaa käyttää objekteja.
-        
+
         toimipisteNimiColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("nimi"));
         toimipisteLahiosoiteColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("lahiosoite"));
         toimipistePostinroColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("postinro"));
         toimipistePostitoimipaikkaColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("postitoimipaikka"));
         toimipistePuhelinnumeroColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("puhelinnro"));
         toimipisteEmailColumn.setCellValueFactory(new PropertyValueFactory<Toimipiste, String>("email"));
-        
+    
         palveluNimiColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("nimi"));
         palveluToimipisteNimiColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("toimipisteNimi"));
         palveluTyyppiColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("tyyppiString"));
