@@ -89,19 +89,20 @@ public class ToimipisteDao implements Dao<Toimipiste, Integer>{
         // Laitetaan tilalle tyhjät listat.
         
         int toimipisteId = rs.getInt("toimipiste_id");
-        
-        ObservableList<Palvelu> palvelut = new PalveluDao().listByToimipisteId(toimipisteId);
-        ObservableList<Varaus> varaukset = new VarausDao().listByToimipisteId(toimipisteId);
 
 
         Toimipiste toimipiste = new Toimipiste(toimipisteId, rs.getString("nimi"), 
                 rs.getString("lahiosoite"), rs.getString("postitoimipaikka"), 
                 rs.getString("postinro"), rs.getString("email"), 
-                rs.getString("puhelinnro"), palvelut, varaukset);
+                rs.getString("puhelinnro"));
 
         stmt.close();
         rs.close();
         connection.close();
+        
+        //Lisää Toimipisteelle siihen kuuluvat palvelut ja varaukset
+        toimipiste.setPalvelut(new PalveluDao().listByToimipisteId(toimipisteId));
+        toimipiste.setVaraukset(new VarausDao().listByToimipisteId(toimipisteId));
 
         return toimipiste;
     }
@@ -199,6 +200,15 @@ public class ToimipisteDao implements Dao<Toimipiste, Integer>{
         ObservableList<Toimipiste> observableToimipiste = FXCollections.observableArrayList();
         
         observableToimipiste.addAll(toimipisteet);
+        
+        
+        //Lisää Toimipisteille niihin kuuluvat palvelut ja varaukset
+        
+        for (Toimipiste toimipiste : observableToimipiste) {
+            
+            toimipiste.setPalvelut(new PalveluDao().listByToimipisteId(toimipiste.getToimipisteId()));
+            toimipiste.setVaraukset(new VarausDao().listByToimipisteId(toimipiste.getToimipisteId()));
+        }
         
         return observableToimipiste;
     }
