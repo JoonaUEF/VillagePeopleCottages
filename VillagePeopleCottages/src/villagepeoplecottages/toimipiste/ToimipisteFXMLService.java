@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import villagepeoplecottages.varaus.Varaus;
 
 /**
  * ToimipisteFXMLService
@@ -62,14 +63,14 @@ public class ToimipisteFXMLService {
         
         if (object instanceof Palvelu) {
             
-            fxmlLoader = new FXMLLoader(getClass().getResource("PalveluFXML.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("../palvelu/PalveluFXML.fxml"));
             
 
         }
         
-        else if (object instanceof PalveluVaraus) {
+        else if (object instanceof Varaus) {
           
-          fxmlLoader = new FXMLLoader(getClass().getResource("VarausFXML.fxml"));
+          fxmlLoader = new FXMLLoader(getClass().getResource("../varaus/varausFXML.fxml"));
         }
         
         Parent root1 = (Parent) fxmlLoader.load();
@@ -89,7 +90,7 @@ public class ToimipisteFXMLService {
             controller.initData(vanhaToimipiste);
             
         }
-        else if (object instanceof PalveluVaraus) {
+        else if (object instanceof Varaus) {
           
           stage.setTitle("Lisää varaus");
         }
@@ -116,7 +117,7 @@ public class ToimipisteFXMLService {
         //Päivitetään objektin mukainen näkymä
         //
         // TODO: muille luokille
-        if (object instanceof PalveluVaraus) {
+        if (object instanceof Varaus) {
             
 //            Daoa ei vielä toteutettu
 //            tv.setItems(new PalveluVarausDao().list());
@@ -139,12 +140,12 @@ public class ToimipisteFXMLService {
         
        if (object instanceof Palvelu) {
             
-            fxmlLoader = new FXMLLoader(getClass().getResource("PalveluFXML.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("../palvelu/PalveluFXML.fxml"));
         }
         
         else if (object instanceof PalveluVaraus) {
           
-          fxmlLoader = new FXMLLoader(getClass().getResource("VarausFXML.fxml"));
+          fxmlLoader = new FXMLLoader(getClass().getResource("../varaus/VarausFXML.fxml"));
         }
         
         Parent root1 = (Parent) fxmlLoader.load();
@@ -157,7 +158,7 @@ public class ToimipisteFXMLService {
         
         Stage stage = new Stage();
         
-        if (object instanceof PalveluVaraus) {
+        if (object instanceof Varaus) {
 
             stage.setTitle("Muokkaa varausta");
             
