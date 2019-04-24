@@ -25,6 +25,7 @@ import villagepeoplecottages.varaus.Varaus;
 
 public class PalveluVaraus {
     
+    private int palveluVarausId;
     private int VarausId;
     private int palveluId;
     private Date palvelunVarausAlku;
@@ -37,6 +38,14 @@ public class PalveluVaraus {
     }
 
     public PalveluVaraus(int VarausId, int palveluId, Date palvelunVarausAlku, Date palvelunVarausLoppu) {
+        this.VarausId = VarausId;
+        this.palveluId = palveluId;
+        this.palvelunVarausAlku = palvelunVarausAlku;
+        this.palvelunVarausLoppu = palvelunVarausLoppu;
+    }
+    
+    public PalveluVaraus(int palveluVarausId, int VarausId, int palveluId, Date palvelunVarausAlku, Date palvelunVarausLoppu) {
+        this.palveluVarausId = palveluVarausId;
         this.VarausId = VarausId;
         this.palveluId = palveluId;
         this.palvelunVarausAlku = palvelunVarausAlku;
@@ -73,6 +82,10 @@ public class PalveluVaraus {
 
     public void setPalvelunVarausLoppu(Date palvelunVarausLoppu) {
         this.palvelunVarausLoppu = palvelunVarausLoppu;
+    }
+
+    public Integer getPalveluVarausId() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

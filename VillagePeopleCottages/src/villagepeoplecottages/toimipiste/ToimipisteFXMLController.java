@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -23,7 +22,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import villagepeoplecottages.MainFXMLController;
 
 /**
  * FXML Controller class
@@ -37,8 +35,10 @@ public class ToimipisteFXMLController implements Initializable {
     private ToimipisteFXMLService tfxmls = new ToimipisteFXMLService();
     
     // Controllerille tuleva olio initData:ssa
-    private Toimipiste muokattavaToimipiste;
-
+    private Toimipiste selectedToimipiste;
+    
+    //Mainpane ikkunan aktivointia ja deaktivointia varten
+    @FXML private AnchorPane mainPane;
     
     //yläosion toiminnot
     @FXML private TextField nimiTextField;
@@ -47,6 +47,7 @@ public class ToimipisteFXMLController implements Initializable {
     @FXML private TextField postitoimipaikkaTextField;
     @FXML private TextField puhelinnumeroTextField;
     @FXML private TextField emailTextField;
+    
     @FXML private Button tallennaButton;
     @FXML private Button peruutaButton;
     
@@ -54,6 +55,7 @@ public class ToimipisteFXMLController implements Initializable {
     // PalveluTabin toiminnot
     
     @FXML private AnchorPane palvelutVarauksetAnchorPane;
+    @FXML private Button palveluLisaaUusiButton;
     @FXML private Button palveluMuokkaaButton;
     @FXML private Button palveluPoistaButton;
     @FXML private TableView<Palvelu> palvelutTableView;
@@ -78,10 +80,8 @@ public class ToimipisteFXMLController implements Initializable {
     @FXML private TableColumn<PalveluVaraus, Date> varausVahvistettuColumn;
     @FXML private Button varausMuokkaaButton;
     @FXML private Button varausPoistaButton;
-    @FXML
-    private AnchorPane mainPane;
-    @FXML
-    private Button palveluLisaaUusiButton;
+    
+    
 
     
      /** 
@@ -112,23 +112,21 @@ public class ToimipisteFXMLController implements Initializable {
      * @param object 
      */
     public void initData(Object object) {
-        this.muokattavaToimipiste = (Toimipiste)object;
-        nimiTextField.textProperty().set(muokattavaToimipiste.getNimi());
-        lahiosoiteTextField.textProperty().set(muokattavaToimipiste.getLahiosoite());
-        postinumeroTextField.textProperty().set(muokattavaToimipiste.getPostinro());
-        postitoimipaikkaTextField.textProperty().set(muokattavaToimipiste.getPostitoimipaikka());
-        puhelinnumeroTextField.textProperty().set(muokattavaToimipiste.getPuhelinnro());
-        emailTextField.textProperty().set(muokattavaToimipiste.getEmail());
+        this.selectedToimipiste = (Toimipiste)object;
+        nimiTextField.textProperty().set(selectedToimipiste.getNimi());
+        lahiosoiteTextField.textProperty().set(selectedToimipiste.getLahiosoite());
+        postinumeroTextField.textProperty().set(selectedToimipiste.getPostinro());
+        postitoimipaikkaTextField.textProperty().set(selectedToimipiste.getPostitoimipaikka());
+        puhelinnumeroTextField.textProperty().set(selectedToimipiste.getPuhelinnro());
+        emailTextField.textProperty().set(selectedToimipiste.getEmail());
         
-        //Jos Controlleri saa syötteenä vanhan toimipisteen, aktivoidaan alapaneeli.
+        //aktivoidaan näkymän alaosa.
         //Lisäksi ladataan tiedot tauluihin
         
-        if (!muokattavaToimipiste.getNimi().isEmpty()) {
-            palvelutVarauksetAnchorPane.setDisable(false);
-            
-        }
-        
-        palvelutTableView.setItems(muokattavaToimipiste.getPalvelut());
+        palvelutVarauksetAnchorPane.setDisable(false);
+
+        // Laitetaan palvelut TableViewiin valitun toimipisteen palvelut
+        palvelutTableView.setItems(selectedToimipiste.getPalvelut());
         
     }
     
@@ -167,7 +165,7 @@ public class ToimipisteFXMLController implements Initializable {
     @FXML
     private void tallennaButtonOnAction(ActionEvent event) throws SQLException {
         
-        tfxmls.tallennaButton(muokattavaToimipiste, haeTietoLomakkeelta());
+        tfxmls.tallennaButton(selectedToimipiste, haeTietoLomakkeelta());
         
         //sulje ikkuna
         this.peruutaButtonOnAction(event);
@@ -188,52 +186,53 @@ public class ToimipisteFXMLController implements Initializable {
     private void peruutaButtonOnAction(ActionEvent event) {
         
         //sulkee ikkunan
-        
         final Node source = (Node) event.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
+        
     }
 
     @FXML
     private void palveluLisaaUusiButtonOnAction(ActionEvent event) {
-        // Lisätään uusi palvelu toimipisteelle
-        
         try {
-            if (muokattavaToimipiste != null) {
-                tfxmls.lisaaUusiButton(muokattavaToimipiste, new Palvelu(), palvelutTableView, mainPane);
-                
-            }
+            // Lisätään uusi palvelu toimipisteelle
+
+            tfxmls.lisaaUusiButton(new Palvelu(), palvelutTableView, mainPane);
             
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+           
     }
 
     @FXML
     private void palveluMuokkaaButtonOnAction(ActionEvent event) {
         
-        // Muokataan valittua palvelua
-        
         try {
-            tfxmls.muokkaaButton(muokattavaToimipiste, palvelutTableView.getSelectionModel().getSelectedItem(), palvelutTableView, mainPane);
+            // Muokataan valittua palvelua
             
+            tfxmls.muokkaaButton(palvelutTableView, mainPane);
         } catch (SQLException ex) {
-            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+            
         
     }
 
     @FXML
     private void palveluPoistaButtonOnAction(ActionEvent event) {
+        try {
+            tfxmls.poistaButton(palvelutTableView);
+        } catch (SQLException ex) {
+            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void palveluTabOnSelectionChanged(Event event) {
- 
+
     }
 
 
@@ -242,8 +241,6 @@ public class ToimipisteFXMLController implements Initializable {
         
         // Luodaan kuuntelija, joka aktivoi tai deaktivoi muokkaus ja poistonapit, 
         // kun taulusta valitaan rivi
-        //
-        // TODO kaikille päänäkymän tauluille
         
         varauksetTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
