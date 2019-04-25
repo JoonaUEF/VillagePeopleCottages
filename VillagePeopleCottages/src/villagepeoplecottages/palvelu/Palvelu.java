@@ -13,12 +13,12 @@
  * Versiohistoria
  * 8.4.2019 Tekijä Lassi Puurunen
  * 10.4.2019 Dao-luokan vaatimat konstruktorit tehty
+ * 25.4.2019 toimipisteNimi lisätty
  */
 
 package villagepeoplecottages.palvelu;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import villagepeoplecottages.palveluvaraus.PalveluVaraus;
 import villagepeoplecottages.toimipiste.Toimipiste;
@@ -32,6 +32,7 @@ public class Palvelu {
     private String kuvaus;
     private double hinta;
     private double alv;
+    private String toimipisteNimi;
     
     private Toimipiste toimipiste;
     
@@ -70,6 +71,18 @@ public class Palvelu {
         this.alv = alv;
         this.palvelunVaraukset = palvelunVaraukset;
     }
+
+    public Palvelu(int palveluId, int toimipisteId, String nimi, int tyyppi, String kuvaus, double hinta, double alv, String toimipisteNimi) {
+        this.palveluId = palveluId;
+        this.toimipisteId = toimipisteId;
+        this.nimi = nimi;
+        this.tyyppi = tyyppi;
+        this.kuvaus = kuvaus;
+        this.hinta = hinta;
+        this.alv = alv;
+        this.toimipisteNimi = toimipisteNimi;
+    }
+    
     
     
     public Palvelu(int palveluId, int toimipisteId, String nimi, int tyyppi, 
@@ -181,25 +194,20 @@ public class Palvelu {
     public Toimipiste getToimipiste()  {
         return this.toimipiste;
     }
-
-    // Toimipisteen nimi haetaan Daon avulla.
     
-    public String getToimipisteNimi()  {
-        return this.toimipiste.getNimi();
-    }
 
     public void setToimipiste(Toimipiste toimipiste) {
         this.toimipiste = toimipiste;
     }
     
-    
-    
-    
+    public String getToimipisteNimi()  {
+        return toimipisteNimi;
+    }
 
-
-
+    public void setToimipisteNimi(String toimipisteNimi) {
+        this.toimipisteNimi = toimipisteNimi;
+    }
     
     
-    
-    
+  
 }
