@@ -5,7 +5,7 @@
  * Versiohistoria
  * 20.4.19 Tiedosto luotu ToimipisteDaon pohjalta. Joona Honkanen.
  * 23.4.19 Lisätty listByToimipisteId(). Lassi Puurunen
- * 
+ * 25.4.19 Listan haussa uusi SQL
  * 
  */
 package villagepeoplecottages.palvelu;
@@ -173,7 +173,9 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
         
         Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
 
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Palvelu");
+        PreparedStatement stmt = connection.prepareStatement("SELECT palvelu.*, "
+                + "toimipiste.nimi as toimipistenimi FROM Palvelu LEFT JOIN Toimipiste "
+                + "WHERE palvelu.toimipiste_id = toimipiste.TOIMIPISTE_ID ");
         
         ResultSet rs = stmt.executeQuery();
         
@@ -186,18 +188,15 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
         do {
             palvelut.add(new Palvelu(rs.getInt("palvelu_id"), rs.getInt("toimipiste_id"), rs.getString("nimi"),
                     rs.getInt("tyyppi"), rs.getString("kuvaus"),
-                    rs.getDouble("hinta"), rs.getDouble("alv")));     
+                    rs.getDouble("hinta"), rs.getDouble("alv"), rs.getString("toimipistenimi")));     
         } while (rs.next());
+        
+        
         
         rs.close();
         stmt.close();
         connection.close();
-        
-        // Päivitetään listan palveluille toimipisteet
-        for (Palvelu palvelu : palvelut) {
-            palvelu.setToimipiste(new ToimipisteDao().read(palvelu.getToimipisteId()));
-        }
-        
+       
         //Siirretään luotu lista Observablelistiin.
         
         ObservableList<Palvelu> observablePalvelu = FXCollections.observableArrayList();
