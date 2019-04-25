@@ -124,6 +124,7 @@ public class MainFXMLController implements Initializable {
     
     @FXML private TableView<?> varauksetTableView;
         @FXML private TableColumn<?, ?> varausIdColumn;
+        @FXML private TableColumn<?, ?> varausAsiakasIdColumn;
         @FXML private TableColumn<?, ?> varausToimipisteColumn;
         @FXML private TableColumn<?, ?> varausPalveluTyyppiColumn;
         @FXML private TableColumn<?, ?> varausPalvelunNimiColumn;
@@ -163,8 +164,6 @@ public class MainFXMLController implements Initializable {
     
     //Tilapalkki
     @FXML private Label tilapalkkiLabel;
-    
-    
 
     
     

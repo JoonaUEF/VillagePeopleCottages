@@ -141,6 +141,7 @@
                               <TableView fx:id="varauksetTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
                                  <columns>
                                     <TableColumn fx:id="varausIdColumn" text="VarausId" />
+                                    <TableColumn fx:id="varausAsiakasIdColumn" text="AsiakasId" />
                                     <TableColumn fx:id="varausToimipisteColumn" prefWidth="120.0" text="Toimipiste" />
                                     <TableColumn fx:id="varausPalveluTyyppiColumn" prefWidth="98.0" text="Palvelutyyppi" />
                                     <TableColumn fx:id="varausPalvelunNimiColumn" prefWidth="153.0" text="Palvelun nimi" />
@@ -176,8 +177,8 @@
                               </ToolBar>
                               <TableView fx:id="laskutTableView" layoutY="37.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
                                  <columns>
-                                    <TableColumn fx:id="laskutToimipisteColumn" prefWidth="86.0" text="Toimipiste" />
                                     <TableColumn fx:id="laskutLaskuIdColumn" prefWidth="49.0" text="LaskuId" />
+                                    <TableColumn fx:id="laskutToimipisteColumn" prefWidth="86.0" text="Toimipiste" />
                                     <TableColumn fx:id="laskutVarausIdColumn" prefWidth="55.0" text="VarausId" />
                                     <TableColumn fx:id="laskutAsiakasIdColumn" prefWidth="62.0" text="AsiakasId" />
                                     <TableColumn fx:id="laskutTilaColumn" prefWidth="76.0" text="Tila" />
