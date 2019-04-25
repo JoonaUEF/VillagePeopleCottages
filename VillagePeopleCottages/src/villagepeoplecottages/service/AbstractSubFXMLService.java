@@ -72,6 +72,37 @@ public abstract class AbstractSubFXMLService extends AbstractMainFXMLService {
         paivitaNakyma(object, tv);    
 
       }
+
+    public void muokkaaButton(Object selectedObject, TableView tv, AnchorPane mainPane) throws SQLException, IOException {
+        // Haetaan tableviewissa valittu objekti.
+        Object object = tv.getSelectionModel().getSelectedItem();
+        
+        //ladataan syötetyn objektin mukainen FXML-tiedosto
+        FXMLLoader fxmlLoader = this.lataaObjektilleFxml(object);
+        
+        //Asetukset stagelle
+        Stage stage = setAndGetStage(object, fxmlLoader, mainPane);
+        
+        //Lähetä muokattava objekti uudem näkymän Controllerille
+        //Lähetään objekti controllerille
+        sendObjectToController(object, fxmlLoader);  
+        
+        //Ladataan objektin luokan mukainen nimi ikkunalle
+        stage.setTitle(muokkaaObjectTitleString(object));
+        
+        
+        
+        //Näytetään stage ja laitetaan nykyinen säie odotustilaan
+        stage.showAndWait();
+        
+        //Aktivoidaan mainPane stagen sulkeuduttua
+        mainPane.setDisable(false);
+        
+        //Päivitetään objektin mukainen näkymä
+        paivitaNakyma(selectedObject, object, tv);
+    }
+    
+    
       
     private void teeUusiObjekti(Object object) throws SQLException {
         
@@ -186,5 +217,19 @@ public abstract class AbstractSubFXMLService extends AbstractMainFXMLService {
         
         return fxmlLoader;
         
+    }
+
+    public void paivitaNakyma(Object selectedObject, Object object, TableView tv) throws SQLException {
+        
+        if (selectedObject instanceof Toimipiste) {
+            
+            if (object instanceof Palvelu) {
+                tv.setItems(new PalveluDao().listByToimipisteId(((Toimipiste) selectedObject).getToimipisteId()));
+            }
+            
+            if (object instanceof PalveluVaraus) {
+                tv.setItems(new PalveluVarausDao().listByToimipisteId(((Toimipiste) selectedObject).getToimipisteId()));
+            }
+        }
     }
 }

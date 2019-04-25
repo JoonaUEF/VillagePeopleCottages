@@ -202,13 +202,6 @@ public class ToimipisteDao implements Dao<Toimipiste, Integer>{
         observableToimipiste.addAll(toimipisteet);
         
         
-        //Lisää Toimipisteille niihin kuuluvat palvelut ja varaukset
-        
-        for (Toimipiste toimipiste : observableToimipiste) {
-            
-            toimipiste.setPalvelut(new PalveluDao().listByToimipisteId(toimipiste.getToimipisteId()));
-            toimipiste.setVaraukset(new VarausDao().listByToimipisteId(toimipiste.getToimipisteId()));
-        }
         
         return observableToimipiste;
     }

@@ -15,7 +15,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -52,36 +54,54 @@ public class ToimipisteFXMLController implements Initializable {
     @FXML private Button peruutaButton;
     
     
-    // PalveluTabin toiminnot
-    
+    //Alaosion ankkuripane
     @FXML private AnchorPane palvelutVarauksetAnchorPane;
+    
+    
+    // PalveluTabin toiminnot 
+        
+    @FXML private TextField palveluHakuTextField;
+    @FXML private ComboBox<?> palveluTyyppiComboBox;
+    
     @FXML private Button palveluLisaaUusiButton;
     @FXML private Button palveluMuokkaaButton;
     @FXML private Button palveluPoistaButton;
+    
     @FXML private TableView<Palvelu> palvelutTableView;
-    @FXML private TableColumn<Palvelu, String> palveluTyyppiColumn;
-    @FXML private TableColumn<Palvelu, String> palveluNimiColumn;
-    @FXML private TableColumn<Palvelu, String> palveluKuvausColumn;
-    @FXML private TableColumn<Palvelu, Double> palveluHintaColumn;
-    @FXML private TableColumn<Palvelu, Double> palveluAlvColumn;
-    @FXML private TableColumn<Palvelu, Double> palveluHintaAlvColumn;
+        @FXML private TableColumn<Palvelu, String> palveluTyyppiColumn;
+        @FXML private TableColumn<Palvelu, String> palveluNimiColumn;
+        @FXML private TableColumn<Palvelu, String> palveluKuvausColumn;
+        @FXML private TableColumn<Palvelu, Double> palveluHintaColumn;
+        @FXML private TableColumn<Palvelu, Double> palveluAlvColumn;
+        @FXML private TableColumn<Palvelu, Double> palveluHintaAlvColumn;
     
     
     //VarausTabin toiminnot
     
-    @FXML private Tab varauksetTabOnSelectionChanged;
-    @FXML private TableView<PalveluVaraus> varauksetTableView;
-    @FXML private TableColumn<PalveluVaraus, Integer> varausVarausIdColumn;
-    @FXML private TableColumn<PalveluVaraus, String> varausPalvelutyyppiColumn;
-    @FXML private TableColumn<PalveluVaraus, String> varausPalvelunNimiColumn;
-    @FXML private TableColumn<PalveluVaraus, Date> varausPalvelunAlkuColumn;
-    @FXML private TableColumn<PalveluVaraus, Date> varausPalvelunLoppuColumn;
-    @FXML private TableColumn<PalveluVaraus, Date> varausVarattuColumn;
-    @FXML private TableColumn<PalveluVaraus, Date> varausVahvistettuColumn;
+    
+    @FXML private TextField varausHakuTextField;
+    @FXML private ComboBox<?> varausPalvelutyyppiComboBox;
+    @FXML private DatePicker varausMistaDatePicker;
+    @FXML private DatePicker varausMihinDatePicker;
+    
+    @FXML private Button varausLisaaUusiButton;
     @FXML private Button varausMuokkaaButton;
     @FXML private Button varausPoistaButton;
     
+    @FXML private TableView<?> varauksetTableView;
+        @FXML private TableColumn<PalveluVaraus, Integer> varausIdColumn;
+        @FXML private TableColumn<PalveluVaraus, Integer> varausAsiakasIdColumn;
+        @FXML private TableColumn<PalveluVaraus, String> varausPalveluTyyppiColumn;
+
+        @FXML private TableColumn<PalveluVaraus, String> varausPalvelunNimiColumn;
+        @FXML private TableColumn<PalveluVaraus, Date> varausPalvelunAlkuColumn;
+        @FXML private TableColumn<PalveluVaraus, Date> varausPalvelunLoppuColumn;
+        @FXML private TableColumn<PalveluVaraus, Date> varausVarattuColumn;
+        @FXML private TableColumn<PalveluVaraus, Date> varausVahvistettuColumn;
     
+    
+    //tilapalkki
+    @FXML private Label tilaPalkkiLabel;
 
     
      /** 
@@ -112,6 +132,7 @@ public class ToimipisteFXMLController implements Initializable {
      * @param object 
      */
     public void initData(Object object) {
+        
         this.selectedToimipiste = (Toimipiste)object;
         nimiTextField.textProperty().set(selectedToimipiste.getNimi());
         lahiosoiteTextField.textProperty().set(selectedToimipiste.getLahiosoite());
@@ -126,27 +147,17 @@ public class ToimipisteFXMLController implements Initializable {
         palvelutVarauksetAnchorPane.setDisable(false);
 
         // Laitetaan palvelut TableViewiin valitun toimipisteen palvelut
-        palvelutTableView.setItems(selectedToimipiste.getPalvelut());
+        try {
+            tfxmls.paivitaNakyma(selectedToimipiste, new Palvelu(), palvelutTableView);
+        } catch (SQLException ex) {
+            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
     
     
-    /**
-     * haeTietoLomakkeelta
-     * 
-     * Metodi palauttaa olion, jossa on lomakkeelle taytetyt tiedot
-     * 
-     * 18.4.2019 Lassi Puurunen
-     * 
-     * @return toimipiste
-     */
     
-    private Toimipiste haeTietoLomakkeelta() {
-        return new Toimipiste(nimiTextField.getText(), 
-                lahiosoiteTextField.getText(), postitoimipaikkaTextField.getText(), 
-                postinumeroTextField.getText(), emailTextField.getText(), puhelinnumeroTextField.getText());
-    }
     
     /**
      * tallennaButtonOnAction
@@ -192,6 +203,23 @@ public class ToimipisteFXMLController implements Initializable {
         
     }
 
+    
+    
+    //Palvelunäkymän metodit
+    
+    @FXML
+    private void palveluTabOnSelectionChanged(Event event) {
+        try {
+            tfxmls.paivitaNakyma(selectedToimipiste, new Palvelu(), palvelutTableView);
+        } catch (SQLException ex) {
+            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @FXML
+    private void palveluTyyppiComboBoxOnAction(ActionEvent event) {
+    }
+    
     @FXML
     private void palveluLisaaUusiButtonOnAction(ActionEvent event) {
         try {
@@ -211,14 +239,13 @@ public class ToimipisteFXMLController implements Initializable {
         try {
             // Muokataan valittua palvelua
             
-            tfxmls.muokkaaButton(palvelutTableView, mainPane);
+            tfxmls.muokkaaButton(selectedToimipiste, palvelutTableView, mainPane);
         } catch (SQLException ex) {
             Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-        
+               
     }
 
     @FXML
@@ -230,13 +257,67 @@ public class ToimipisteFXMLController implements Initializable {
         }
     }
 
-    @FXML
-    private void palveluTabOnSelectionChanged(Event event) {
+    
 
+    // Varaus-näkymän metodit
+    
+    @FXML
+    private void varauksetTabOnSelectionChanged(Event event) {
+        try {
+            tfxmls.paivitaNakyma(selectedToimipiste, new PalveluVaraus(), varauksetTableView);
+        } catch (SQLException ex) {
+            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    @FXML
+    private void varausPalvelutyyppiComboBoxOnAction(ActionEvent event) {
     }
 
+    @FXML
+    private void varausMistaDatePickerOnAction(ActionEvent event) {
+    }
 
+    @FXML
+    private void varausMihinDatePickerOnAction(ActionEvent event) {
+    }
 
+    @FXML
+    private void varausLisaaUusiButtonOnAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void varausMuokkaaButtonOnAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void varausPoistaButtonOnAction(ActionEvent event) {
+    }
+
+    
+ 
+    
+    
+    //Privaatteja metodeja
+    
+    /**
+     * haeTietoLomakkeelta
+     * 
+     * Metodi palauttaa olion, jossa on lomakkeelle taytetyt tiedot
+     * 
+     * 18.4.2019 Lassi Puurunen
+     * 
+     * @return toimipiste
+     */
+    
+    private Toimipiste haeTietoLomakkeelta() {
+        return new Toimipiste(nimiTextField.getText(), 
+                lahiosoiteTextField.getText(), postitoimipaikkaTextField.getText(), 
+                postinumeroTextField.getText(), emailTextField.getText(), puhelinnumeroTextField.getText());
+    }
+    
+    
     private void listeners() {
         
         // Luodaan kuuntelija, joka aktivoi tai deaktivoi muokkaus ja poistonapit, 
@@ -280,7 +361,16 @@ public class ToimipisteFXMLController implements Initializable {
         palveluHintaColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("hinta"));
         palveluAlvColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("alv"));
         palveluHintaAlvColumn.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("hintaAlv"));
+        
+        varausIdColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, Integer>("varausId"));
+        varausAsiakasIdColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, Integer>("asiakasId"));
+        varausPalveluTyyppiColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, String>("palveluTyyppiString"));
+        varausPalvelunNimiColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, String>("palvelunNimi"));
+        varausPalvelunAlkuColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, Date>("palvelunVarausAlku"));
+        varausPalvelunLoppuColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, Date>("palvelunVarausLoppu"));
+        varausVarattuColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, Date>("varausVarattu"));
+        varausVahvistettuColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, Date>("varausVahvistettu"));
+
 
     }
-    
 }

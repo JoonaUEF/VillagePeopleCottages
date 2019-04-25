@@ -345,7 +345,7 @@ public abstract class AbstractMainFXMLService {
         
         else if (object instanceof PalveluVaraus) {
             
-            new PalveluVarausDao().delete(((PalveluVaraus) object).getPalveluVarausId());
+//            new PalveluVarausDao().delete();
             
         }
         
