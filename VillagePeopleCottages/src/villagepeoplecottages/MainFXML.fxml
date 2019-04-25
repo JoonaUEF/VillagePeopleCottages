@@ -21,7 +21,7 @@
          <children>
             <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
               <tabs>
-                <Tab onSelectionChanged="#toimipisteOnSelectionChanged" text="Toimipisteet">
+                <Tab fx:id="toimipisteetTab" onSelectionChanged="#toimipisteetTabOnSelectionChanged" text="Toimipisteet">
                      <content>
                         <AnchorPane>
                            <children>
@@ -29,11 +29,11 @@
                                  <children>
                                     <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <items>
-                                          <TextField prefHeight="27.0" prefWidth="130.0" promptText="Haku" />
+                                          <TextField fx:id="toimipisteetHakuTextField" prefHeight="27.0" prefWidth="130.0" promptText="Haku" />
                                           <Separator orientation="VERTICAL" />
-                                          <Button fx:id="toimipisteLisaaUusiButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#toimipisteLisaaUusiButtonOnAction" prefHeight="25.0" text="Lisää uusi" />
-                                        <Button fx:id="toimipisteMuokkaaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#toimipisteMuokkaaButtonOnAction" prefHeight="25.0" text="Muokkaa" />
-                                          <Button fx:id="toimipistePoistaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#toimipistePoistaButtonOnAction" prefHeight="25.0" text="Poista" />
+                                          <Button fx:id="toimipisteetLisaaUusiButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#toimipisteetLisaaUusiButtonOnAction" prefHeight="25.0" text="Lisää uusi" />
+                                        <Button fx:id="toimipisteetMuokkaaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#toimipisteetMuokkaaButtonOnAction" prefHeight="25.0" text="Muokkaa" />
+                                          <Button fx:id="toimipisteetPoistaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#toimipisteetPoistaButtonOnAction" prefHeight="25.0" text="Poista" />
                                        </items>
                                     </ToolBar>
                                     <TableView fx:id="toimipisteetTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
@@ -55,15 +55,15 @@
                         </AnchorPane>
                      </content>
                 </Tab>
-                  <Tab onSelectionChanged="#palveluOnSelectionChanged" text="Palvelut">
+                  <Tab fx:id="palveluttTab" onSelectionChanged="#palvelutTabOnSelectionChanged" text="Palvelut">
                      <content>
                         <AnchorPane>
                            <children>
                               <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <items>
-                                    <TextField prefHeight="27.0" prefWidth="130.0" promptText="Haku" />
-                                    <ComboBox prefWidth="160.0" promptText="Valitse toimipiste" />
-                                    <ComboBox prefWidth="160.0" promptText="Valitse palvelutyyppi" />
+                                    <TextField fx:id="palvelutHakuTextField" prefHeight="27.0" prefWidth="130.0" promptText="Haku" />
+                                    <ComboBox fx:id="palvelutToimipisteComboBox" onAction="#palvelutToimipisteComboBoxOnAction" prefWidth="160.0" promptText="Valitse toimipiste" />
+                                    <ComboBox fx:id="palvelutPalvelutyyppiComboBox" onAction="#palvelutPalvelutyyppiComboBoxOnAction" prefWidth="160.0" promptText="Valitse palvelutyyppi" />
                                     <Separator orientation="VERTICAL" />
                                     <Button fx:id="palveluLisaaUusiButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#palveluLisaaUusiButtonOnAction" prefHeight="25.0" text="Lisää uusi" />
                                     <Button fx:id="palveluMuokkaaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#palveluMuokkaaButtonOnAction" prefHeight="25.0" text="Muokkaa" />
@@ -88,49 +88,13 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Varaukset">
-                     <content>
-                        <AnchorPane prefHeight="541.0">
-                           <children>
-                              <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
-                                 <items>
-                                    <TextField prefWidth="130.0" promptText="Haku" />
-                                    <ComboBox prefWidth="160.0" promptText="Valitse toimipiste" />
-                                    <ComboBox prefWidth="160.0" promptText="Valitse palvelutyyppi" />
-                                    <DatePicker prefWidth="130.0" promptText="Mistä päivästä" />
-                                    <DatePicker layoutX="328.0" layoutY="10.0" prefWidth="130.0" promptText="Mihin päivään" />
-                                    <Separator orientation="VERTICAL" />
-                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Lisää uusi" />
-                                    <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" text="Muokkaa" />
-                                    <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" text="Poista" />
-                                 </items>
-                              </ToolBar>
-                              <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
-                                 <columns>
-                                    <TableColumn text="VarausId" />
-                                    <TableColumn prefWidth="120.0" text="Toimipiste" />
-                                    <TableColumn prefWidth="98.0" text="Palvelutyyppi" />
-                                    <TableColumn prefWidth="153.0" text="Palvelun nimi" />
-                                    <TableColumn prefWidth="111.0" text="Palvelun alku" />
-                                    <TableColumn prefWidth="100.0" text="Palvelun loppu" />
-                                    <TableColumn prefWidth="94.0" text="Varattu" />
-                                    <TableColumn prefWidth="102.0" text="Vahvistettu" />
-                                 </columns>
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab onSelectionChanged="#asiakasOnSelectionChanged" text="Asiakkaat">
+                  <Tab fx:id="asiakkaatTab" onSelectionChanged="#asiakkaatTabOnSelectionChanged" text="Asiakkaat">
                      <content>
                         <AnchorPane>
                            <children>
                               <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
                                  <items>
-                                    <TextField prefWidth="130.0" promptText="Haku" />
+                                    <TextField fx:id="asiakasHakuTextField" prefWidth="130.0" promptText="Haku" />
                                     <Separator orientation="VERTICAL" />
                                     <Button fx:id="asiakasLisaaUusiButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#asiakasLisaaUusiButtonOnAction" text="Lisää uusi" />
                                     <Button fx:id="asiakasMuokkaaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#asiakasMuokkaaButtonOnAction" text="Muokkaa" />
@@ -157,27 +121,74 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Laskut">
+                  <Tab fx:id="varauksetTab" onSelectionChanged="#varauksetTabOnSelectionChanged" text="Varaukset">
+                     <content>
+                        <AnchorPane prefHeight="541.0">
+                           <children>
+                              <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
+                                 <items>
+                                    <TextField fx:id="varauksetHakuTextField" prefWidth="130.0" promptText="Haku" />
+                                    <ComboBox fx:id="varauksetToimipisteComboBox" onAction="#varauksetToimipisteComboBoxOnAction" prefWidth="160.0" promptText="Valitse toimipiste" />
+                                    <ComboBox fx:id="varauksetPalvelutyyppiComboBox" onAction="#varauksetPalvelutyyppiComboBoxOnAction" prefWidth="160.0" promptText="Valitse palvelutyyppi" />
+                                    <DatePicker fx:id="varauksetMistaDatePicker" onAction="#varauksetMistaDatePickerOnAction" prefWidth="130.0" promptText="Mistä päivästä" />
+                                    <DatePicker fx:id="varauksetMihinDatePicker" layoutX="328.0" layoutY="10.0" onAction="#varauksetMihinDatePickerOnAction" prefWidth="130.0" promptText="Mihin päivään" />
+                                    <Separator orientation="VERTICAL" />
+                                    <Button fx:id="varauksetLisaaUusiButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#varauksetLisaaUusiButtonOnAction" text="Lisää uusi" />
+                                    <Button fx:id="varauksetMuokkaaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#varauksetMuokkaaButtonOnAction" text="Muokkaa" />
+                                    <Button fx:id="varauksetPoistaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#varauksetPoistaButtonOnAction" text="Poista" />
+                                 </items>
+                              </ToolBar>
+                              <TableView fx:id="varauksetTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+                                 <columns>
+                                    <TableColumn fx:id="varausIdColumn" text="VarausId" />
+                                    <TableColumn fx:id="varausToimipisteColumn" prefWidth="120.0" text="Toimipiste" />
+                                    <TableColumn fx:id="varausPalveluTyyppiColumn" prefWidth="98.0" text="Palvelutyyppi" />
+                                    <TableColumn fx:id="varausPalvelunNimiColumn" prefWidth="153.0" text="Palvelun nimi" />
+                                    <TableColumn fx:id="varausPalvelunAlkuColumn" prefWidth="111.0" text="Palvelun alku" />
+                                    <TableColumn fx:id="varausPalvelunLoppuColumn" prefWidth="100.0" text="Palvelun loppu" />
+                                    <TableColumn fx:id="varausVarattuColumn" prefWidth="94.0" text="Varattu" />
+                                    <TableColumn fx:id="varausVahvistettuColumn" prefWidth="102.0" text="Vahvistettu" />
+                                 </columns>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="laskutTab" onSelectionChanged="#laskutTabOnSelectionChanged" text="Laskut">
                      <content>
                         <AnchorPane>
                            <children>
                               <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
                                  <items>
-                                    <TextField prefWidth="130.0" promptText="Haku" />
-                                    <ComboBox prefWidth="160.0" promptText="Valitse toimipiste" />
-                                    <DatePicker prefWidth="130.0" promptText="Päiväys alkaen" />
-                                    <DatePicker layoutX="278.0" layoutY="10.0" prefWidth="130.0" promptText="Päiväys päättyen" />
-                                    <ComboBox prefWidth="100.0" promptText="Laskun tila" />
+                                    <TextField fx:id="laskutHakuTextField" prefWidth="130.0" promptText="Haku" />
+                                    <ComboBox fx:id="laskutToimipisteComboBox" onAction="#laskutToimipisteComboBoxOnAction" prefWidth="160.0" promptText="Valitse toimipiste" />
+                                    <DatePicker fx:id="laskutAlkaenDatePicker" onAction="#laskutAlkaenDatePickerOnAction" prefWidth="130.0" promptText="Päiväys alkaen" />
+                                    <DatePicker fx:id="laskutPaattyenDatePicker" layoutX="278.0" layoutY="10.0" onAction="#laskutPaattyenDatePickerOnAction" prefWidth="130.0" promptText="Päiväys päättyen" />
+                                    <ComboBox fx:id="laskutTilaComboBox" onAction="#laskutTilaComboBoxOnAction" prefWidth="100.0" promptText="Laskun tila" />
                                     <Separator orientation="VERTICAL" />
-                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Lisää uusi" />
-                                    <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" text="Muokkaa" />
-                                    <Button alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" text="Poista" />
+                                    <Button fx:id="laskutLisaaUusiButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#laskutLisaaUusiButtonOnAction" text="Lisää uusi" />
+                                    <Button fx:id="laskutMuokkaaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#laskutMuokkaaButtonOnAction" text="Muokkaa" />
+                                    <Button fx:id="laskutPoistaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#laskutPoistaButtonOnAction" text="Poista" />
                                  </items>
                               </ToolBar>
-                              <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+                              <TableView fx:id="laskutTableView" layoutY="37.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
                                  <columns>
-                                    <TableColumn prefWidth="75.0" text="C1" />
-                                    <TableColumn prefWidth="75.0" text="C2" />
+                                    <TableColumn fx:id="laskutToimipisteColumn" prefWidth="86.0" text="Toimipiste" />
+                                    <TableColumn fx:id="laskutLaskuIdColumn" prefWidth="49.0" text="LaskuId" />
+                                    <TableColumn fx:id="laskutVarausIdColumn" prefWidth="55.0" text="VarausId" />
+                                    <TableColumn fx:id="laskutAsiakasIdColumn" prefWidth="62.0" text="AsiakasId" />
+                                    <TableColumn fx:id="laskutTilaColumn" prefWidth="76.0" text="Tila" />
+                                    <TableColumn fx:id="laskutPaivaysColumn" prefWidth="78.0" text="Päiväys" />
+                                    <TableColumn fx:id="laskutNimiColumn" prefWidth="130.0" text="Nimi" />
+                                    <TableColumn fx:id="laskutLahiosoiteColumn" prefWidth="105.0" text="Lahiosoite" />
+                                    <TableColumn fx:id="laskutPostinumeroColumn" prefWidth="71.0" text="Postinumero" />
+                                    <TableColumn fx:id="laskutPostitoimipaikkaColumn" prefWidth="71.0" text="Postitoimipaikka" />
+                                    <TableColumn fx:id="laskutSummaColumn" prefWidth="53.0" text="Summa" />
+                                    <TableColumn fx:id="laskutAlvColumn" prefWidth="44.0" text="Alv" />
+                                    <TableColumn fx:id="laskutSummaAvlColumn" prefWidth="106.0" text="Summa+Alv" />
                                  </columns>
                                  <opaqueInsets>
                                     <Insets />
@@ -195,7 +206,7 @@
          <children>
             <ToolBar AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
                <items>
-                  <Label text="Tilapalkki">
+                  <Label fx:id="tilapalkkiLabel" text="Tilapalkki">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>

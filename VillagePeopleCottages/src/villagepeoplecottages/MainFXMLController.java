@@ -1,6 +1,4 @@
 package villagepeoplecottages;
-
-import villagepeoplecottages.service.AbstractMainFXMLService;
         
 import villagepeoplecottages.toimipiste.Toimipiste;
 import villagepeoplecottages.toimipiste.ToimipisteDao;
@@ -19,8 +17,13 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
@@ -38,6 +41,7 @@ import javafx.scene.layout.AnchorPane;
  * 16.4.2019 Toimipisteen poisto-toiminto lisätty, poisto ja muokkaus -nappien aktivointi ja deaktivointi. Lassi Puurunen
  * 18.4.2019 Päivitetty käyttämään MainFXMLService -luokkaa. Lassi Puurunen
  * 20.4.2019 Palvelun TableView, lisäys ja poisto-toiminnot lisätty. Joona Honkanen
+ * 25.4.2019 Täydennetty kaikki FXML:n toiminnot.
  * 
  */
 
@@ -50,51 +54,124 @@ public class MainFXMLController implements Initializable {
     @FXML private AnchorPane mainPane;
     
     // Määritetään toimipistenäkymän tiedot
+    @FXML private Tab toimipisteetTab;
+    
+    @FXML private TextField toimipisteetHakuTextField;
+    @FXML private Button toimipisteetLisaaUusiButton;
+    @FXML private Button toimipisteetMuokkaaButton;
+    @FXML private Button toimipisteetPoistaButton;
+    
     @FXML private TableView<Toimipiste> toimipisteetTableView;
-    @FXML private TableColumn<Toimipiste, String> toimipisteNimiColumn;
-    @FXML private TableColumn<Toimipiste, String> toimipisteLahiosoiteColumn;
-    @FXML private TableColumn<Toimipiste, String> toimipistePostinroColumn;
-    @FXML private TableColumn<Toimipiste, String> toimipistePostitoimipaikkaColumn;
-    @FXML private TableColumn<Toimipiste, String> toimipistePuhelinnumeroColumn;
-    @FXML private TableColumn<Toimipiste, String> toimipisteEmailColumn;
-    @FXML private Button toimipisteLisaaUusiButton;
-    @FXML private Button toimipisteMuokkaaButton;
-    @FXML private Button toimipistePoistaButton;
+        @FXML private TableColumn<Toimipiste, String> toimipisteNimiColumn;
+        @FXML private TableColumn<Toimipiste, String> toimipisteLahiosoiteColumn;
+        @FXML private TableColumn<Toimipiste, String> toimipistePostinroColumn;
+        @FXML private TableColumn<Toimipiste, String> toimipistePostitoimipaikkaColumn;
+        @FXML private TableColumn<Toimipiste, String> toimipistePuhelinnumeroColumn;
+        @FXML private TableColumn<Toimipiste, String> toimipisteEmailColumn;
     
     // Määritetään palvelunäkymän tiedot
-    @FXML private TableView<Palvelu> palvelutTableView;
-    @FXML private TableColumn<Palvelu, String> palveluToimipisteNimiColumn;
-    @FXML private TableColumn<Palvelu, String> palveluNimiColumn;
-    @FXML private TableColumn<Palvelu, String> palveluTyyppiColumn;
-    @FXML private TableColumn<Palvelu, String> palveluKuvausColumn;
-    @FXML private TableColumn<Palvelu, Double> palveluHintaColumn;
-    @FXML private TableColumn<Palvelu, Double> palveluAlvColumn;
-    @FXML private TableColumn<Palvelu, Double> palveluHintaAlvColumn;
+    @FXML private Tab palveluttTab;
+    
+    @FXML private TextField palvelutHakuTextField;
+    @FXML private ComboBox<?> palvelutToimipisteComboBox;
+    @FXML private ComboBox<?> palvelutPalvelutyyppiComboBox;
+    
     @FXML private Button palveluLisaaUusiButton;
     @FXML private Button palveluMuokkaaButton;
     @FXML private Button palveluPoistaButton;
     
-
+    @FXML private TableView<Palvelu> palvelutTableView;
+        @FXML private TableColumn<Palvelu, String> palveluToimipisteNimiColumn;
+        @FXML private TableColumn<Palvelu, String> palveluNimiColumn;
+        @FXML private TableColumn<Palvelu, String> palveluTyyppiColumn;
+        @FXML private TableColumn<Palvelu, String> palveluKuvausColumn;
+        @FXML private TableColumn<Palvelu, Double> palveluHintaColumn;
+        @FXML private TableColumn<Palvelu, Double> palveluAlvColumn;
+        @FXML private TableColumn<Palvelu, Double> palveluHintaAlvColumn;
+    
     // Määritetään asiakasnäkymän tiedot
-    @FXML private TableView<Asiakas> asiakkaatTableView;
-    @FXML private TableColumn<Asiakas, Integer> asiakasIdColumn;
-    @FXML private TableColumn<Asiakas, String> asiakasEtunimiColumn;
-    @FXML private TableColumn<Asiakas, String> asiakasSukunimiColumn;
-    @FXML private TableColumn<Asiakas, String> asiakasLahiosoiteColumn;
-    @FXML private TableColumn<Asiakas, String> asiakasPostinroColumn;
-    @FXML private TableColumn<Asiakas, String> asiakasPostitoimipaikkaColumn;
-    @FXML private TableColumn<Asiakas, String> asiakasPuhelinnumeroColumn;
-    @FXML private TableColumn<Asiakas, String> asiakasEmailColumn;
+    @FXML private Tab asiakkaatTab;
+    
+    @FXML private TextField asiakasHakuTextField;
+    
     @FXML private Button asiakasLisaaUusiButton;
     @FXML private Button asiakasMuokkaaButton;
     @FXML private Button asiakasPoistaButton;
+    
+    @FXML private TableView<Asiakas> asiakkaatTableView;
+        @FXML private TableColumn<Asiakas, Integer> asiakasIdColumn;
+        @FXML private TableColumn<Asiakas, String> asiakasEtunimiColumn;
+        @FXML private TableColumn<Asiakas, String> asiakasSukunimiColumn;
+        @FXML private TableColumn<Asiakas, String> asiakasLahiosoiteColumn;
+        @FXML private TableColumn<Asiakas, String> asiakasPostinroColumn;
+        @FXML private TableColumn<Asiakas, String> asiakasPostitoimipaikkaColumn;
+        @FXML private TableColumn<Asiakas, String> asiakasPuhelinnumeroColumn;
+        @FXML private TableColumn<Asiakas, String> asiakasEmailColumn;
+    
+    
+    // Määritetään varaukset-näkymän tiedot
+    @FXML private Tab varauksetTab;
+    
+    @FXML private TextField varauksetHakuTextField;
+    @FXML private ComboBox<?> varauksetToimipisteComboBox;
+    @FXML private ComboBox<?> varauksetPalvelutyyppiComboBox;
+    @FXML private DatePicker varauksetMistaDatePicker;
+    @FXML private DatePicker varauksetMihinDatePicker;
+    
+    @FXML private Button varauksetLisaaUusiButton;
+    @FXML private Button varauksetMuokkaaButton;
+    @FXML private Button varauksetPoistaButton;
+    
+    @FXML private TableView<?> varauksetTableView;
+        @FXML private TableColumn<?, ?> varausIdColumn;
+        @FXML private TableColumn<?, ?> varausToimipisteColumn;
+        @FXML private TableColumn<?, ?> varausPalveluTyyppiColumn;
+        @FXML private TableColumn<?, ?> varausPalvelunNimiColumn;
+        @FXML private TableColumn<?, ?> varausPalvelunAlkuColumn;
+        @FXML private TableColumn<?, ?> varausPalvelunLoppuColumn;
+        @FXML private TableColumn<?, ?> varausVarattuColumn;
+        @FXML private TableColumn<?, ?> varausVahvistettuColumn;
+    
+    
+    // Määritetään laskut-näkymän tiedot
+    @FXML private Tab laskutTab;
+    
+    @FXML private TextField laskutHakuTextField;
+    @FXML private ComboBox<?> laskutToimipisteComboBox;
+    @FXML private DatePicker laskutAlkaenDatePicker;
+    @FXML private DatePicker laskutPaattyenDatePicker;
+    @FXML private ComboBox<?> laskutTilaComboBox;
+    
+    @FXML private Button laskutLisaaUusiButton;
+    @FXML private Button laskutMuokkaaButton;
+    @FXML private Button laskutPoistaButton;
+    
+    @FXML private TableView<?> laskutTableView;
+        @FXML private TableColumn<?, ?> laskutToimipisteColumn;
+        @FXML private TableColumn<?, ?> laskutLaskuIdColumn;
+        @FXML private TableColumn<?, ?> laskutVarausIdColumn;
+        @FXML private TableColumn<?, ?> laskutAsiakasIdColumn;
+        @FXML private TableColumn<?, ?> laskutTilaColumn;
+        @FXML private TableColumn<?, ?> laskutPaivaysColumn;
+        @FXML private TableColumn<?, ?> laskutNimiColumn;
+        @FXML private TableColumn<?, ?> laskutLahiosoiteColumn;
+        @FXML private TableColumn<?, ?> laskutPostinumeroColumn;
+        @FXML private TableColumn<?, ?> laskutPostitoimipaikkaColumn;
+        @FXML private TableColumn<?, ?> laskutSummaColumn;
+        @FXML private TableColumn<?, ?> laskutAlvColumn;
+        @FXML private TableColumn<?, ?> laskutSummaAvlColumn;
+    
+    //Tilapalkki
+    @FXML private Label tilapalkkiLabel;
+    
+    
+
     
     
     /**
      * Initializes the controller class.
      * 
      * 
-     * 16.4.2019 Lassi Puurunen
      */
     
     @Override
@@ -113,24 +190,12 @@ public class MainFXMLController implements Initializable {
     
     
     /**
-     * Toimipiste-näkymän metodit alkavat tästä
+     * Toimipiste-näkymän metodit
      * 
      */
     
-    
-    /**
-     * Siirryttäessä toimipiste-välilehdelle, ladataan tietokannasta toimipisteiden tiedot
-     * 
-     * 
-     * 15.4. 2019 Lassi Puurunen
-     * 
-     * @param event
-     * @throws SQLException 
-     */
-    
-    @FXML
-    private void toimipisteOnSelectionChanged(Event event) {
-
+    //Tabin aktivoituminen
+    @FXML private void toimipisteetTabOnSelectionChanged(Event event) {
         // Haetaan näkymään tiedot tietokannasta
         
         try {
@@ -140,24 +205,9 @@ public class MainFXMLController implements Initializable {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-
-    /**
-     * Toimipistenäkymän
-     * Lisää uusi - napin toiminto
-     * 
-     * 
-     * 16.4. 2019 Lassi Puurunen
-     * 18.4. 2019 Päivitetty käyttämään Service-luokkaa
-     * 
-     * @param event 
-     */
     
-    @FXML
-    private void toimipisteLisaaUusiButtonOnAction(ActionEvent event) {
-
-        // Lisätään uusi toimipiste
-        
+    //Lisää uusi napin painallus
+    @FXML private void toimipisteetLisaaUusiButtonOnAction(ActionEvent event) {
         try {
             mfxmls.lisaaUusiButton(new Toimipiste(), toimipisteetTableView, mainPane);
             
@@ -166,52 +216,21 @@ public class MainFXMLController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
-   
-
-    /**
-     * Toimipistenäkymän
-     * Muokkaa-napin toiminto
-     * 
-     * 
-     * 18.4. Lassi Puurunen
-     * 23.4. Uusi versio. Lassi Puurunen
-     * 
-     * @param event 
-     */
-    
-    @FXML
-    private void toimipisteMuokkaaButtonOnAction(ActionEvent event) {
-     
-        // Muokataan valittua toimipistettä
+    //Muokkaa-napin painallus
+    @FXML private void toimipisteetMuokkaaButtonOnAction(ActionEvent event) {
         try {
-            
             mfxmls.muokkaaButton(toimipisteetTableView, mainPane);
             
         } catch (SQLException | IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
     }
-    
 
-    /**
-     * Toimipisteen näkymän
-     * Poista-napin toiminto
-     * 
-     * 
-     * 16.4.2019 Lassi Puurunen
-     * 
-     * @param event 
-     */
-    
+    //Poista-napin painallus
     @FXML
-    private void toimipistePoistaButtonOnAction(ActionEvent event) {
-   
-        // Poistetaan valittu toimipiste
-        
+    private void toimipisteetPoistaButtonOnAction(ActionEvent event) {
         try {
             mfxmls.poistaButton(toimipisteetTableView);
  
@@ -220,27 +239,14 @@ public class MainFXMLController implements Initializable {
         }
     }
 
+
+   
     /**
      * Palvelu-näkymän metodit alkavat tästä
      * 
      */
     
-    
-    /**
-     * Siirryttäessä palvelu-välilehdelle, ladataan tietokannasta palveluiden tiedot
-     * 
-     * 
-     * 20.4. 2019 Joona Honkanen
-     * 
-     * @param event
-     * @throws SQLException 
-     */
-    
-    @FXML
-    private void palveluOnSelectionChanged(Event event) {
-
-        // Haetaan näkymään tiedot tietokannasta
-        
+    @FXML private void palvelutTabOnSelectionChanged(Event event) {
         try {
             palvelutTableView.setItems(new PalveluDao().list());
             
@@ -248,21 +254,14 @@ public class MainFXMLController implements Initializable {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-
     
-    /**
-     * Palvelunäkymän
-     * Lisää uusi - napin toiminto
-     * 
-     * 
-     * 20.4. 2019 Joona Honkanen
-     * 
-     * @param event 
-     */
+    @FXML private void palvelutToimipisteComboBoxOnAction(ActionEvent event) {
+    }
+
+    @FXML private void palvelutPalvelutyyppiComboBoxOnAction(ActionEvent event) {
+    }
     
-    @FXML
-    private void palveluLisaaUusiButtonOnAction(ActionEvent event) {
+    @FXML private void palveluLisaaUusiButtonOnAction(ActionEvent event) {
 
         // Lisätään uusi toimipiste
         
@@ -276,21 +275,8 @@ public class MainFXMLController implements Initializable {
         }
 
     }
-
-   
-
-    /**
-     * Palvelunäkymän
-     * Muokkaa-napin toiminto
-     * 
-     * 
-     * 20.4. Joona Honkanen
-     * 
-     * @param event 
-     */
     
-    @FXML
-    private void palveluMuokkaaButtonOnAction(ActionEvent event) {
+    @FXML private void palveluMuokkaaButtonOnAction(ActionEvent event) {
         
         // Muokataan valittua palvelua
         
@@ -302,19 +288,7 @@ public class MainFXMLController implements Initializable {
         }
     }
     
-
-    /**
-     * Palvelun näkymän
-     * Poista-napin toiminto
-     * 
-     * 
-     * 20.4.2019 Joona Honkanen
-     * 
-     * @param event 
-     */
-    
-    @FXML
-    private void palveluPoistaButtonOnAction(ActionEvent event) {
+    @FXML private void palveluPoistaButtonOnAction(ActionEvent event) {
    
         // Poistetaan valittu palvelu
         
@@ -331,20 +305,7 @@ public class MainFXMLController implements Initializable {
      * 
      */
     
-    
-    /**
-     * Siirryttäessä asiakas-välilehdelle, ladataan tietokannasta asiakasiden tiedot
-     * 
-     * 
-     * 15.4. 2019 Lassi Puurunen
-     * 
-     * @param event
-     * @throws SQLException 
-     */
-    
-    @FXML
-    private void asiakasOnSelectionChanged(Event event) {
-
+    @FXML private void asiakkaatTabOnSelectionChanged(Event event) {
         // Haetaan näkymään tiedot tietokannasta
         
         try {
@@ -354,22 +315,8 @@ public class MainFXMLController implements Initializable {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-
-    
-    /**
-     * Asiakasnäkymän
-     * Lisää uusi - napin toiminto
-     * 
-     * 
-     * 16.4. 2019 Lassi Puurunen
-     * 18.4. 2019 Päivitetty käyttämään Service-luokkaa
-     * 
-     * @param event 
-     */
-    
-    @FXML
-    private void asiakasLisaaUusiButtonOnAction(ActionEvent event) {
+       
+    @FXML private void asiakasLisaaUusiButtonOnAction(ActionEvent event) {
 
         // Lisätään uusi asiakas
         
@@ -384,20 +331,7 @@ public class MainFXMLController implements Initializable {
 
     }
 
-   
-
-    /**
-     * Asiakasnäkymän
-     * Muokkaa-napin toiminto
-     * 
-     * 
-     * 18.4. Lassi Puurunen
-     * 
-     * @param event 
-     */
-    
-    @FXML
-    private void asiakasMuokkaaButtonOnAction(ActionEvent event) {
+    @FXML private void asiakasMuokkaaButtonOnAction(ActionEvent event) {
         
         // Muokataan valittua asiakasttä
         
@@ -408,20 +342,8 @@ public class MainFXMLController implements Initializable {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-
-    /**
-     * Asiakas näkymän
-     * Poista-napin toiminto
-     * 
-     * 
-     * 16.4.2019 Lassi Puurunen
-     * 
-     * @param event 
-     */
-    
-    @FXML
-    private void asiakasPoistaButtonOnAction(ActionEvent event) {
+   
+    @FXML private void asiakasPoistaButtonOnAction(ActionEvent event) {
    
         // Poistetaan valittu asiakas
         
@@ -434,6 +356,68 @@ public class MainFXMLController implements Initializable {
     }
 
 
+    /**
+     * Varaukset -näkymän toiminnot
+     * 
+     */
+    
+    @FXML private void varauksetTabOnSelectionChanged(Event event) {
+    }
+    
+    @FXML private void varauksetToimipisteComboBoxOnAction(ActionEvent event) {
+    }
+
+    @FXML private void varauksetPalvelutyyppiComboBoxOnAction(ActionEvent event) {
+    }
+
+    @FXML private void varauksetMistaDatePickerOnAction(ActionEvent event) {
+    }
+
+    @FXML private void varauksetMihinDatePickerOnAction(ActionEvent event) {
+    }
+
+    @FXML private void varauksetLisaaUusiButtonOnAction(ActionEvent event) {
+    }
+
+    @FXML private void varauksetMuokkaaButtonOnAction(ActionEvent event) {
+    }
+
+    @FXML private void varauksetPoistaButtonOnAction(ActionEvent event) {
+    }
+
+    
+    /**
+     * Laskut -näkymän toiminnot
+     * 
+     */
+    
+    @FXML private void laskutTabOnSelectionChanged(Event event) {
+    }
+    
+    @FXML private void laskutToimipisteComboBoxOnAction(ActionEvent event) {
+    } 
+    
+    @FXML private void laskutAlkaenDatePickerOnAction(ActionEvent event) {
+    }
+
+    @FXML private void laskutPaattyenDatePickerOnAction(ActionEvent event) {
+    }
+
+    @FXML private void laskutTilaComboBoxOnAction(ActionEvent event) {
+    }
+
+    @FXML private void laskutLisaaUusiButtonOnAction(ActionEvent event) {
+    }
+
+    @FXML private void laskutMuokkaaButtonOnAction(ActionEvent event) {
+    }
+
+    @FXML private void laskutPoistaButtonOnAction(ActionEvent event) {
+    }
+
+    
+
+    
     
     // Yleismetodeja
     
@@ -454,12 +438,12 @@ public class MainFXMLController implements Initializable {
         
         toimipisteetTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                toimipisteMuokkaaButton.setDisable(false);
-                toimipistePoistaButton.setDisable(false);
+                toimipisteetMuokkaaButton.setDisable(false);
+                toimipisteetPoistaButton.setDisable(false);
             }
             if (newSelection == null) {
-                toimipisteMuokkaaButton.setDisable(true);
-                toimipistePoistaButton.setDisable(true);
+                toimipisteetMuokkaaButton.setDisable(true);
+                toimipisteetPoistaButton.setDisable(true);
             }
         });
         
@@ -519,6 +503,7 @@ public class MainFXMLController implements Initializable {
 
         // TODO Tehdään sama muille näkymille
     }
-
+    
+    
     
 }
