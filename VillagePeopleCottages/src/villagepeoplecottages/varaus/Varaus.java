@@ -13,25 +13,29 @@
  * Versiohistoria
  * 8.4.2019 Tekijä Lassi Puurunen
  * 10.4.2019 Dao-luokan vaatimat konstruktorit tehty
+ * 30.4.2019 Date muutettu LocalDate muotoon, lisätty asiakkaan etu ja sukunimi ja toimipisteen nimi
  */
 
 package villagepeoplecottages.varaus;
 
 import villagepeoplecottages.palveluvaraus.PalveluVaraus;
 import villagepeoplecottages.lasku.Lasku;
-import java.util.Date;
 import java.util.List;
 import villagepeoplecottages.asiakas.Asiakas;
 import villagepeoplecottages.toimipiste.Toimipiste;
-
+import java.time.LocalDate;
 
 public class Varaus {
     
     private int varausId;
     private int asiakasId;
     private int toimipisteId;
-    private Date varattuPvm;
-    private Date vahvistusPvm;
+    private LocalDate varattuPvm;
+    private LocalDate vahvistusPvm;
+    
+    private String asiakasEtunimi;
+    private String asiakasSukunimi;
+    private String toimipisteNimi;
     
     private List<PalveluVaraus> palvelut;
     private List<Lasku> laskut;
@@ -43,7 +47,7 @@ public class Varaus {
 
     }
 
-    public Varaus(int asiakasId, int toimipisteId, Date varattuPvm, Date vahvistusPvm) {
+    public Varaus(int asiakasId, int toimipisteId, LocalDate varattuPvm, LocalDate vahvistusPvm) {
         this.asiakasId = asiakasId;
         this.toimipisteId = toimipisteId;
         this.varattuPvm = varattuPvm;
@@ -52,7 +56,7 @@ public class Varaus {
     }
 
     
-    public Varaus(int varausId, int asiakasId, int toimipisteId, Date varattuPvm, Date vahvistusPvm) {
+    public Varaus(int varausId, int asiakasId, int toimipisteId, LocalDate varattuPvm, LocalDate vahvistusPvm) {
         this.varausId = varausId;
         this.asiakasId = asiakasId;
         this.toimipisteId = toimipisteId;
@@ -61,8 +65,8 @@ public class Varaus {
     }
 
     
-    public Varaus(int varausId, int asiakasId, int toimipisteId, Date varattuPvm, 
-            Date vahvistusPvm, 
+    public Varaus(int varausId, int asiakasId, int toimipisteId, LocalDate varattuPvm, 
+            LocalDate vahvistusPvm, 
             List<PalveluVaraus> varauksenPalvelut, List<Lasku> varauksenLaskut) {
         
         this.varausId = varausId;
@@ -75,6 +79,20 @@ public class Varaus {
     }
 
     
+
+    public Varaus(int varausId, int asiakasId, int toimipisteId, LocalDate varattuPvm, 
+            LocalDate vahvistusPvm, String asiakasEtunimi, String asiakasSukunimi, 
+            String toimipisteNimi) {
+      
+      this.varausId = varausId;
+      this.asiakasId = asiakasId;
+      this.toimipisteId = toimipisteId;
+      this.varattuPvm = varattuPvm;
+      this.vahvistusPvm = vahvistusPvm;
+      this.asiakasEtunimi = asiakasEtunimi;
+      this.asiakasSukunimi = asiakasSukunimi;
+      this.toimipisteNimi = toimipisteNimi;
+    }
 
     public int getVarausId() {
         return varausId;
@@ -100,19 +118,19 @@ public class Varaus {
         this.toimipisteId = toimipisteId;
     }
 
-    public Date getVarattuPvm() {
+    public LocalDate getVarattuPvm() {
         return varattuPvm;
     }
 
-    public void setVarattuPvm(Date varattuPvm) {
+    public void setVarattuPvm(LocalDate varattuPvm) {
         this.varattuPvm = varattuPvm;
     }
 
-    public Date getVahvistusPvm() {
+    public LocalDate getVahvistusPvm() {
         return vahvistusPvm;
     }
 
-    public void setVahvistusPvm(Date vahvistusPvm) {
+    public void setVahvistusPvm(LocalDate vahvistusPvm) {
         this.vahvistusPvm = vahvistusPvm;
     }
 
