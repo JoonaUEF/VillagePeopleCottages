@@ -1,5 +1,6 @@
 package villagepeoplecottages;
         
+import java.awt.event.ActionListener;
 import villagepeoplecottages.toimipiste.Toimipiste;
 import villagepeoplecottages.toimipiste.ToimipisteDao;
 import villagepeoplecottages.palvelu.Palvelu;
@@ -12,6 +13,10 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -26,22 +31,25 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
 /**
  * FXML Controller class
  *
  * @author Lassi Puurunen, Joona Honkanen
- * 
- * Versiohistoria
- * 
- * 15.4.2019 Tiedosto luotu. Lassi Puurunen
- * 15.4.2019 Toimipisteen TableView-tietokantayhteys toteutettu. Lassi Puurunen
- * 16.4.2019 Toimipisteen lisäys-toiminto lisätty. Lassi Puurunen
- * 16.4.2019 Toimipisteen poisto-toiminto lisätty, poisto ja muokkaus -nappien aktivointi ja deaktivointi. Lassi Puurunen
- * 18.4.2019 Päivitetty käyttämään MainFXMLService -luokkaa. Lassi Puurunen
- * 20.4.2019 Palvelun TableView, lisäys ja poisto-toiminnot lisätty. Joona Honkanen
- * 25.4.2019 Täydennetty kaikki FXML:n toiminnot.
+ 
+ Versiohistoria
+ 
+ 15.4.2019 Tiedosto luotu. Lassi Puurunen
+ 15.4.2019 Toimipisteen TableView-tietokantayhteys toteutettu. Lassi Puurunen
+ 16.4.2019 Toimipisteen lisäys-toiminto lisätty. Lassi Puurunen
+ 16.4.2019 Toimipisteen poisto-toiminto lisätty, poisto ja muokkaus -nappien aktivointi ja deaktivointi. Lassi Puurunen
+ 18.4.2019 Päivitetty käyttämään MainFXMLService -luokkaa. Lassi Puurunen
+ 20.4.2019 Palvelun TableView, lisäys ja poisto-toiminnot lisätty. Joona Honkanen
+ 25.4.2019 Täydennetty kaikki FXML:n toiminnot.
+ 2.5.2019  TableController otettu käyttöön.
  * 
  */
 
@@ -49,11 +57,15 @@ public class MainFXMLController implements Initializable {
 
     // Määritetään MainFXMLService käyttöön
     private MainFXMLService mfxmls = new MainFXMLService();
+    
+    // Määritetään TableController käyttöön
+    private TableController tableController = new TableController();
       
     // Mainpanen avulla voidaan päänäkymä aktivoida tai deaktivoida muita ikkunoita käsitellessä
     @FXML private AnchorPane mainPane;
     
-    // Määritetään toimipistenäkymän tiedot
+    
+    
     @FXML private Tab toimipisteetTab;
     
     @FXML private TextField toimipisteetHakuTextField;
@@ -176,12 +188,19 @@ public class MainFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        // Tehdään kuuntelijat
-        this.listeners();
-        
         // Tehdään PropertyValueFactory:t, joiden avulla oliot yhdistetään
         // tableView:hin
         this.propertyValueFactories();
+        
+        // Alustetaan tableController ensimmäiseen näkymään
+        try {
+            tableController.initializeToimipisteTable(toimipisteetTableView);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // Tehdään kuuntelijat
+        this.listeners();
         
     }    
     
@@ -195,14 +214,15 @@ public class MainFXMLController implements Initializable {
     
     //Tabin aktivoituminen
     @FXML private void toimipisteetTabOnSelectionChanged(Event event) {
-        // Haetaan näkymään tiedot tietokannasta
-        
         try {
-            toimipisteetTableView.setItems(new ToimipisteDao().list());
-            
+            // Haetaan näkymään tiedot tietokannasta
+
+            tableController.initializeToimipisteTable(toimipisteetTableView);
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+            
     }
     
     //Lisää uusi napin painallus
@@ -468,7 +488,14 @@ public class MainFXMLController implements Initializable {
             	asiakasPoistaButton.setDisable(true);
             }
         });
+        
         //TODO haku- ja rajaustoimintojen kuuntelijat
+        
+        //Toimipisteen Hakutoiminnon kuuntelija
+        toimipisteetHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            tableController.toimipisteHakuListener(newValue);
+        });
+  
         
     }
 
