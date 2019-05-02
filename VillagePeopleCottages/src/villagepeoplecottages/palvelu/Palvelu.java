@@ -19,7 +19,10 @@
 package villagepeoplecottages.palvelu;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import villagepeoplecottages.palveluvaraus.PalveluVaraus;
 import villagepeoplecottages.toimipiste.Toimipiste;
 
@@ -38,8 +41,18 @@ public class Palvelu {
     
     private List<PalveluVaraus> palvelunVaraukset;
     
-    final private String[] tyypit = {"Majoitus", "Lisäpalvelu"}; 
+    private List<String> tyypit; 
 
+    //Tyypit Stringinä listan järjestyksessä
+    
+    public List<String> getTyypit() {
+        tyypit = new ArrayList<>();
+        tyypit.add("Majoitus");
+        tyypit.add("Lisäpalvelu");
+        return tyypit;
+    }
+    
+    
     public Palvelu() {
     }
 
@@ -182,12 +195,10 @@ public class Palvelu {
     
     // Muuttaa tyypin Stringiksi
     public String getTyyppiString() {
-        return tyypit[this.tyyppi];
+        return getTyypit().get(tyyppi);
     }
 
-    public String[] getTyypit() {
-        return tyypit;
-    }
+    
     
     // Toimipisteen getteri palauttaa tiedon tietokannasta
 

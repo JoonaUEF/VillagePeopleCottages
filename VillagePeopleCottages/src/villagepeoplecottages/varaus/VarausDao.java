@@ -4,6 +4,7 @@
  * 
  * Versiohistoria
  * 30.04.2019 Toteutettu toimivaksi. Joona Honkanen
+ * 2.5. 2019 LocalDate otettu pois Daosta, ei toimi sql:n kanssa. Lassi Puurunen
  * 
  */
 
@@ -44,7 +45,7 @@ public class VarausDao implements Dao<Varaus, Integer> {
     Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
 
     PreparedStatement stmt =
-        connection.prepareStatement("SELECT * FROM Varaus WHERE varaus_id = ?");
+        connection.prepareStatement("SELECT * FROM Varaus WHERE toimipiste_id = ?");
 
     stmt.setInt(1, toimipisteId);
 
@@ -58,7 +59,7 @@ public class VarausDao implements Dao<Varaus, Integer> {
     // Lisätään tietokannan taulun rivit listalle olioina
     do {
       palautettava.add(new Varaus(rs.getInt("varaus_id"), rs.getInt("asiakas_id"),
-          rs.getInt("toimipiste_id"), (LocalDate) rs.getObject("varattu_pvm"), (LocalDate) rs.getObject("vahvistus_pvm"),
+          rs.getInt("toimipiste_id"), rs.getDate("varattu_pvm"), rs.getDate("vahvistus_pvm"),
           new ArrayList<PalveluVaraus>(), new ArrayList<Lasku>()));
     } while (rs.next());
 
@@ -125,7 +126,7 @@ public class VarausDao implements Dao<Varaus, Integer> {
     List<Lasku> varauksenLaskut = new ArrayList<>();
 
     Varaus varaus = new Varaus(varausId, rs.getInt("asiakas_id"), rs.getInt("toimipiste_id"),
-        rs.getObject("varattu_pvm", LocalDate.class), rs.getObject("vahvistus_pvm", LocalDate.class),
+        rs.getDate("varattu_pvm"), rs.getDate("vahvistus_pvm"),
         varauksenPalvelut, varauksenLaskut);
 
     stmt.close();
@@ -207,8 +208,8 @@ public class VarausDao implements Dao<Varaus, Integer> {
     // Lisätään tietokannan taulun rivit listalle olioina
     do {
       varaukset.add(new Varaus(rs.getInt("varaus_id"), rs.getInt("asiakas_id"),
-          rs.getInt("toimipiste_id"), (LocalDate) rs.getObject("varattu_pvm"),
-          (LocalDate) rs.getObject("vahvistus_pvm"), rs.getString("asiakassukunimi"),
+          rs.getInt("toimipiste_id"), rs.getDate("varattu_pvm"),
+          rs.getDate("vahvistus_pvm"), rs.getString("asiakassukunimi"),
           rs.getString("asiakassukunimi"), rs.getString("toimipistenimi")));
     } while (rs.next());
 

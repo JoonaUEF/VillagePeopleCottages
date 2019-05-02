@@ -16,146 +16,145 @@
 
 package villagepeoplecottages.palveluvaraus;
 
-import java.time.LocalDate;
+
+import java.util.Date;
+import java.util.List;
 import villagepeoplecottages.palvelu.Palvelu;
 import villagepeoplecottages.varaus.Varaus;
 
 
 public class PalveluVaraus {
 
-  private String toimipiste;
-  private int varausId;
-  private int palveluId;
-  private int asiakasId;
-  private int palveluTyyppi;
-  private String palvelunNimi;
-  private LocalDate palvelunVarausAlku;
-  private LocalDate palvelunVarausLoppu;
-  private LocalDate varausVarattu;
-  private LocalDate varausVahvistettu;
+    
+    private String toimipiste;
+    private int varausId;
+    private int palveluId;
+    private int asiakasId;
+    private int palveluTyyppi;
+    private String palvelunNimi;
+    private Date palvelunVarausAlku;
+    private Date palvelunVarausLoppu;
+    private Date varausVarattu;
+    private Date varausVahvistettu;
+    
+    private Palvelu palvelu;
+    private Varaus varaus;
 
-  private Palvelu palvelu;
-  private Varaus varaus;
+    public String getPalveluTyyppiString() {
+        List<String> palvelutyypit = new Palvelu().getTyypit();
+        return palvelutyypit.get(palveluTyyppi);
+    }
+    
+    
+    public PalveluVaraus() {
+    }
 
-  public String getPalveluTyyppiString() {
-    String[] palvelutyypit = new Palvelu().getTyypit();
-    return palvelutyypit[this.palveluTyyppi];
-  }
+    public PalveluVaraus(String toimipiste, int VarausId, int palveluId, int asiakasId, int palveluTyyppi, String palvelunNimi, Date palvelunVarausAlku, Date palvelunVarausLoppu, Date varausVarattu, Date varausVahvistettu) {
+        this.toimipiste = toimipiste;
+        this.varausId = VarausId;
+        this.palveluId = palveluId;
+        this.asiakasId = asiakasId;
+        this.palveluTyyppi = palveluTyyppi;
+        this.palvelunNimi = palvelunNimi;
+        this.palvelunVarausAlku = palvelunVarausAlku;
+        this.palvelunVarausLoppu = palvelunVarausLoppu;
+        this.varausVarattu = varausVarattu;
+        this.varausVahvistettu = varausVahvistettu;
+    }
 
+    public String getToimipiste() {
+        return toimipiste;
+    }
 
-  public PalveluVaraus() {}
+    public void setToimipiste(String toimipiste) {
+        this.toimipiste = toimipiste;
+    }
 
-  public PalveluVaraus(String toimipiste, int VarausId, int palveluId, int asiakasId,
-      int palveluTyyppi, String palvelunNimi, LocalDate palvelunVarausAlku, LocalDate palvelunVarausLoppu,
-      LocalDate varausVarattu, LocalDate varausVahvistettu) {
-    this.toimipiste = toimipiste;
-    this.varausId = VarausId;
-    this.palveluId = palveluId;
-    this.asiakasId = asiakasId;
-    this.palveluTyyppi = palveluTyyppi;
-    this.palvelunNimi = palvelunNimi;
-    this.palvelunVarausAlku = palvelunVarausAlku;
-    this.palvelunVarausLoppu = palvelunVarausLoppu;
-    this.varausVarattu = varausVarattu;
-    this.varausVahvistettu = varausVahvistettu;
-  }
+    public int getVarausId() {
+        return varausId;
+    }
 
-  public String getToimipiste() {
-    return toimipiste;
-  }
+    public void setVarausId(int VarausId) {
+        this.varausId = VarausId;
+    }
 
-  public void setToimipiste(String toimipiste) {
-    this.toimipiste = toimipiste;
-  }
+    public int getPalveluId() {
+        return palveluId;
+    }
 
-  public int getVarausId() {
-    return varausId;
-  }
+    public void setPalveluId(int palveluId) {
+        this.palveluId = palveluId;
+    }
 
-  public void setVarausId(int VarausId) {
-    this.varausId = VarausId;
-  }
+    public int getAsiakasId() {
+        return asiakasId;
+    }
 
-  public int getPalveluId() {
-    return palveluId;
-  }
+    public void setAsiakasId(int asiakasId) {
+        this.asiakasId = asiakasId;
+    }
 
-  public void setPalveluId(int palveluId) {
-    this.palveluId = palveluId;
-  }
+    public int getPalveluTyyppi() {
+        return palveluTyyppi;
+    }
 
-  public int getAsiakasId() {
-    return asiakasId;
-  }
+    public void setPalveluTyyppi(int palveluTyyppi) {
+        this.palveluTyyppi = palveluTyyppi;
+    }
 
-  public void setAsiakasId(int asiakasId) {
-    this.asiakasId = asiakasId;
-  }
+    public String getPalvelunNimi() {
+        return palvelunNimi;
+    }
 
-  public int getPalveluTyyppi() {
-    return palveluTyyppi;
-  }
+    public void setPalvelunNimi(String palvelunNimi) {
+        this.palvelunNimi = palvelunNimi;
+    }
 
-  public void setPalveluTyyppi(int palveluTyyppi) {
-    this.palveluTyyppi = palveluTyyppi;
-  }
+    public Date getPalvelunVarausAlku() {
+        return palvelunVarausAlku;
+    }
 
-  public String getPalvelunNimi() {
-    return palvelunNimi;
-  }
+    public void setPalvelunVarausAlku(Date palvelunVarausAlku) {
+        this.palvelunVarausAlku = palvelunVarausAlku;
+    }
 
-  public void setPalvelunNimi(String palvelunNimi) {
-    this.palvelunNimi = palvelunNimi;
-  }
+    public Date getPalvelunVarausLoppu() {
+        return palvelunVarausLoppu;
+    }
 
-  public LocalDate getPalvelunVarausAlku() {
-    return palvelunVarausAlku;
-  }
+    public void setPalvelunVarausLoppu(Date palvelunVarausLoppu) {
+        this.palvelunVarausLoppu = palvelunVarausLoppu;
+    }
 
-  public void setPalvelunVarausAlku(LocalDate palvelunVarausAlku) {
-    this.palvelunVarausAlku = palvelunVarausAlku;
-  }
+    public Date getVarausVarattu() {
+        return varausVarattu;
+    }
 
-  public LocalDate getPalvelunVarausLoppu() {
-    return palvelunVarausLoppu;
-  }
+    public void setVarausVarattu(Date varausVarattu) {
+        this.varausVarattu = varausVarattu;
+    }
 
-  public void setPalvelunVarausLoppu(LocalDate palvelunVarausLoppu) {
-    this.palvelunVarausLoppu = palvelunVarausLoppu;
-  }
+    public Date getVarausVahvistettu() {
+        return varausVahvistettu;
+    }
 
-  public LocalDate getVarausVarattu() {
-    return varausVarattu;
-  }
+    public void setVarausVahvistettu(Date varausVahvistettu) {
+        this.varausVahvistettu = varausVahvistettu;
+    }
 
-  public void setVarausVarattu(LocalDate varausVarattu) {
-    this.varausVarattu = varausVarattu;
-  }
+    public Palvelu getPalvelu() {
+        return palvelu;
+    }
 
-  public LocalDate getVarausVahvistettu() {
-    return varausVahvistettu;
-  }
+    public void setPalvelu(Palvelu palvelu) {
+        this.palvelu = palvelu;
+    }
 
-  public void setVarausVahvistettu(LocalDate varausVahvistettu) {
-    this.varausVahvistettu = varausVahvistettu;
-  }
+    public Varaus getVaraus() {
+        return varaus;
+    }
 
-  public Palvelu getPalvelu() {
-    return palvelu;
-  }
-
-  public void setPalvelu(Palvelu palvelu) {
-    this.palvelu = palvelu;
-  }
-
-  public Varaus getVaraus() {
-    return varaus;
-  }
-
-  public void setVaraus(Varaus varaus) {
-    this.varaus = varaus;
-  }
-
-
-
+    public void setVaraus(Varaus varaus) {
+        this.varaus = varaus;
+    }
 }

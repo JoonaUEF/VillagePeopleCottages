@@ -20,6 +20,7 @@ package villagepeoplecottages.toimipiste;
 import villagepeoplecottages.palvelu.Palvelu;
 import java.util.List;
 import javafx.collections.ObservableList;
+import villagepeoplecottages.palveluvaraus.PalveluVaraus;
 import villagepeoplecottages.varaus.Varaus;
 
 
@@ -34,7 +35,7 @@ public class Toimipiste {
     private String puhelinnro;
     
     private ObservableList<Palvelu> palvelut;
-    private ObservableList<Varaus> varaukset;
+    private ObservableList<PalveluVaraus> palveluvaraukset;
 
     public Toimipiste() {
 
@@ -61,7 +62,7 @@ public class Toimipiste {
 
     public Toimipiste(int toimipisteId, String nimi, String lahiosoite, 
             String postitoimipaikka, String postinro, String email, String puhelinnro, 
-            ObservableList<Palvelu> palvelut, ObservableList<Varaus> varaukset) {
+            ObservableList<Palvelu> palvelut, ObservableList<PalveluVaraus> varaukset) {
         
         this.toimipisteId = toimipisteId;
         this.nimi = nimi;
@@ -71,7 +72,7 @@ public class Toimipiste {
         this.email = email;
         this.puhelinnro = puhelinnro;
         this.palvelut = palvelut;
-        this.varaukset = varaukset;
+        this.palveluvaraukset = varaukset;
     }
 
     
@@ -140,18 +141,20 @@ public class Toimipiste {
         this.palvelut = palvelut;
     }
 
-    public ObservableList<Varaus> getVaraukset() {
-        return varaukset;
+    public ObservableList<PalveluVaraus> getVaraukset() {
+        return palveluvaraukset;
     }
 
-    public void setVaraukset(ObservableList<Varaus> varaukset) {
-        this.varaukset = varaukset;
+    public void setVaraukset(ObservableList<PalveluVaraus> varaukset) {
+        this.palveluvaraukset = varaukset;
     }
 
     @Override
     public String toString() {
-        return "Toimipiste{" + "toimipisteId=" + toimipisteId + ", nimi=" + nimi + ", lahiosoite=" + lahiosoite + ", postitoimipaikka=" + postitoimipaikka + ", postinro=" + postinro + ", email=" + email + ", puhelinnro=" + puhelinnro + ", palvelut=" + palvelut + ", varaukset=" + varaukset + '}';
+        return "Toimipiste{" + "toimipisteId=" + toimipisteId + ", nimi=" + nimi + ", lahiosoite=" + lahiosoite + ", postitoimipaikka=" + postitoimipaikka + ", postinro=" + postinro + ", email=" + email + ", puhelinnro=" + puhelinnro + ", palvelut=" + palvelut + ", palveluvaraukset=" + palveluvaraukset + '}';
     }
+
+    
     
     
     
