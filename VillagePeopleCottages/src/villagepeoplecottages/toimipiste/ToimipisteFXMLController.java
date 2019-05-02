@@ -93,7 +93,7 @@ public class ToimipisteFXMLController implements Initializable {
     @FXML private Button varausMuokkaaButton;
     @FXML private Button varausPoistaButton;
     
-    @FXML private TableView<?> varauksetTableView;
+    @FXML private TableView<PalveluVaraus> varauksetTableView;
         @FXML private TableColumn<PalveluVaraus, Integer> varausIdColumn;
         @FXML private TableColumn<PalveluVaraus, Integer> varausAsiakasIdColumn;
         @FXML private TableColumn<PalveluVaraus, String> varausPalveluTyyppiColumn;
@@ -273,9 +273,10 @@ public class ToimipisteFXMLController implements Initializable {
     @FXML
     private void varauksetTabOnSelectionChanged(Event event) {
         try {
-            tfxmls.paivitaNakyma(new PalveluVaraus(), selectedToimipiste, varauksetTableView);
+            tableController.initializeTable(new PalveluVaraus(), selectedToimipiste, varauksetTableView);
+            
         } catch (SQLException ex) {
-            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }

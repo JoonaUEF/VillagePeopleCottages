@@ -69,7 +69,7 @@ public abstract class AbstractSubFXMLService extends AbstractMainFXMLService {
         mainPane.setDisable(false);
         
         //Päivitetään objektin mukainen näkymä
-        paivitaNakyma(object, tv);    
+//        paivitaNakyma(object, tv);    
 
       }
 

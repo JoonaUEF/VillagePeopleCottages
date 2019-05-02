@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import villagepeoplecottages.MainTableController;
 import villagepeoplecottages.asiakas.Asiakas;
 import villagepeoplecottages.asiakas.AsiakasDao;
 import villagepeoplecottages.asiakas.AsiakasFXMLController;
@@ -25,6 +26,7 @@ import villagepeoplecottages.palveluvaraus.PalveluVarausFXMLController;
 import villagepeoplecottages.toimipiste.Toimipiste;
 import villagepeoplecottages.toimipiste.ToimipisteDao;
 import villagepeoplecottages.toimipiste.ToimipisteFXMLController;
+import villagepeoplecottages.toimipiste.ToimipisteTableController;
 import villagepeoplecottages.varaus.Varaus;
 import villagepeoplecottages.varaus.VarausDao;
 import villagepeoplecottages.varaus.VarausFXMLController;
@@ -47,6 +49,7 @@ import villagepeoplecottages.varaus.VarausFXMLController;
  * 24.4.2019 v1 Lassi Puurunen
  */
 public abstract class AbstractMainFXMLService {
+    
     
     /**
      * Lisää uusi - napin toiminto
@@ -76,8 +79,6 @@ public abstract class AbstractMainFXMLService {
         //Aktivoidaan mainPane stagen sulkeuduttua
         mainPane.setDisable(false);
         
-        //Päivitetään objektin mukainen näkymä
-        paivitaNakyma(object, tv);
         
     }
     
@@ -116,8 +117,8 @@ public abstract class AbstractMainFXMLService {
         //Aktivoidaan mainPane stagen sulkeuduttua
         mainPane.setDisable(false);
         
-        //Päivitetään objektin mukainen näkymä
-        paivitaNakyma(object, tv);
+//        //Päivitetään objektin mukainen näkymä
+//        paivitaNakyma(object, tv);
         
     }
 
@@ -141,7 +142,7 @@ public abstract class AbstractMainFXMLService {
         
         delete(object);
         
-        paivitaNakyma(object, tv);
+//        paivitaNakyma(object, tv);
     }
     
     
@@ -283,38 +284,38 @@ public abstract class AbstractMainFXMLService {
     }
 
     //Päivitetään objektin mukainen näkymä
-    public void paivitaNakyma(Object object, TableView tv) throws SQLException {
-        
-        if (object instanceof Toimipiste) {
- 
-            tv.setItems(new ToimipisteDao().list());
-        }
-        
-        else if (object instanceof Palvelu) {
-          
-            tv.setItems(new PalveluDao().list());
-        }
-        
-        else if (object instanceof Asiakas) {
-            
-            tv.setItems(new AsiakasDao().list());
-        }
-        
-        else if (object instanceof Lasku) {
-          
-            tv.setItems(new LaskuDao().list());
-        }
-        
-        else if (object instanceof PalveluVaraus) {
-            
-            tv.setItems(new PalveluVarausDao().list());
-        }
-        
-        else if (object instanceof Varaus) {
-            
-            tv.setItems(new VarausDao().list());
-        }
-    }
+//    public void paivitaNakyma(Object object, TableView tv) throws SQLException {
+//        
+//        if (object instanceof Toimipiste) {
+// 
+//            mtc.initializeTable(object, tv);
+//        }
+//        
+//        else if (object instanceof Palvelu) {
+//          
+//            tv.setItems(new PalveluDao().list());
+//        }
+//        
+//        else if (object instanceof Asiakas) {
+//            
+//            tv.setItems(new AsiakasDao().list());
+//        }
+//        
+//        else if (object instanceof Lasku) {
+//          
+//            tv.setItems(new LaskuDao().list());
+//        }
+//        
+//        else if (object instanceof PalveluVaraus) {
+//            
+//            tv.setItems(new PalveluVarausDao().list());
+//        }
+//        
+//        else if (object instanceof Varaus) {
+//            
+//            tv.setItems(new VarausDao().list());
+//        }
+//    }
 
     // Poistetaan tietokannasta objektin mukainen tietue.
     public void delete(Object object) throws SQLException {

@@ -9,6 +9,8 @@ import javafx.scene.control.TableView;
 import villagepeoplecottages.MainFXMLController;
 import villagepeoplecottages.palvelu.Palvelu;
 import villagepeoplecottages.palvelu.PalveluDao;
+import villagepeoplecottages.palveluvaraus.PalveluVaraus;
+import villagepeoplecottages.palveluvaraus.PalveluVarausDao;
 
 /**
  *
@@ -20,6 +22,11 @@ public class ToimipisteTableController extends MainFXMLController {
     private ObservableList<Palvelu> palveluMasterData;
     private FilteredList<Palvelu> palveluFilteredData;
     private SortedList<Palvelu> palveluSortedData;
+    
+    // Määritetään varausnäkymän tiedot
+    private ObservableList<PalveluVaraus> pvMasterData;
+    private FilteredList<PalveluVaraus> pvFilteredData;
+    private SortedList<PalveluVaraus> pvSortedData;
 
     public ToimipisteTableController() {
     }
@@ -31,6 +38,14 @@ public class ToimipisteTableController extends MainFXMLController {
         palveluSortedData = new SortedList<>(palveluFilteredData);
         palveluSortedData.comparatorProperty().bind(tv.comparatorProperty());
         tv.setItems(palveluSortedData);
+    }
+    
+    public void initializeTable(PalveluVaraus pv, Toimipiste selectedToimipiste, TableView<PalveluVaraus> tv) throws SQLException {
+        pvMasterData = new PalveluVarausDao().listByToimipisteId(selectedToimipiste.getToimipisteId());
+        pvFilteredData = new FilteredList<>(pvMasterData, p -> true);
+        pvSortedData = new SortedList<>(pvFilteredData);
+        pvSortedData.comparatorProperty().bind(tv.comparatorProperty());
+        tv.setItems(pvSortedData);
     }
 
     public FilteredList<Palvelu> getPalveluFilteredData() {

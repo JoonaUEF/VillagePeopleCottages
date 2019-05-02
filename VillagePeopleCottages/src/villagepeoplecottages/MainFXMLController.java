@@ -221,6 +221,8 @@ public class MainFXMLController implements Initializable {
     @FXML private void toimipisteetLisaaUusiButtonOnAction(ActionEvent event) {
         try {
             mfxmls.lisaaUusiButton(new Toimipiste(), toimipisteetTableView, mainPane);
+            //päivitetään näkymä
+            tableController.initializeTable(new Toimipiste(), toimipisteetTableView);
             
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -233,6 +235,8 @@ public class MainFXMLController implements Initializable {
     @FXML private void toimipisteetMuokkaaButtonOnAction(ActionEvent event) {
         try {
             mfxmls.muokkaaButton(toimipisteetTableView, mainPane);
+            //päivitetään näkymä
+            tableController.initializeTable(new Toimipiste(), toimipisteetTableView);
             
         } catch (SQLException | IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -244,6 +248,8 @@ public class MainFXMLController implements Initializable {
     private void toimipisteetPoistaButtonOnAction(ActionEvent event) {
         try {
             mfxmls.poistaButton(toimipisteetTableView);
+            //päivitetään näkymä
+            tableController.initializeTable(new Toimipiste(), toimipisteetTableView);
  
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
