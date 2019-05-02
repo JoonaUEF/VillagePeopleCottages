@@ -1,6 +1,5 @@
 package villagepeoplecottages;
         
-import java.awt.event.ActionListener;
 import villagepeoplecottages.toimipiste.Toimipiste;
 import villagepeoplecottages.toimipiste.ToimipisteDao;
 import villagepeoplecottages.palvelu.Palvelu;
@@ -13,10 +12,6 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -31,8 +26,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 
 /**
@@ -49,7 +42,7 @@ import javax.swing.event.DocumentListener;
  18.4.2019 Päivitetty käyttämään MainFXMLService -luokkaa. Lassi Puurunen
  20.4.2019 Palvelun TableView, lisäys ja poisto-toiminnot lisätty. Joona Honkanen
  25.4.2019 Täydennetty kaikki FXML:n toiminnot.
- 2.5.2019  TableController otettu käyttöön.
+ 2.5.2019  MainTableController otettu käyttöön.
  * 
  */
 
@@ -58,8 +51,8 @@ public class MainFXMLController implements Initializable {
     // Määritetään MainFXMLService käyttöön
     private MainFXMLService mfxmls = new MainFXMLService();
     
-    // Määritetään TableController käyttöön
-    private TableController tableController = new TableController();
+    // Määritetään MainTableController käyttöön
+    private MainTableController tableController = new MainTableController();
       
     // Mainpanen avulla voidaan päänäkymä aktivoida tai deaktivoida muita ikkunoita käsitellessä
     @FXML private AnchorPane mainPane;
@@ -194,7 +187,7 @@ public class MainFXMLController implements Initializable {
         
         // Alustetaan tableController ensimmäiseen näkymään
         try {
-            tableController.initializeToimipisteTable(toimipisteetTableView);
+            tableController.initializeTable(new Toimipiste(), toimipisteetTableView);
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -216,8 +209,7 @@ public class MainFXMLController implements Initializable {
     @FXML private void toimipisteetTabOnSelectionChanged(Event event) {
         try {
             // Haetaan näkymään tiedot tietokannasta
-
-            tableController.initializeToimipisteTable(toimipisteetTableView);
+            tableController.initializeTable(new Toimipiste(), toimipisteetTableView);
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -267,7 +259,7 @@ public class MainFXMLController implements Initializable {
     
     @FXML private void palvelutTabOnSelectionChanged(Event event) {
         try {
-            palvelutTableView.setItems(new PalveluDao().list());
+            tableController.initializeTable(new Palvelu(), palvelutTableView);
             
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -489,13 +481,18 @@ public class MainFXMLController implements Initializable {
             }
         });
         
+        
         //TODO haku- ja rajaustoimintojen kuuntelijat
         
         //Toimipisteen Hakutoiminnon kuuntelija
         toimipisteetHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            tableController.toimipisteHakuListener(newValue);
+            new ListenerMethods().toimipisteHakuListener(tableController.getToimipisteFilteredData(), newValue);
         });
-  
+        
+        //Palvelu Hakutoiminnon kuuntelija
+        palvelutHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            new ListenerMethods().palveluHakuListener(tableController.getPalveluFilteredData(), newValue);
+        });
         
     }
 

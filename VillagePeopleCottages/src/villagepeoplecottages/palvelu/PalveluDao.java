@@ -207,7 +207,7 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
     }
 
     public ObservableList<Palvelu> listByToimipisteId(int toimipisteId) throws SQLException {
-        List<Palvelu> palvelut = new ArrayList<>();
+        ObservableList<Palvelu> observablePalvelu = FXCollections.observableArrayList();
         
         Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
 
@@ -219,12 +219,12 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
         
         //Jos ei ole rivejä, palautetaan null-viite
         if(!rs.next()) {
-            return null;
+            return observablePalvelu;
         }
         
         //Lisätään tietokannan taulun rivit listalle olioina
         do {
-            palvelut.add(new Palvelu(rs.getInt("palvelu_id"), rs.getInt("toimipiste_id"), rs.getString("nimi"),
+            observablePalvelu.add(new Palvelu(rs.getInt("palvelu_id"), rs.getInt("toimipiste_id"), rs.getString("nimi"),
                     rs.getInt("tyyppi"), rs.getString("kuvaus"),
                     rs.getDouble("hinta"), rs.getDouble("alv")));
         } while (rs.next());
@@ -233,14 +233,7 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
         stmt.close();
         connection.close();
         
-        
-        
-        //Siirretään luotu lista Observablelistiin.
-        
-        ObservableList<Palvelu> observablePalvelu = FXCollections.observableArrayList();
-        
-        observablePalvelu.addAll(palvelut);
-        
+       
         return observablePalvelu;
     }
     
