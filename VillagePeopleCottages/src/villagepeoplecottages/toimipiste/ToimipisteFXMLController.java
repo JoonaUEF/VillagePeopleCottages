@@ -24,6 +24,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import villagepeoplecottages.ListenerMethods;
+import villagepeoplecottages.MainFXMLController;
 
 /**
  * FXML Controller class
@@ -35,6 +37,9 @@ public class ToimipisteFXMLController implements Initializable {
 
     // Ladataan Service käyttöön
     private ToimipisteFXMLService tfxmls = new ToimipisteFXMLService();
+    
+    // Ladataan MainTableController käyttöön
+    private ToimipisteTableController tableController = new ToimipisteTableController();
     
     // Controllerille tuleva olio initData:ssa
     private Toimipiste selectedToimipiste;
@@ -103,7 +108,7 @@ public class ToimipisteFXMLController implements Initializable {
     //tilapalkki
     @FXML private Label tilaPalkkiLabel;
 
-    
+   
      /** 
       * Initializes the controller class.
       * 
@@ -112,13 +117,17 @@ public class ToimipisteFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        // Tehdään kuuntelijat
-        this.listeners();
+        
         
         // Tehdään PropertyValueFactory:t, joiden avulla oliot yhdistetään
         // tableView:hin
         this.propertyValueFactories();
-            
+        
+        // Tehdään kuuntelijat
+        this.listeners();  
+        
+        
+        
     }    
 
     
@@ -148,11 +157,10 @@ public class ToimipisteFXMLController implements Initializable {
 
         // Laitetaan palvelut TableViewiin valitun toimipisteen palvelut
         try {
-            tfxmls.paivitaNakyma(selectedToimipiste, new Palvelu(), palvelutTableView);
+            tableController.initializeTable(new Palvelu(), selectedToimipiste, palvelutTableView);
         } catch (SQLException ex) {
             Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }   
     }
     
     
@@ -210,9 +218,10 @@ public class ToimipisteFXMLController implements Initializable {
     @FXML
     private void palveluTabOnSelectionChanged(Event event) {
         try {
-            tfxmls.paivitaNakyma(selectedToimipiste, new Palvelu(), palvelutTableView);
+            tableController.initializeTable(new Palvelu(), selectedToimipiste, palvelutTableView);
+            
         } catch (SQLException ex) {
-            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -264,7 +273,7 @@ public class ToimipisteFXMLController implements Initializable {
     @FXML
     private void varauksetTabOnSelectionChanged(Event event) {
         try {
-            tfxmls.paivitaNakyma(selectedToimipiste, new PalveluVaraus(), varauksetTableView);
+            tfxmls.paivitaNakyma(new PalveluVaraus(), selectedToimipiste, varauksetTableView);
         } catch (SQLException ex) {
             Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -347,6 +356,11 @@ public class ToimipisteFXMLController implements Initializable {
         });
         
         //TODO haku- ja rajaustoimintojen kuuntelijat
+        
+        //Palvelu Hakutoiminnon kuuntelija
+        palveluHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            new ToimipisteFXMLListeners().palveluHakuListener(tableController.getPalveluFilteredData(), newValue);
+        });
         
     }
 
