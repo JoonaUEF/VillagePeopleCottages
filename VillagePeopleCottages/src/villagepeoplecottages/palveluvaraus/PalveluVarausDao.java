@@ -81,9 +81,9 @@ public class PalveluVarausDao implements Dao<PalveluVaraus, Integer> {
 
     PalveluVaraus palveluVaraus = new PalveluVaraus(rs.getString("toimipistenimi"), varausId,
         rs.getInt("palvelu_id"), rs.getInt("asiakasid"), rs.getInt("palvelutyyppi"),
-        rs.getString("palvelunnimi"), rs.getObject("alku", LocalDate.class),
-        rs.getObject("loppu", LocalDate.class), rs.getObject("varausvarattu", LocalDate.class),
-        rs.getObject("varausvahvistettu", LocalDate.class));
+        rs.getString("palvelunnimi"), rs.getDate("alku"),
+        rs.getDate("loppu"), rs.getDate("varausvarattu"),
+        rs.getDate("varausvahvistettu"));
 
     stmt.close();
     rs.close();
@@ -163,9 +163,9 @@ public class PalveluVarausDao implements Dao<PalveluVaraus, Integer> {
     do {
       palveluvaraukset.add(new PalveluVaraus(rs.getString("nimi"), rs.getInt("varaus_id"),
           rs.getInt("palvelu_id"), rs.getInt("asiakas_id"), rs.getInt("tyyppi"),
-          rs.getString("palvelun_nimi"), rs.getObject("alku", LocalDate.class),
-          rs.getObject("loppu", LocalDate.class), rs.getObject("varattu_pvm", LocalDate.class),
-          rs.getObject("vahvistettu_pvm", LocalDate.class)));
+          rs.getString("palvelun_nimi"), rs.getDate("alku"),
+          rs.getDate("loppu"), rs.getDate("varattu_pvm"),
+          rs.getDate("vahvistettu_pvm")));
 
 
     } while (rs.next());
@@ -210,9 +210,9 @@ public class PalveluVarausDao implements Dao<PalveluVaraus, Integer> {
     do {
       palveluVaraukset.add(new PalveluVaraus(rs.getString("nimi"), rs.getInt("varaus_id"),
           rs.getInt("palvelu_id"), rs.getInt("asiakas_id"), rs.getInt("tyyppi"),
-          rs.getString("palvelun_nimi"), rs.getObject("alku", LocalDate.class),
-          rs.getObject("loppu", LocalDate.class), rs.getObject("varattu_pvm", LocalDate.class),
-          rs.getObject("vahvistus_pvm", LocalDate.class)));
+          rs.getString("palvelun_nimi"), rs.getDate("alku"),
+          rs.getDate("loppu"), rs.getDate("varattu_pvm"),
+          rs.getDate("vahvistus_pvm")));
     } while (rs.next());
 
     rs.close();
