@@ -125,7 +125,7 @@ public class VarausDao implements Dao<Varaus, Integer> {
     List<Lasku> varauksenLaskut = new ArrayList<>();
 
     Varaus varaus = new Varaus(varausId, rs.getInt("asiakas_id"), rs.getInt("toimipiste_id"),
-        (LocalDate) rs.getObject("varattu_pvm"), (LocalDate) rs.getObject("vahvistus_pvm"),
+        rs.getObject("varattu_pvm", LocalDate.class), rs.getObject("vahvistus_pvm", LocalDate.class),
         varauksenPalvelut, varauksenLaskut);
 
     stmt.close();
