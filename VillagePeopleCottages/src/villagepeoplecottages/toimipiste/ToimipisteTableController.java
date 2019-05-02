@@ -50,13 +50,6 @@ public class ToimipisteTableController extends MainFXMLController {
         tv.setItems(pvSortedData);
     }
     
-    public void updateTable(List<Palvelu> palvelut, Toimipiste selectedToimipiste, TableView<Palvelu> tv) throws SQLException {
-        palveluMasterData = (ObservableList<Palvelu>) palvelut;
-        palveluFilteredData = new FilteredList<>(palveluMasterData, p -> true);
-        palveluSortedData = new SortedList<>(palveluFilteredData);
-        palveluSortedData.comparatorProperty().bind(tv.comparatorProperty());
-        tv.setItems(palveluSortedData);
-    }
 
     public FilteredList<Palvelu> getPalveluFilteredData() {
         return palveluFilteredData;
