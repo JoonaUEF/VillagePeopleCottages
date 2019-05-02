@@ -20,6 +20,7 @@
 package villagepeoplecottages.palveluvaraus;
 
 import java.util.Date;
+import java.util.List;
 import villagepeoplecottages.palvelu.Palvelu;
 import villagepeoplecottages.varaus.Varaus;
 
@@ -41,8 +42,8 @@ public class PalveluVaraus {
     private Varaus varaus;
 
     public String getPalveluTyyppiString() {
-        String[] palvelutyypit = new Palvelu().getTyypit();
-        return palvelutyypit[this.palveluTyyppi];
+        List<String> palvelutyypit = new Palvelu().getTyypit();
+        return palvelutyypit.get(palveluTyyppi);
     }
     
     

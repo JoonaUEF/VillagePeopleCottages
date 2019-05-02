@@ -1,6 +1,8 @@
 package villagepeoplecottages.toimipiste;
 
 import java.sql.SQLException;
+import static java.util.Collections.list;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -47,10 +49,58 @@ public class ToimipisteTableController extends MainFXMLController {
         pvSortedData.comparatorProperty().bind(tv.comparatorProperty());
         tv.setItems(pvSortedData);
     }
+    
+    public void updateTable(List<Palvelu> palvelut, Toimipiste selectedToimipiste, TableView<Palvelu> tv) throws SQLException {
+        palveluMasterData = (ObservableList<Palvelu>) palvelut;
+        palveluFilteredData = new FilteredList<>(palveluMasterData, p -> true);
+        palveluSortedData = new SortedList<>(palveluFilteredData);
+        palveluSortedData.comparatorProperty().bind(tv.comparatorProperty());
+        tv.setItems(palveluSortedData);
+    }
 
     public FilteredList<Palvelu> getPalveluFilteredData() {
         return palveluFilteredData;
     }
+
+    public FilteredList<PalveluVaraus> getPvFilteredData() {
+        return pvFilteredData;
+    }
+
+    public ObservableList<Palvelu> getPalveluMasterData() {
+        return palveluMasterData;
+    }
+
+    public void setPalveluMasterData(ObservableList<Palvelu> palveluMasterData) {
+        this.palveluMasterData = palveluMasterData;
+    }
+
+    public SortedList<Palvelu> getPalveluSortedData() {
+        return palveluSortedData;
+    }
+
+    public void setPalveluSortedData(SortedList<Palvelu> palveluSortedData) {
+        this.palveluSortedData = palveluSortedData;
+    }
+
+    public ObservableList<PalveluVaraus> getPvMasterData() {
+        return pvMasterData;
+    }
+
+    public void setPvMasterData(ObservableList<PalveluVaraus> pvMasterData) {
+        this.pvMasterData = pvMasterData;
+    }
+
+    public SortedList<PalveluVaraus> getPvSortedData() {
+        return pvSortedData;
+    }
+
+    public void setPvSortedData(SortedList<PalveluVaraus> pvSortedData) {
+        this.pvSortedData = pvSortedData;
+    }
+    
+    
+    
+    
     
     
     

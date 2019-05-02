@@ -8,6 +8,7 @@ package villagepeoplecottages.toimipiste;
 import javafx.collections.transformation.FilteredList;
 import villagepeoplecottages.ListenerMethods;
 import villagepeoplecottages.palvelu.Palvelu;
+import villagepeoplecottages.palveluvaraus.PalveluVaraus;
 
 /**
  *
@@ -34,6 +35,61 @@ public class ToimipisteFXMLListeners extends ListenerMethods {
             } else if (palvelu.getTyyppiString().toLowerCase().contains(lowerCaseFilter)) {
                 return true;
             }
+
+            return false;
+        });
+    }
+
+    public void palveluVarausHakuListener(FilteredList<PalveluVaraus> palveluVarausFilteredData, String newValue) {
+        palveluVarausFilteredData.setPredicate(palvelu -> {
+                
+            // Jos suodattimessa ei ole mitään, palautetaan kaikki;
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+
+            String lowerCaseFilter = newValue.toLowerCase();
+
+            // Suodattimen ehdot
+            if (palvelu.getPalveluTyyppiString().toLowerCase().contains(lowerCaseFilter)) {
+                return true;
+            } else if (palvelu.getPalvelunNimi().toLowerCase().contains(lowerCaseFilter)) {
+                return true;
+            } 
+            
+            return false;
+        });
+    }
+
+    public void palveluTyyppiComboBox(FilteredList<Palvelu> palveluFilteredData, String newValue) {
+        palveluFilteredData.setPredicate(palvelu -> {
+             
+            if (newValue.isEmpty() || newValue.equals(null)) {
+                return true;
+            }
+            
+            
+            // Suodattimen ehdot
+            if (palvelu.getTyyppiString().equals(newValue)) {
+                return true;
+            } 
+
+            return false;
+        });
+    }
+    
+    public void palveluVarausTyyppiComboBox(FilteredList<PalveluVaraus> palveluFilteredData, String newValue) {
+        palveluFilteredData.setPredicate(palvelu -> {
+                
+            if (newValue.isEmpty() || newValue.equals(null)) {
+                return true;
+            }
+            
+            
+            // Suodattimen ehdot
+            if (palvelu.getPalveluTyyppiString().equals(newValue)) {
+                return true;
+            } 
 
             return false;
         });
