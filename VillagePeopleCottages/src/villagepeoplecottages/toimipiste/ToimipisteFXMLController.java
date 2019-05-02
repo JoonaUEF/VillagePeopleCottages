@@ -28,7 +28,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import villagepeoplecottages.ListenerMethods;
+import villagepeoplecottages.MainFXMLSearchFilters;
 import villagepeoplecottages.MainFXMLController;
 
 /**
@@ -246,7 +246,7 @@ public class ToimipisteFXMLController implements Initializable {
             Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        new ToimipisteFXMLListeners().palveluTyyppiComboBox(tableController.getPalveluFilteredData(), palveluTyyppiComboBox.getSelectionModel().getSelectedItem());
+        new ToimipisteFXMLSearchFilters().palveluTyyppiComboBoxFilter(tableController.getPalveluFilteredData(), palveluTyyppiComboBox.getSelectionModel().getSelectedItem());
         
     }
     
@@ -312,7 +312,7 @@ public class ToimipisteFXMLController implements Initializable {
             Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        new ToimipisteFXMLListeners().palveluVarausTyyppiComboBox(tableController.getPvFilteredData(), varausPalvelutyyppiComboBox.getSelectionModel().getSelectedItem());
+        new ToimipisteFXMLSearchFilters().palveluVarausTyyppiComboBoxFilter(tableController.getPvFilteredData(), varausPalvelutyyppiComboBox.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -396,7 +396,7 @@ public class ToimipisteFXMLController implements Initializable {
                 Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            new ToimipisteFXMLListeners().palveluHakuListener(tableController.getPalveluFilteredData(), newValue);
+            new ToimipisteFXMLSearchFilters().palveluHakuFilter(tableController.getPalveluFilteredData(), newValue);
             palveluTyyppiComboBox.getSelectionModel().clearSelection();
             
         });
@@ -411,7 +411,7 @@ public class ToimipisteFXMLController implements Initializable {
                 Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            new ToimipisteFXMLListeners().palveluVarausHakuListener(tableController.getPvFilteredData(), newValue);
+            new ToimipisteFXMLSearchFilters().palveluVarausHakuFilter(tableController.getPvFilteredData(), newValue);
             varausPalvelutyyppiComboBox.getSelectionModel().clearSelection();
             
         });

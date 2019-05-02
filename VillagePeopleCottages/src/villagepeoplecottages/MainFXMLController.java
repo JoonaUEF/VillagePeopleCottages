@@ -492,12 +492,12 @@ public class MainFXMLController implements Initializable {
         
         //Toimipisteen Hakutoiminnon kuuntelija
         toimipisteetHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            new ListenerMethods().toimipisteHakuListener(tableController.getToimipisteFilteredData(), newValue);
+            new MainFXMLSearchFilters().toimipisteHakuFilter(tableController.getToimipisteFilteredData(), newValue);
         });
         
         //Palvelu Hakutoiminnon kuuntelija
         palvelutHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            new ListenerMethods().palveluHakuListener(tableController.getPalveluFilteredData(), newValue);
+            new MainFXMLSearchFilters().palveluHakuFilter(tableController.getPalveluFilteredData(), newValue);
         });
         
     }
