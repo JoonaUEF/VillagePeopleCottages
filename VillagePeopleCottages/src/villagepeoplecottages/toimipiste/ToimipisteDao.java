@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import villagepeoplecottages.palveluvaraus.PalveluVarausDao;
 import villagepeoplecottages.varaus.Varaus;
 import villagepeoplecottages.varaus.VarausDao;
 
@@ -102,7 +103,7 @@ public class ToimipisteDao implements Dao<Toimipiste, Integer>{
         
         //Lisää Toimipisteelle siihen kuuluvat palvelut ja varaukset
         toimipiste.setPalvelut(new PalveluDao().listByToimipisteId(toimipisteId));
-        toimipiste.setVaraukset(new VarausDao().listByToimipisteId(toimipisteId));
+        toimipiste.setVaraukset(new PalveluVarausDao().listByToimipisteId(toimipisteId));
 
         return toimipiste;
     }

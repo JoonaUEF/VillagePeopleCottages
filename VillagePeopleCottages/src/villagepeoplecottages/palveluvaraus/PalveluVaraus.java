@@ -1,30 +1,30 @@
- /**
+/**
  * PalveluVaraus -olioluokka
  * 
- * Luokan ilmentämä olio sisältää palveluvarauksien tiedot 
- * tietokannasta. Tiedot olioon haetaan tietokannasta PalveluVarausDao 
- * -luokan avulla.
+ * Luokan ilmentämä olio sisältää palveluvarauksien tiedot tietokannasta. Tiedot olioon haetaan
+ * tietokannasta PalveluVarausDao -luokan avulla.
  * 
- * Luokalla on konstruktori ilman parametreja, sekä konstruktori kaikilla
- * parametreilla viitaten luokan muuttujiin.
+ * Luokalla on konstruktori ilman parametreja, sekä konstruktori kaikilla parametreilla viitaten
+ * luokan muuttujiin.
  * 
  * Luokalla on getter ja setter metodit kaikille muuttujille.
  * 
  * 
- * Tekijä: Lassi Puurunen
- * 8.4.2019
- * 23.4. Päivitetty uuden tietokantamallin mukaiseksi. Lassi Puurunen
- * 25.4. Lisätty attribuutteja listausta varten.
+ * Tekijä: Lassi Puurunen 8.4.2019 23.4. Päivitetty uuden tietokantamallin mukaiseksi. Lassi
+ * Puurunen 25.4. Lisätty attribuutteja listausta varten.
  */
 
 package villagepeoplecottages.palveluvaraus;
 
+
 import java.util.Date;
+import java.util.List;
 import villagepeoplecottages.palvelu.Palvelu;
 import villagepeoplecottages.varaus.Varaus;
 
 
 public class PalveluVaraus {
+
     
     private String toimipiste;
     private int varausId;
@@ -41,8 +41,8 @@ public class PalveluVaraus {
     private Varaus varaus;
 
     public String getPalveluTyyppiString() {
-        String[] palvelutyypit = new Palvelu().getTyypit();
-        return palvelutyypit[this.palveluTyyppi];
+        List<String> palvelutyypit = new Palvelu().getTyypit();
+        return palvelutyypit.get(palveluTyyppi);
     }
     
     
@@ -157,10 +157,4 @@ public class PalveluVaraus {
     public void setVaraus(Varaus varaus) {
         this.varaus = varaus;
     }
-
-    
-
-    
-    
-    
 }

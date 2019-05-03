@@ -6,9 +6,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -24,6 +28,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import villagepeoplecottages.MainFXMLSearchFilters;
+import villagepeoplecottages.MainFXMLController;
 
 /**
  * FXML Controller class
@@ -35,6 +41,9 @@ public class ToimipisteFXMLController implements Initializable {
 
     // Ladataan Service käyttöön
     private ToimipisteFXMLService tfxmls = new ToimipisteFXMLService();
+    
+    // Ladataan ToimipisteTableController käyttöön
+    private ToimipisteTableController tableController = new ToimipisteTableController();
     
     // Controllerille tuleva olio initData:ssa
     private Toimipiste selectedToimipiste;
@@ -61,7 +70,7 @@ public class ToimipisteFXMLController implements Initializable {
     // PalveluTabin toiminnot 
         
     @FXML private TextField palveluHakuTextField;
-    @FXML private ComboBox<?> palveluTyyppiComboBox;
+    @FXML private ComboBox<String> palveluTyyppiComboBox;
     
     @FXML private Button palveluLisaaUusiButton;
     @FXML private Button palveluMuokkaaButton;
@@ -80,7 +89,7 @@ public class ToimipisteFXMLController implements Initializable {
     
     
     @FXML private TextField varausHakuTextField;
-    @FXML private ComboBox<?> varausPalvelutyyppiComboBox;
+    @FXML private ComboBox<String> varausPalvelutyyppiComboBox;
     @FXML private DatePicker varausMistaDatePicker;
     @FXML private DatePicker varausMihinDatePicker;
     
@@ -88,7 +97,7 @@ public class ToimipisteFXMLController implements Initializable {
     @FXML private Button varausMuokkaaButton;
     @FXML private Button varausPoistaButton;
     
-    @FXML private TableView<?> varauksetTableView;
+    @FXML private TableView<PalveluVaraus> varauksetTableView;
         @FXML private TableColumn<PalveluVaraus, Integer> varausIdColumn;
         @FXML private TableColumn<PalveluVaraus, Integer> varausAsiakasIdColumn;
         @FXML private TableColumn<PalveluVaraus, String> varausPalveluTyyppiColumn;
@@ -103,7 +112,7 @@ public class ToimipisteFXMLController implements Initializable {
     //tilapalkki
     @FXML private Label tilaPalkkiLabel;
 
-    
+   
      /** 
       * Initializes the controller class.
       * 
@@ -112,13 +121,25 @@ public class ToimipisteFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        // Tehdään kuuntelijat
-        this.listeners();
+        
         
         // Tehdään PropertyValueFactory:t, joiden avulla oliot yhdistetään
         // tableView:hin
         this.propertyValueFactories();
-            
+        
+        // Tehdään kuuntelijat
+        this.listeners();  
+        
+        
+        //Tuodaan palvelutyypit valikoihin
+        ObservableList<String> palvelutyypit = FXCollections.observableArrayList();
+        for (String string : new Palvelu().getTyypit()) {
+            palvelutyypit.add(string);
+        }
+        
+        palveluTyyppiComboBox.setItems(palvelutyypit);
+        varausPalvelutyyppiComboBox.setItems(palvelutyypit);
+        
     }    
 
     
@@ -148,11 +169,10 @@ public class ToimipisteFXMLController implements Initializable {
 
         // Laitetaan palvelut TableViewiin valitun toimipisteen palvelut
         try {
-            tfxmls.paivitaNakyma(selectedToimipiste, new Palvelu(), palvelutTableView);
+            tableController.initializeTable(new Palvelu(), selectedToimipiste, palvelutTableView);
         } catch (SQLException ex) {
             Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }   
     }
     
     
@@ -210,14 +230,24 @@ public class ToimipisteFXMLController implements Initializable {
     @FXML
     private void palveluTabOnSelectionChanged(Event event) {
         try {
-            tfxmls.paivitaNakyma(selectedToimipiste, new Palvelu(), palvelutTableView);
+            tableController.initializeTable(new Palvelu(), selectedToimipiste, palvelutTableView);
+            
         } catch (SQLException ex) {
-            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     @FXML
     private void palveluTyyppiComboBoxOnAction(ActionEvent event) {
+        palveluHakuTextField.clear();
+        try {
+            tableController.initializeTable(new Palvelu(), selectedToimipiste, palvelutTableView);
+        } catch (SQLException ex) {
+            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        new ToimipisteFXMLSearchFilters().palveluTyyppiComboBoxFilter(tableController.getPalveluFilteredData(), palveluTyyppiComboBox.getSelectionModel().getSelectedItem());
+        
     }
     
     @FXML
@@ -264,15 +294,25 @@ public class ToimipisteFXMLController implements Initializable {
     @FXML
     private void varauksetTabOnSelectionChanged(Event event) {
         try {
-            tfxmls.paivitaNakyma(selectedToimipiste, new PalveluVaraus(), varauksetTableView);
+            tableController.initializeTable(new PalveluVaraus(), selectedToimipiste, varauksetTableView);
+            
         } catch (SQLException ex) {
-            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
     
     @FXML
     private void varausPalvelutyyppiComboBoxOnAction(ActionEvent event) {
+        
+        varausHakuTextField.clear();
+        try {
+            tableController.initializeTable(new PalveluVaraus(), selectedToimipiste, varauksetTableView);
+        } catch (SQLException ex) {
+            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        new ToimipisteFXMLSearchFilters().palveluVarausTyyppiComboBoxFilter(tableController.getPvFilteredData(), varausPalvelutyyppiComboBox.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -346,8 +386,35 @@ public class ToimipisteFXMLController implements Initializable {
             }
         });
         
-        //TODO haku- ja rajaustoimintojen kuuntelijat
+       
         
+        //Palvelu Hakutoiminnon kuuntelija
+        palveluHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                tableController.initializeTable(new Palvelu(), selectedToimipiste, palvelutTableView);
+            } catch (SQLException ex) {
+                Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            new ToimipisteFXMLSearchFilters().palveluHakuFilter(tableController.getPalveluFilteredData(), newValue);
+            palveluTyyppiComboBox.getSelectionModel().clearSelection();
+            
+        });
+        
+        
+        //PalveluVaraus hakutoiminnon kuuntelija
+        varausHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            
+             try {
+                tableController.initializeTable(new PalveluVaraus(), selectedToimipiste, varauksetTableView);
+            } catch (SQLException ex) {
+                Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            new ToimipisteFXMLSearchFilters().palveluVarausHakuFilter(tableController.getPvFilteredData(), newValue);
+            varausPalvelutyyppiComboBox.getSelectionModel().clearSelection();
+            
+        });
     }
 
     private void propertyValueFactories() {
