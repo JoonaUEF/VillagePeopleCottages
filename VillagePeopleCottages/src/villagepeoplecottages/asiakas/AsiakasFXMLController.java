@@ -18,13 +18,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import villagepeoplecottages.interfaces.FXMLControllerInterface;
 
 /**
  * FXML Controller class
  *
  * 18.4.2019 Lassi Puurunen
  */
-public class AsiakasFXMLController implements Initializable {
+public class AsiakasFXMLController implements Initializable, FXMLControllerInterface<Asiakas> {
 
     // Ladataan Service käyttöön
     private AsiakasFXMLService afxmls = new AsiakasFXMLService();
@@ -129,6 +130,7 @@ public class AsiakasFXMLController implements Initializable {
      * 
      * @param object 
      */
+    @Override
     public void initData(Object object) {
         this.vanhaAsiakas = (Asiakas)object;
         etunimiTextField.textProperty().set(vanhaAsiakas.getEtunimi());
@@ -152,8 +154,8 @@ public class AsiakasFXMLController implements Initializable {
      * 
      * @return asiakas
      */
-    
-    private Asiakas haeTietoLomakkeelta() {
+    @Override
+    public Asiakas haeTietoLomakkeelta() {
         return new Asiakas(etunimiTextField.getText(), sukunimiTextField.getText(), 
                 lahiosoiteTextField.getText(), postitoimipaikkaTextField.getText(), 
                 postinumeroTextField.getText(), emailTextField.getText(), puhelinnumeroTextField.getText());
@@ -173,6 +175,7 @@ public class AsiakasFXMLController implements Initializable {
      * @param event
      * @throws SQLException 
      */
+    
     @FXML
     private void tallennaButtonOnAction(ActionEvent event) throws SQLException {
         
@@ -254,9 +257,6 @@ public class AsiakasFXMLController implements Initializable {
     @FXML
     private void laskutTabOnSelectionChanged(Event event) {
     }
-
-
-
 
     
 }
