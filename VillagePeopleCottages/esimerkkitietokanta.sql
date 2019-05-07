@@ -15,28 +15,28 @@ VALUES (2, 'VillagePeople Laskettelukeskus', 'Mäkikatu 5', '40300', 'LASKETTELU
 
 
 INSERT INTO Palvelu (palvelu_id, toimipiste_id, tyyppi, nimi, kuvaus, hinta, alv)
-VALUES (1, 1, 0, 'Hirsimökki nro 1', 'Hirsimökkimajoitus keskellä metsää. Rauhallinen sijainti', 100, 24);
+VALUES (1, 1, 1, 'Hirsimökki nro 1', 'Hirsimökkimajoitus keskellä metsää. Rauhallinen sijainti', 100, 24);
 
 INSERT INTO Palvelu (palvelu_id, toimipiste_id, tyyppi, nimi, kuvaus, hinta, alv)
-VALUES (2, 1, 0, 'Hirsimökki nro 2', 'Hirsimökkimajoitus keskellä metsää. Rauhallinen sijainti', 100, 24);
+VALUES (2, 1, 1, 'Hirsimökki nro 2', 'Hirsimökkimajoitus keskellä metsää. Rauhallinen sijainti', 100, 24);
 
 INSERT INTO Palvelu (palvelu_id, toimipiste_id, tyyppi, nimi, kuvaus, hinta, alv)
-VALUES (3, 2, 0, 'Huoneistohotelli huone 123', 'Luksusmajoitus laskettelukeskuksen huoneistohotellissa.', 200, 48);
+VALUES (3, 2, 1, 'Huoneistohotelli huone 123', 'Luksusmajoitus laskettelukeskuksen huoneistohotellissa.', 200, 48);
 
 INSERT INTO Palvelu (palvelu_id, toimipiste_id, tyyppi, nimi, kuvaus, hinta, alv)
-VALUES (4, 2, 0, 'Huoneistohotelli huone 321', 'Luksusmajoitus laskettelukeskuksen huoneistohotellissa.', 200, 48);
+VALUES (4, 2, 1, 'Huoneistohotelli huone 321', 'Luksusmajoitus laskettelukeskuksen huoneistohotellissa.', 200, 48);
 
 INSERT INTO Palvelu (palvelu_id, toimipiste_id, tyyppi, nimi, kuvaus, hinta, alv)
-VALUES (5, 1, 1, 'Poroajelu', 'kesto 2 tuntia', 20, 4.8);
+VALUES (5, 1, 2, 'Poroajelu', 'kesto 2 tuntia', 20, 4.8);
 
 INSERT INTO Palvelu (palvelu_id, toimipiste_id, tyyppi, nimi, kuvaus, hinta, alv)
-VALUES (6, 1, 1, 'Kalastusreissu', 'kesto 8 tuntia', 40, 9.6);
+VALUES (6, 1, 2, 'Kalastusreissu', 'kesto 8 tuntia', 40, 9.6);
 
 INSERT INTO Palvelu (palvelu_id, toimipiste_id, tyyppi, nimi, kuvaus, hinta, alv)
-VALUES (7, 2, 1, 'Buffet-aamiainen', 'Tarjoillaan aamuisin 07-11 välillä', 20, 4.8);
+VALUES (7, 2, 2, 'Buffet-aamiainen', 'Tarjoillaan aamuisin 07-11 välillä', 20, 4.8);
 
 INSERT INTO Palvelu (palvelu_id, toimipiste_id, tyyppi, nimi, kuvaus, hinta, alv)
-VALUES (8, 2, 1, 'Buffet-illallinen', 'Tarjoillaan iltaisin 17-21 välillä', 40, 9.6);
+VALUES (8, 2, 2, 'Buffet-illallinen', 'Tarjoillaan iltaisin 17-21 välillä', 40, 9.6);
 
 
 

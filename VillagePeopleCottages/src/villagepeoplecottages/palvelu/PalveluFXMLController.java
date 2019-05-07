@@ -36,12 +36,10 @@ public class PalveluFXMLController implements Initializable, FXMLControllerInter
   private PalveluFXMLService pfxmls = new PalveluFXMLService();
 
   // Controllerille tuleva olio initData:ssa
-  private Palvelu vanhaPalvelu;
+  private Palvelu selectedPalvelu;
 
-  private TextField toimipisteTextField;
   @FXML
   private TextField nimiTextField;
-  private TextField tyyppiTextField;
   @FXML
   private TextField kuvausTextField;
   @FXML
@@ -121,7 +119,6 @@ public class PalveluFXMLController implements Initializable, FXMLControllerInter
     TextFormatter<String> alvTextFormatter = new TextFormatter<>(doubleFilter);
 
 
-    tyyppiTextField.setTextFormatter(tyyppiTextFormatter);
     hintaTextField.setTextFormatter(hintaTextFormatter);
     alvTextField.setTextFormatter(alvTextFormatter);
   }
@@ -137,24 +134,14 @@ public class PalveluFXMLController implements Initializable, FXMLControllerInter
    * @param object
    */
   public void initData(Object object) {
-    
-    if (object instanceof Palvelu) {
         
-        this.vanhaPalvelu = (Palvelu) object;
-        toimipisteTextField.textProperty().set(String.valueOf(vanhaPalvelu.getToimipisteId()));
-        nimiTextField.textProperty().set(vanhaPalvelu.getNimi());
-        tyyppiTextField.textProperty().set(vanhaPalvelu.getTyyppiString());
-        kuvausTextField.textProperty().set(vanhaPalvelu.getKuvaus());
-        hintaTextField.textProperty().set(String.valueOf(vanhaPalvelu.getHinta()));
-        alvTextField.textProperty().set(String.valueOf(vanhaPalvelu.getAlv()));
-    }  
-    
-    if (object instanceof Toimipiste) {
-        
-        toimipisteTextField.setText(((Toimipiste) object).getNimi());
- 
-    }
+        this.selectedPalvelu = (Palvelu) object;
+        nimiTextField.textProperty().set(selectedPalvelu.getNimi());
 
+        kuvausTextField.textProperty().set(selectedPalvelu.getKuvaus());
+        hintaTextField.textProperty().set(String.valueOf(selectedPalvelu.getHinta()));
+        alvTextField.textProperty().set(String.valueOf(selectedPalvelu.getAlv()));
+    
   }
 
 
@@ -170,14 +157,8 @@ public class PalveluFXMLController implements Initializable, FXMLControllerInter
    * @throws NumberFormatException
    */
 
-  public Palvelu haeTietoLomakkeelta() throws NumberFormatException {
-    try {
-      return new Palvelu(Integer.parseInt(toimipisteTextField.getText()), nimiTextField.getText(),
-          Integer.parseInt(tyyppiTextField.getText()), kuvausTextField.getText(),
-          Double.parseDouble(hintaTextField.getText()), Double.parseDouble(alvTextField.getText()));
-    } catch (NumberFormatException e) {
-      throw(e);
-    }
+  public Palvelu haeTietoLomakkeelta() {
+      return null;
   }
 
   /**
@@ -196,7 +177,7 @@ public class PalveluFXMLController implements Initializable, FXMLControllerInter
   @FXML
   private void tallennaButtonOnAction(ActionEvent event) throws SQLException {
 
-    pfxmls.tallennaButton(vanhaPalvelu, haeTietoLomakkeelta());
+    pfxmls.tallennaButton(selectedPalvelu, haeTietoLomakkeelta());
 
     // sulje ikkuna
     this.peruutaButtonOnAction(event);
