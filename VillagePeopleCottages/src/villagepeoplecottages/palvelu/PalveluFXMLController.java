@@ -7,13 +7,20 @@ import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import villagepeoplecottages.toimipiste.Toimipiste;
 
@@ -30,11 +37,9 @@ public class PalveluFXMLController implements Initializable {
   // Controllerille tuleva olio initData:ssa
   private Palvelu vanhaPalvelu;
 
-  @FXML
   private TextField toimipisteTextField;
   @FXML
   private TextField nimiTextField;
-  @FXML
   private TextField tyyppiTextField;
   @FXML
   private TextField kuvausTextField;
@@ -43,9 +48,45 @@ public class PalveluFXMLController implements Initializable {
   @FXML
   private TextField alvTextField;
   @FXML
-  private Button tallennaButton;
-  @FXML
   private Button peruutaButton;
+    @FXML
+    private AnchorPane mainPane;
+    @FXML
+    private ComboBox<?> toimipisteComboBox;
+    @FXML
+    private ComboBox<?> tyyppiComboBox;
+    @FXML
+    private Button tallennaButton1;
+    @FXML
+    private AnchorPane palvelutVarauksetAnchorPane;
+    @FXML
+    private TextField varausHakuTextField;
+    @FXML
+    private DatePicker varausMistaDatePicker;
+    @FXML
+    private DatePicker varausMihinDatePicker;
+    @FXML
+    private Button varausLisaaUusiButton;
+    @FXML
+    private Button varausMuokkaaButton;
+    @FXML
+    private Button varausPoistaButton;
+    @FXML
+    private TableView<?> varauksetTableView;
+    @FXML
+    private TableColumn<?, ?> varausIdColumn;
+    @FXML
+    private TableColumn<?, ?> varausAsiakasIdColumn;
+    @FXML
+    private TableColumn<?, ?> varausPalvelunAlkuColumn;
+    @FXML
+    private TableColumn<?, ?> varausPalvelunLoppuColumn;
+    @FXML
+    private TableColumn<?, ?> varausVarattuColumn;
+    @FXML
+    private TableColumn<?, ?> varausVahvistettuColumn;
+    @FXML
+    private Label tilaPalkkiLabel;
 
 
   /**
@@ -180,6 +221,30 @@ public class PalveluFXMLController implements Initializable {
     final Stage stage = (Stage) source.getScene().getWindow();
     stage.close();
   }
+
+    @FXML
+    private void varausMistaDatePickerOnAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void varausMihinDatePickerOnAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void varausLisaaUusiButtonOnAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void varausMuokkaaButtonOnAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void varausPoistaButtonOnAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void varauksetTabOnSelectionChanged(Event event) {
+    }
 
 
 
