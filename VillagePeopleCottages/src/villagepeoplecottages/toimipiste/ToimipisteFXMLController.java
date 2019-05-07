@@ -30,6 +30,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import villagepeoplecottages.MainFXMLSearchFilters;
 import villagepeoplecottages.MainFXMLController;
+import villagepeoplecottages.interfaces.FXMLControllerInterface;
 
 /**
  * FXML Controller class
@@ -37,7 +38,7 @@ import villagepeoplecottages.MainFXMLController;
  * 18.4.2019 Lassi Puurunen
  * 23.4.2019 Lisätty alavalikko ja taulukot. Lassi Puurunen
  */
-public class ToimipisteFXMLController implements Initializable {
+public class ToimipisteFXMLController implements Initializable, FXMLControllerInterface<Toimipiste> {
 
     // Ladataan Service käyttöön
     private ToimipisteFXMLService tfxmls = new ToimipisteFXMLService();
@@ -351,7 +352,7 @@ public class ToimipisteFXMLController implements Initializable {
      * @return toimipiste
      */
     
-    private Toimipiste haeTietoLomakkeelta() {
+    public Toimipiste haeTietoLomakkeelta() {
         return new Toimipiste(nimiTextField.getText(), 
                 lahiosoiteTextField.getText(), postitoimipaikkaTextField.getText(), 
                 postinumeroTextField.getText(), emailTextField.getText(), puhelinnumeroTextField.getText());

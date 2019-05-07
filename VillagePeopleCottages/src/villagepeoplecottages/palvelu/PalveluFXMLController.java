@@ -23,13 +23,14 @@ import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import villagepeoplecottages.toimipiste.Toimipiste;
+import villagepeoplecottages.interfaces.FXMLControllerInterface;
 
 /**
  * FXML Controller class
  *
  * 20.4.2019 Joona Honkanen muokkasi ToimipisteFXMLControllerista.
  */
-public class PalveluFXMLController implements Initializable {
+public class PalveluFXMLController implements Initializable, FXMLControllerInterface<Palvelu> {
 
   // Ladataan Service käyttöön
   private PalveluFXMLService pfxmls = new PalveluFXMLService();
@@ -169,7 +170,7 @@ public class PalveluFXMLController implements Initializable {
    * @throws NumberFormatException
    */
 
-  private Palvelu haeTietoLomakkeelta() throws NumberFormatException {
+  public Palvelu haeTietoLomakkeelta() throws NumberFormatException {
     try {
       return new Palvelu(Integer.parseInt(toimipisteTextField.getText()), nimiTextField.getText(),
           Integer.parseInt(tyyppiTextField.getText()), kuvausTextField.getText(),
@@ -213,7 +214,7 @@ public class PalveluFXMLController implements Initializable {
    * @param event
    */
   @FXML
-  private void peruutaButtonOnAction(ActionEvent event) {
+  public void peruutaButtonOnAction(ActionEvent event) {
 
     // sulkee ikkunan
 

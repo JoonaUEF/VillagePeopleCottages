@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="villagepeoplecottages.varaus.VarausFXMLController">
+   <children>
+      <AnchorPane layoutX="20.0" layoutY="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label text="Varauksen hallinta">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" top="15.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </Pane>
+            <AnchorPane AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+               <children>
+                  <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane>
+                           <children>
+                              <GridPane prefHeight="90.0" prefWidth="255.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="99.0" minWidth="10.0" prefWidth="91.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="134.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <padding>
+                                    <Insets left="15.0" right="15.0" />
+                                 </padding>
+                                 <children>
+                                    <Label text="Varattu" GridPane.rowIndex="1" />
+                                    <Label text="VarausId" />
+                                    <Label fx:id="asiakasIdLabel" text="id" GridPane.columnIndex="1" />
+                                    <Label text="Vahvistettu" GridPane.rowIndex="2" />
+                                    <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane>
+                           <children>
+                              <GridPane>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <padding>
+                                    <Insets left="15.0" right="15.0" />
+                                 </padding>
+                                 <children>
+                                    <Label text="AsiakasId" GridPane.rowIndex="1" />
+                                    <Label text="Asiakkaan nimi" GridPane.rowIndex="2" />
+                                    <ComboBox prefHeight="25.0" prefWidth="119.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label text="Toimipiste" />
+                                    <ChoiceBox prefHeight="25.0" prefWidth="119.0" GridPane.columnIndex="1" />
+                                    <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" top="15.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="190.0">
+         <items>
+            <Button fx:id="tallennaButton" mnemonicParsing="false" onAction="#tallennaButtonOnAction" prefWidth="75.0" text="Tallenna" />
+            <Button fx:id="peruutaButton" layoutX="10.0" layoutY="18.0" mnemonicParsing="false" onAction="#peruutaButtonOnAction" prefWidth="75.0" text="Peruuta" />
+         </items>
+         <padding>
+            <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
+         </padding>
+      </ToolBar>
+      <AnchorPane fx:id="palvelutVarauksetAnchorPane" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
+         <children>
+            <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <tabs>
+                  <Tab fx:id="palveluttTab" onSelectionChanged="#palvelutTabOnSelectionChanged" text="Palvelut">
+                     <content>
+                        <AnchorPane>
+                           <children>
+                              <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <items>
+                                    <TextField fx:id="palvelutHakuTextField" prefHeight="27.0" prefWidth="130.0" promptText="Haku" />
+                                    <ComboBox fx:id="palvelutPalvelutyyppiComboBox" onAction="#palvelutPalvelutyyppiComboBoxOnAction" prefWidth="160.0" promptText="Valitse palvelutyyppi" />
+                                    <Separator orientation="VERTICAL" />
+                                    <Button fx:id="palveluLisaaUusiButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#palveluLisaaUusiButtonOnAction" prefHeight="25.0" text="Lisää uusi" />
+                                    <Button fx:id="palveluMuokkaaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#palveluMuokkaaButtonOnAction" prefHeight="25.0" text="Muokkaa" />
+                                    <Button fx:id="palveluPoistaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#palveluPoistaButtonOnAction" prefHeight="25.0" text="Poista" />
+                                 </items>
+                              </ToolBar>
+                              <TableView fx:id="palvelutTableView" layoutY="37.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+                                 <columns>
+                                    <TableColumn fx:id="palveluTyyppiColumn" prefWidth="100.0" text="Palvelutyyppi" />
+                                    <TableColumn fx:id="palveluNimiColumn" prefWidth="160.0" text="Nimi" />
+                                    <TableColumn fx:id="palveluKuvausColumn" prefWidth="300.0" text="Kuvaus" />
+                                    <TableColumn fx:id="palveluHintaColumn" prefWidth="75.0" text="Hinta" />
+                                    <TableColumn fx:id="palveluAlvColumn" prefWidth="75.0" text="Alv" />
+                                    <TableColumn fx:id="palveluHintaAlvColumn" prefWidth="75.0" text="Hinta+Alv" />
+                                 </columns>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="laskutTab" onSelectionChanged="#laskutTabOnSelectionChanged" text="Laskut">
+                     <content>
+                        <AnchorPane>
+                           <children>
+                              <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
+                                 <items>
+                                    <TextField fx:id="laskutHakuTextField" prefWidth="130.0" promptText="Haku" />
+                                    <ComboBox fx:id="laskutTilaComboBox" onAction="#laskutTilaComboBoxOnAction" prefWidth="100.0" promptText="Laskun tila" />
+                                    <Separator orientation="VERTICAL" />
+                                    <Button fx:id="laskutLisaaUusiButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#laskutLisaaUusiButtonOnAction" text="Lisää uusi" />
+                                    <Button fx:id="laskutMuokkaaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#laskutMuokkaaButtonOnAction" text="Muokkaa" />
+                                    <Button fx:id="laskutPoistaButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#laskutPoistaButtonOnAction" text="Poista" />
+                                 </items>
+                              </ToolBar>
+                              <TableView fx:id="laskutTableView" layoutY="37.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+                                 <columns>
+                                    <TableColumn fx:id="laskutLaskuIdColumn" prefWidth="69.0" text="LaskuId" />
+                                    <TableColumn fx:id="laskutTilaColumn" prefWidth="69.0" text="Tila" />
+                                    <TableColumn fx:id="laskutPaivaysColumn" prefWidth="94.0" text="Päiväys" />
+                                    <TableColumn fx:id="laskutSummaColumn" prefWidth="67.0" text="Summa" />
+                                    <TableColumn fx:id="laskutAlvColumn" prefWidth="73.0" text="Alv" />
+                                    <TableColumn fx:id="laskutSummaAvlColumn" prefWidth="83.0" text="Summa+Alv" />
+                                 </columns>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane maxHeight="30.0" minHeight="30.0" prefHeight="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <ToolBar fx:id="tilapalkki" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" SplitPane.resizableWithParent="false">
+               <items>
+                  <Label fx:id="tilaPalkkiLabel" text="Tilapalkki">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+               </items>
+            </ToolBar>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
