@@ -3,15 +3,18 @@ package villagepeoplecottages;
 import villagepeoplecottages.toimipiste.Toimipiste;
 import villagepeoplecottages.toimipiste.ToimipisteDao;
 import villagepeoplecottages.palvelu.Palvelu;
-import villagepeoplecottages.palvelu.PalveluDao;
-import villagepeoplecottages.asiakas.AsiakasDao;
 import villagepeoplecottages.asiakas.Asiakas;
+import villagepeoplecottages.palveluvaraus.PalveluVaraus;
+import villagepeoplecottages.lasku.Lasku;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -26,6 +29,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import villagepeoplecottages.toimipiste.ToimipisteFXMLSearchFilters;
+
 
 
 /**
@@ -41,8 +46,9 @@ import javafx.scene.layout.AnchorPane;
  16.4.2019 Toimipisteen poisto-toiminto lisätty, poisto ja muokkaus -nappien aktivointi ja deaktivointi. Lassi Puurunen
  18.4.2019 Päivitetty käyttämään MainFXMLService -luokkaa. Lassi Puurunen
  20.4.2019 Palvelun TableView, lisäys ja poisto-toiminnot lisätty. Joona Honkanen
- 25.4.2019 Täydennetty kaikki FXML:n toiminnot.
- 2.5.2019  MainTableController otettu käyttöön.
+ 25.4.2019 Täydennetty kaikki FXML:n toiminnot. Lassi Puurunen
+  2.5.2019 MainTableController otettu käyttöön. Lassi Puurunen
+  8.5.2019 Kaikkien näkymien listaukset. Lassi Puurunen
  * 
  */
 
@@ -51,8 +57,6 @@ public class MainFXMLController implements Initializable {
     // Määritetään MainFXMLService käyttöön
     private MainFXMLService mfxmls = new MainFXMLService();
     
-    // Määritetään MainTableController käyttöön
-    private MainTableController tableController = new MainTableController();
       
     // Mainpanen avulla voidaan päänäkymä aktivoida tai deaktivoida muita ikkunoita käsitellessä
     @FXML private AnchorPane mainPane;
@@ -78,8 +82,8 @@ public class MainFXMLController implements Initializable {
     @FXML private Tab palveluttTab;
     
     @FXML private TextField palvelutHakuTextField;
-    @FXML private ComboBox<?> palvelutToimipisteComboBox;
-    @FXML private ComboBox<?> palvelutPalvelutyyppiComboBox;
+    @FXML private ComboBox<String> palvelutToimipisteComboBox;
+    @FXML private ComboBox<String> palvelutPalvelutyyppiComboBox;
     
     @FXML private Button palveluLisaaUusiButton;
     @FXML private Button palveluMuokkaaButton;
@@ -118,8 +122,8 @@ public class MainFXMLController implements Initializable {
     @FXML private Tab varauksetTab;
     
     @FXML private TextField varauksetHakuTextField;
-    @FXML private ComboBox<?> varauksetToimipisteComboBox;
-    @FXML private ComboBox<?> varauksetPalvelutyyppiComboBox;
+    @FXML private ComboBox<String> varauksetToimipisteComboBox;
+    @FXML private ComboBox<String> varauksetPalvelutyyppiComboBox;
     @FXML private DatePicker varauksetMistaDatePicker;
     @FXML private DatePicker varauksetMihinDatePicker;
     
@@ -127,45 +131,45 @@ public class MainFXMLController implements Initializable {
     @FXML private Button varauksetMuokkaaButton;
     @FXML private Button varauksetPoistaButton;
     
-    @FXML private TableView<?> varauksetTableView;
-        @FXML private TableColumn<?, ?> varausIdColumn;
-        @FXML private TableColumn<?, ?> varausAsiakasIdColumn;
-        @FXML private TableColumn<?, ?> varausToimipisteColumn;
-        @FXML private TableColumn<?, ?> varausPalveluTyyppiColumn;
-        @FXML private TableColumn<?, ?> varausPalvelunNimiColumn;
-        @FXML private TableColumn<?, ?> varausPalvelunAlkuColumn;
-        @FXML private TableColumn<?, ?> varausPalvelunLoppuColumn;
-        @FXML private TableColumn<?, ?> varausVarattuColumn;
-        @FXML private TableColumn<?, ?> varausVahvistettuColumn;
+    @FXML private TableView<PalveluVaraus> varauksetTableView;
+        @FXML private TableColumn<PalveluVaraus, Integer> varausIdColumn;
+        @FXML private TableColumn<PalveluVaraus, Integer> varausAsiakasIdColumn;
+        @FXML private TableColumn<PalveluVaraus, String> varausToimipisteColumn;
+        @FXML private TableColumn<PalveluVaraus, String> varausPalveluTyyppiColumn;
+        @FXML private TableColumn<PalveluVaraus, String> varausPalvelunNimiColumn;
+        @FXML private TableColumn<PalveluVaraus, Date> varausPalvelunAlkuColumn;
+        @FXML private TableColumn<PalveluVaraus, Date> varausPalvelunLoppuColumn;
+        @FXML private TableColumn<PalveluVaraus, Date> varausVarattuColumn;
+        @FXML private TableColumn<PalveluVaraus, Date> varausVahvistettuColumn;
     
     
     // Määritetään laskut-näkymän tiedot
     @FXML private Tab laskutTab;
     
     @FXML private TextField laskutHakuTextField;
-    @FXML private ComboBox<?> laskutToimipisteComboBox;
+    @FXML private ComboBox<String> laskutToimipisteComboBox;
     @FXML private DatePicker laskutAlkaenDatePicker;
     @FXML private DatePicker laskutPaattyenDatePicker;
-    @FXML private ComboBox<?> laskutTilaComboBox;
+    @FXML private ComboBox<String> laskutTilaComboBox;
     
     @FXML private Button laskutLisaaUusiButton;
     @FXML private Button laskutMuokkaaButton;
     @FXML private Button laskutPoistaButton;
     
-    @FXML private TableView<?> laskutTableView;
-        @FXML private TableColumn<?, ?> laskutToimipisteColumn;
-        @FXML private TableColumn<?, ?> laskutLaskuIdColumn;
-        @FXML private TableColumn<?, ?> laskutVarausIdColumn;
-        @FXML private TableColumn<?, ?> laskutAsiakasIdColumn;
-        @FXML private TableColumn<?, ?> laskutTilaColumn;
-        @FXML private TableColumn<?, ?> laskutPaivaysColumn;
-        @FXML private TableColumn<?, ?> laskutNimiColumn;
-        @FXML private TableColumn<?, ?> laskutLahiosoiteColumn;
-        @FXML private TableColumn<?, ?> laskutPostinumeroColumn;
-        @FXML private TableColumn<?, ?> laskutPostitoimipaikkaColumn;
-        @FXML private TableColumn<?, ?> laskutSummaColumn;
-        @FXML private TableColumn<?, ?> laskutAlvColumn;
-        @FXML private TableColumn<?, ?> laskutSummaAvlColumn;
+    @FXML private TableView<Lasku> laskutTableView;
+        @FXML private TableColumn<Lasku, String> laskutToimipisteColumn;
+        @FXML private TableColumn<Lasku, Integer> laskutLaskuIdColumn;
+        @FXML private TableColumn<Lasku, Integer> laskutVarausIdColumn;
+        @FXML private TableColumn<Lasku, Integer> laskutAsiakasIdColumn;
+        @FXML private TableColumn<Lasku, String> laskutTilaColumn;
+        @FXML private TableColumn<Lasku, Date> laskutPaivaysColumn;
+        @FXML private TableColumn<Lasku, String> laskutNimiColumn;
+        @FXML private TableColumn<Lasku, String> laskutLahiosoiteColumn;
+        @FXML private TableColumn<Lasku, String> laskutPostinumeroColumn;
+        @FXML private TableColumn<Lasku, String> laskutPostitoimipaikkaColumn;
+        @FXML private TableColumn<Lasku, Double> laskutSummaColumn;
+        @FXML private TableColumn<Lasku, Double> laskutAlvColumn;
+        @FXML private TableColumn<Lasku, Double> laskutSummaAvlColumn;
     
     //Tilapalkki
     @FXML private Label tilapalkkiLabel;
@@ -187,13 +191,43 @@ public class MainFXMLController implements Initializable {
         
         // Alustetaan tableController ensimmäiseen näkymään
         try {
-            tableController.initializeTable(new Toimipiste(), toimipisteetTableView);
+            mfxmls.paivitaNakyma(new Toimipiste(), toimipisteetTableView);
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         // Tehdään kuuntelijat
         this.listeners();
+        
+        //Lisätään näkymiin ComboBoxien sisällöt
+        ObservableList<String> toimipisteet = FXCollections.observableArrayList();
+        toimipisteet.add("Kaikki toimipisteet");
+        try {
+            for (Toimipiste toimipiste : new ToimipisteDao().list()) {
+                toimipisteet.add(toimipiste.getNimi());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ObservableList<String> palvelutyypit = FXCollections.observableArrayList();
+        for (String string : new Palvelu().getTyypit()) {
+            palvelutyypit.add(string);
+        }
+        
+        ObservableList<String> laskunTilat = FXCollections.observableArrayList();
+        for (String string : new Lasku().getLaskunTila()) {
+            laskunTilat.add(string);
+        }
+        
+        palvelutToimipisteComboBox.setItems(toimipisteet);
+        varauksetToimipisteComboBox.setItems(toimipisteet);
+        laskutToimipisteComboBox.setItems(toimipisteet);
+        
+        palvelutPalvelutyyppiComboBox.setItems(palvelutyypit);
+        varauksetPalvelutyyppiComboBox.setItems(palvelutyypit);
+        
+        laskutTilaComboBox.setItems(laskunTilat);
         
     }    
     
@@ -209,10 +243,12 @@ public class MainFXMLController implements Initializable {
     @FXML private void toimipisteetTabOnSelectionChanged(Event event) {
         try {
             // Haetaan näkymään tiedot tietokannasta
-            tableController.initializeTable(new Toimipiste(), toimipisteetTableView);
+            mfxmls.paivitaNakyma(new Toimipiste(), toimipisteetTableView);
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        mfxmls.suodataNakyma(new Toimipiste(), toimipisteetTableView, null, null, toimipisteetHakuTextField.getText() );
+        
         
             
     }
@@ -222,13 +258,14 @@ public class MainFXMLController implements Initializable {
         try {
             mfxmls.lisaaUusiButton(new Toimipiste(), toimipisteetTableView, mainPane);
             //päivitetään näkymä
-            tableController.initializeTable(new Toimipiste(), toimipisteetTableView);
+            mfxmls.paivitaNakyma(new Toimipiste(), toimipisteetTableView);
             
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        mfxmls.suodataNakyma(new Toimipiste(), toimipisteetTableView, null, null, toimipisteetHakuTextField.getText() );
     }
 
     //Muokkaa-napin painallus
@@ -236,11 +273,12 @@ public class MainFXMLController implements Initializable {
         try {
             mfxmls.muokkaaButton(toimipisteetTableView, mainPane);
             //päivitetään näkymä
-            tableController.initializeTable(new Toimipiste(), toimipisteetTableView);
+            mfxmls.paivitaNakyma(new Toimipiste(), toimipisteetTableView);
             
         } catch (SQLException | IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        mfxmls.suodataNakyma(new Toimipiste(), toimipisteetTableView, null, null, toimipisteetHakuTextField.getText() );
     }
 
     //Poista-napin painallus
@@ -249,11 +287,12 @@ public class MainFXMLController implements Initializable {
         try {
             mfxmls.poistaButton(toimipisteetTableView);
             //päivitetään näkymä
-            tableController.initializeTable(new Toimipiste(), toimipisteetTableView);
+            mfxmls.paivitaNakyma(new Toimipiste(), toimipisteetTableView);
  
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        mfxmls.suodataNakyma(new Toimipiste(), toimipisteetTableView, null, null, toimipisteetHakuTextField.getText() );
     }
 
 
@@ -265,17 +304,23 @@ public class MainFXMLController implements Initializable {
     
     @FXML private void palvelutTabOnSelectionChanged(Event event) {
         try {
-            tableController.initializeTable(new Palvelu(), palvelutTableView);
+            mfxmls.paivitaNakyma(new Palvelu(), palvelutTableView);
+            tilapalkkiLabel.setText("Palvelut ladattu tietokannasta");
             
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            tilapalkkiLabel.setText("Virhe palveluiden latauksessa tietokannasta");
         }
+        
+        mfxmls.suodataNakyma(new Palvelu(), palvelutTableView, palvelutToimipisteComboBox, palvelutPalvelutyyppiComboBox, palvelutHakuTextField.getText());
     }
     
     @FXML private void palvelutToimipisteComboBoxOnAction(ActionEvent event) {
+        mfxmls.suodataNakyma(new Palvelu(), palvelutTableView, palvelutToimipisteComboBox, palvelutPalvelutyyppiComboBox, palvelutHakuTextField.getText());
     }
 
     @FXML private void palvelutPalvelutyyppiComboBoxOnAction(ActionEvent event) {
+        mfxmls.suodataNakyma(new Palvelu(), palvelutTableView, palvelutToimipisteComboBox, palvelutPalvelutyyppiComboBox, palvelutHakuTextField.getText());
     }
     
     @FXML private void palveluLisaaUusiButtonOnAction(ActionEvent event) {
@@ -284,12 +329,14 @@ public class MainFXMLController implements Initializable {
         
         try {
             mfxmls.lisaaUusiButton(new Palvelu(), palvelutTableView, mainPane);
-            
+            mfxmls.paivitaNakyma(new Toimipiste(), toimipisteetTableView);
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        mfxmls.suodataNakyma(new Palvelu(), palvelutTableView, palvelutToimipisteComboBox, palvelutPalvelutyyppiComboBox, palvelutHakuTextField.getText());
 
     }
     
@@ -299,10 +346,12 @@ public class MainFXMLController implements Initializable {
         
         try {
             mfxmls.muokkaaButton(palvelutTableView, mainPane);
-            
+            mfxmls.paivitaNakyma(new Toimipiste(), toimipisteetTableView);
         } catch (SQLException | IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        mfxmls.suodataNakyma(new Palvelu(), palvelutTableView, palvelutToimipisteComboBox, palvelutPalvelutyyppiComboBox, palvelutHakuTextField.getText());
     }
     
     @FXML private void palveluPoistaButtonOnAction(ActionEvent event) {
@@ -311,10 +360,12 @@ public class MainFXMLController implements Initializable {
         
         try {
             mfxmls.poistaButton(palvelutTableView);
- 
+            mfxmls.paivitaNakyma(new Toimipiste(), toimipisteetTableView);
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        mfxmls.suodataNakyma(new Palvelu(), palvelutTableView, palvelutToimipisteComboBox, palvelutPalvelutyyppiComboBox, palvelutHakuTextField.getText());
     }
 
     /**
@@ -326,11 +377,12 @@ public class MainFXMLController implements Initializable {
         // Haetaan näkymään tiedot tietokannasta
         
         try {
-            asiakkaatTableView.setItems(new AsiakasDao().list());
+            mfxmls.paivitaNakyma(new Asiakas(), asiakkaatTableView);
             
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        mfxmls.suodataNakyma(new Asiakas(), asiakkaatTableView, null, null, asiakasHakuTextField.getText());
     }
        
     @FXML private void asiakasLisaaUusiButtonOnAction(ActionEvent event) {
@@ -339,12 +391,15 @@ public class MainFXMLController implements Initializable {
         
         try {
             mfxmls.lisaaUusiButton(new Asiakas(), asiakkaatTableView, mainPane);
+            mfxmls.paivitaNakyma(new Asiakas(), asiakkaatTableView);
             
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        mfxmls.suodataNakyma(new Asiakas(), asiakkaatTableView, null, null, asiakasHakuTextField.getText());
 
     }
 
@@ -354,10 +409,13 @@ public class MainFXMLController implements Initializable {
         
         try {
             mfxmls.muokkaaButton(asiakkaatTableView, mainPane);
+            mfxmls.paivitaNakyma(new Asiakas(), asiakkaatTableView);
             
         } catch (SQLException | IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        mfxmls.suodataNakyma(new Asiakas(), asiakkaatTableView, null, null, asiakasHakuTextField.getText());
     }
    
     @FXML private void asiakasPoistaButtonOnAction(ActionEvent event) {
@@ -366,10 +424,13 @@ public class MainFXMLController implements Initializable {
         
         try {
             mfxmls.poistaButton(asiakkaatTableView);
+            mfxmls.paivitaNakyma(new Asiakas(), asiakkaatTableView);
  
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        mfxmls.suodataNakyma(new Asiakas(), asiakkaatTableView, null, null, asiakasHakuTextField.getText());
     }
 
 
@@ -379,12 +440,20 @@ public class MainFXMLController implements Initializable {
      */
     
     @FXML private void varauksetTabOnSelectionChanged(Event event) {
+        try {
+            mfxmls.paivitaNakyma(new PalveluVaraus(), varauksetTableView);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetToimipisteComboBox, varauksetHakuTextField.getText());
     }
     
     @FXML private void varauksetToimipisteComboBoxOnAction(ActionEvent event) {
+        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetToimipisteComboBox, varauksetHakuTextField.getText());
     }
 
     @FXML private void varauksetPalvelutyyppiComboBoxOnAction(ActionEvent event) {
+        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetToimipisteComboBox, varauksetHakuTextField.getText());
     }
 
     @FXML private void varauksetMistaDatePickerOnAction(ActionEvent event) {
@@ -409,6 +478,11 @@ public class MainFXMLController implements Initializable {
      */
     
     @FXML private void laskutTabOnSelectionChanged(Event event) {
+        try {
+            mfxmls.paivitaNakyma(new Lasku(), laskutTableView);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @FXML private void laskutToimipisteComboBoxOnAction(ActionEvent event) {
@@ -487,17 +561,52 @@ public class MainFXMLController implements Initializable {
             }
         });
         
+        varauksetTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                varauksetMuokkaaButton.setDisable(false);
+                varauksetPoistaButton.setDisable(false);
+            }
+            if (newSelection == null) {
+            	varauksetMuokkaaButton.setDisable(true);
+            	varauksetPoistaButton.setDisable(true);
+            }
+        });
+        
+        laskutTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                laskutMuokkaaButton.setDisable(false);
+                laskutPoistaButton.setDisable(false);
+            }
+            if (newSelection == null) {
+            	laskutMuokkaaButton.setDisable(true);
+            	laskutPoistaButton.setDisable(true);
+            }
+        });
+        
         
         //TODO haku- ja rajaustoimintojen kuuntelijat
         
         //Toimipisteen Hakutoiminnon kuuntelija
         toimipisteetHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            new MainFXMLSearchFilters().toimipisteHakuFilter(tableController.getToimipisteFilteredData(), newValue);
+            mfxmls.suodataNakyma(new Toimipiste(), toimipisteetTableView, null, null, newValue );
         });
         
         //Palvelu Hakutoiminnon kuuntelija
         palvelutHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            new MainFXMLSearchFilters().palveluHakuFilter(tableController.getPalveluFilteredData(), newValue);
+            
+            mfxmls.suodataNakyma(new Palvelu(), palvelutTableView, palvelutToimipisteComboBox, palvelutPalvelutyyppiComboBox, newValue);
+        });
+        
+        //Asiakas Hakutoiminnon kuuntelija
+        asiakasHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            new MainFXMLSearchFilters().asiakasHakuFilter(mfxmls.getAsiakkaatFiltered(), newValue);
+            mfxmls.suodataNakyma(new Asiakas(), asiakkaatTableView, null, null, newValue);
+        });
+        
+        //Varaukset Hakutoiminnon kuuntelija
+        varauksetHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            new MainFXMLSearchFilters().palveluVarausHakuFilter(mfxmls.getPalveluvarauksetFiltered(), newValue);
+            mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, null, null, newValue);
         });
         
     }
@@ -530,7 +639,30 @@ public class MainFXMLController implements Initializable {
         asiakasPuhelinnumeroColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("puhelinnro"));
         asiakasEmailColumn.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("email"));
 
-        // TODO Tehdään sama muille näkymille
+        varausIdColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, Integer>("varausId"));
+        varausAsiakasIdColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, Integer>("asiakasId"));
+        varausToimipisteColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, String>("toimipiste"));
+        varausPalveluTyyppiColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, String>("palveluTyyppiString"));
+        varausPalvelunNimiColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, String>("palvelunNimi"));
+        varausPalvelunAlkuColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, Date>("palvelunVarausAlku"));
+        varausPalvelunLoppuColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, Date>("palvelunVarausLoppu"));
+        varausVarattuColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, Date>("varausVarattu"));
+        varausVahvistettuColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, Date>("varausVahvistettu"));
+        
+        laskutLaskuIdColumn.setCellValueFactory(new PropertyValueFactory<Lasku, Integer>("laskuId"));
+        laskutToimipisteColumn.setCellValueFactory(new PropertyValueFactory<Lasku, String>("toimipiste"));
+        laskutVarausIdColumn.setCellValueFactory(new PropertyValueFactory<Lasku, Integer>("varausId"));
+        laskutAsiakasIdColumn.setCellValueFactory(new PropertyValueFactory<Lasku, Integer>("asiakasId"));
+        laskutTilaColumn.setCellValueFactory(new PropertyValueFactory<Lasku, String>("tilaString"));
+        laskutPaivaysColumn.setCellValueFactory(new PropertyValueFactory<Lasku, Date>("paivays"));
+        laskutNimiColumn.setCellValueFactory(new PropertyValueFactory<Lasku, String>("nimi"));
+        laskutLahiosoiteColumn.setCellValueFactory(new PropertyValueFactory<Lasku, String>("lahiosoite"));
+        laskutPostinumeroColumn.setCellValueFactory(new PropertyValueFactory<Lasku, String>("postinro"));
+        laskutPostitoimipaikkaColumn.setCellValueFactory(new PropertyValueFactory<Lasku, String>("postitoimipaikka"));
+        laskutSummaColumn.setCellValueFactory(new PropertyValueFactory<Lasku, Double>("summa"));
+        laskutAlvColumn.setCellValueFactory(new PropertyValueFactory<Lasku, Double>("alv"));
+        laskutSummaAvlColumn.setCellValueFactory(new PropertyValueFactory<Lasku, Double>("summaAlv"));
+                
     }
     
     

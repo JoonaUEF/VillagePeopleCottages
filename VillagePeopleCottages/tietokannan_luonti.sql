@@ -38,6 +38,8 @@ CREATE TABLE Lasku (
 	postinro CHAR (5),
 	summa DOUBLE NOT NULL,
 	alv DOUBLE NOT NULL,
+        paivays DATETIME,
+        toimipiste_id INT,
 	FOREIGN KEY (varaus_id) REFERENCES Varaus (varaus_id) ON DELETE CASCADE,
 	FOREIGN KEY (asiakas_id) REFERENCES Asiakas (asiakas_id) ON DELETE CASCADE
  	);

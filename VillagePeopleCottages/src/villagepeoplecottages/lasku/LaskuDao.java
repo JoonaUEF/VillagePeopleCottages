@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
 
 import javafx.collections.ObservableList;
 import villagepeoplecottages.asiakas.Asiakas;
@@ -107,7 +108,31 @@ public class LaskuDao implements Dao<Lasku, Integer>{
 
     @Override
     public ObservableList<Lasku> list() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ObservableList<Lasku> observableLasku = FXCollections.observableArrayList();
+        
+        Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
+
+        PreparedStatement stmt = connection.prepareStatement("SELECT Lasku.*, Toimipiste.nimi AS toimipiste FROM Lasku\n" +
+                                                            "JOIN Toimipiste ON Lasku.toimipiste_id = Toimipiste.toimipiste_id;");
+        
+        ResultSet rs = stmt.executeQuery();
+        
+        //Jos ei ole rivejä, palautetaan null-viite
+        if(!rs.next()) {
+            return observableLasku;
+        }
+        
+        //Lisätään tietokannan taulun rivit listalle olioina
+        do {
+            observableLasku.add(new Lasku(rs.getInt("lasku_id"), rs.getInt("varaus_id"), rs.getInt("asiakas_id"), rs.getInt("tila"), rs.getString("nimi"), rs.getString("lahiosoite"), rs.getString("postitoimipaikka"), rs.getString("postinro"), rs.getDouble("summa"), rs.getDouble("alv"), rs.getDate("paivays"), rs.getString("toimipiste")));
+        } while (rs.next());
+        
+        rs.close();
+        stmt.close();
+        connection.close();
+        
+       
+        return observableLasku;
     }
     
 }
