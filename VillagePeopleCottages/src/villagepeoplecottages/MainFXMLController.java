@@ -200,34 +200,7 @@ public class MainFXMLController implements Initializable {
         this.listeners();
         
         //Lisätään näkymiin ComboBoxien sisällöt
-        ObservableList<String> toimipisteet = FXCollections.observableArrayList();
-        toimipisteet.add("Kaikki toimipisteet");
-        try {
-            for (Toimipiste toimipiste : new ToimipisteDao().list()) {
-                toimipisteet.add(toimipiste.getNimi());
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        ObservableList<String> palvelutyypit = FXCollections.observableArrayList();
-        for (String string : new Palvelu().getTyypit()) {
-            palvelutyypit.add(string);
-        }
-        
-        ObservableList<String> laskunTilat = FXCollections.observableArrayList();
-        for (String string : new Lasku().getLaskunTila()) {
-            laskunTilat.add(string);
-        }
-        
-        palvelutToimipisteComboBox.setItems(toimipisteet);
-        varauksetToimipisteComboBox.setItems(toimipisteet);
-        laskutToimipisteComboBox.setItems(toimipisteet);
-        
-        palvelutPalvelutyyppiComboBox.setItems(palvelutyypit);
-        varauksetPalvelutyyppiComboBox.setItems(palvelutyypit);
-        
-        laskutTilaComboBox.setItems(laskunTilat);
+        this.comboBoxit();
         
     }    
     
@@ -265,6 +238,7 @@ public class MainFXMLController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.comboBoxit();
         mfxmls.suodataNakyma(new Toimipiste(), toimipisteetTableView, null, null, toimipisteetHakuTextField.getText() );
     }
 
@@ -278,6 +252,7 @@ public class MainFXMLController implements Initializable {
         } catch (SQLException | IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.comboBoxit();
         mfxmls.suodataNakyma(new Toimipiste(), toimipisteetTableView, null, null, toimipisteetHakuTextField.getText() );
     }
 
@@ -292,6 +267,7 @@ public class MainFXMLController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.comboBoxit();
         mfxmls.suodataNakyma(new Toimipiste(), toimipisteetTableView, null, null, toimipisteetHakuTextField.getText() );
     }
 
@@ -663,6 +639,37 @@ public class MainFXMLController implements Initializable {
         laskutAlvColumn.setCellValueFactory(new PropertyValueFactory<Lasku, Double>("alv"));
         laskutSummaAvlColumn.setCellValueFactory(new PropertyValueFactory<Lasku, Double>("summaAlv"));
                 
+    }
+
+    private void comboBoxit() {
+        ObservableList<String> toimipisteet = FXCollections.observableArrayList();
+        toimipisteet.add("Kaikki toimipisteet");
+        try {
+            for (Toimipiste toimipiste : new ToimipisteDao().list()) {
+                toimipisteet.add(toimipiste.getNimi());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ObservableList<String> palvelutyypit = FXCollections.observableArrayList();
+        for (String string : new Palvelu().getTyypit()) {
+            palvelutyypit.add(string);
+        }
+        
+        ObservableList<String> laskunTilat = FXCollections.observableArrayList();
+        for (String string : new Lasku().getLaskunTila()) {
+            laskunTilat.add(string);
+        }
+        
+        palvelutToimipisteComboBox.setItems(toimipisteet);
+        varauksetToimipisteComboBox.setItems(toimipisteet);
+        laskutToimipisteComboBox.setItems(toimipisteet);
+        
+        palvelutPalvelutyyppiComboBox.setItems(palvelutyypit);
+        varauksetPalvelutyyppiComboBox.setItems(palvelutyypit);
+        
+        laskutTilaComboBox.setItems(laskunTilat);
     }
     
     
