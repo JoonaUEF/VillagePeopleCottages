@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import villagepeoplecottages.asiakas.Asiakas;
 import villagepeoplecottages.interfaces.Dao;
@@ -83,7 +84,7 @@ public class LaskuDao implements Dao<Lasku, Integer>{
         //List<Varaus> varaukset = new ArrayList<>();
 
         Lasku lasku = new Lasku(laskuId, rs.getInt("varaus_id"),
-        		rs.getInt("asiakas_id"), rs.getString("nimi"),
+        		rs.getInt("asiakas_id"), rs.getInt("tila"), rs.getString("nimi"),
                 rs.getString("lahiosoite"), rs.getString("postitoimipaikka"), 
                 rs.getString("postinro"), rs.getDouble("summa"), 
                 rs.getDouble("alv"));
@@ -96,18 +97,80 @@ public class LaskuDao implements Dao<Lasku, Integer>{
     }
 
     @Override
-    public Lasku update(Lasku object) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Lasku update(Lasku lasku) throws SQLException {
+    	Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
+
+        PreparedStatement stmt = connection.prepareStatement("UPDATE Lasku"
+            + " SET nimi = ?, lahiosoite = ?, postitoimipaikka = ?, postinro = ?, summa = ?, alv = ?, tila = ?, varaus_id = ?"
+            + " WHERE lasku_id = ?");
+        
+        stmt.setString(1, lasku.getNimi());
+        stmt.setString(2, lasku.getLahiosoite());
+        stmt.setString(3, lasku.getPostitoimipaikka());
+        stmt.setString(4, lasku.getPostinro());
+        stmt.setDouble(5, lasku.getSumma());
+        stmt.setDouble(6, lasku.getAlv());
+        stmt.setInt(6, lasku.getLaskuId());
+        stmt.setInt(8, lasku.getTila());
+        stmt.setInt(9, lasku.getVarausId());
+
+        stmt.executeUpdate();
+        stmt.close();
+        connection.close();
+        
+        
+        return lasku;
     }
 
     @Override
     public void delete(Integer key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
+
+        PreparedStatement stmt = connection.prepareStatement("DELETE FROM Lasku"
+            + " WHERE lasku_id = ?");
+        
+        stmt.setInt(1, key);
+        
+        stmt.executeUpdate();
+        stmt.close();
+        connection.close();
     }
 
     @Override
     public ObservableList<Lasku> list() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    	List<Lasku> laskut = new ArrayList<>();
+        
+        Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
+
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Lasku");
+        
+        ResultSet rs = stmt.executeQuery();
+        
+        //Jos ei ole rivejä, palautetaan null-viite
+        if(!rs.next()) {
+            return null;
+        }
+        
+        //Lisätään tietokannan taulun rivit listalle olioina
+        do {
+            laskut.add(new Lasku(rs.getInt("varaus_id"), rs.getInt("asiakas_id"),
+            		rs.getInt("tila"),
+            		rs.getString("nimi"),rs.getString("lahiosoite"),
+            		rs.getString("postitoimipaikka"), rs.getString("postinro"),
+            		rs.getDouble("summa"), rs.getDouble("alv")));
+        } while (rs.next());
+        
+        rs.close();
+        stmt.close();
+        connection.close();
+        
+        //Siirretään luotu lista Observablelistiin.
+        
+        ObservableList<Lasku> observableLasku = FXCollections.observableArrayList();
+        
+        observableLasku.addAll(laskut);
+        
+        return observableLasku;
+        }
     
 }
