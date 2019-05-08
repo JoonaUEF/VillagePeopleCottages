@@ -47,6 +47,7 @@ public class Palvelu {
     
     public List<String> getTyypit() {
         tyypit = new ArrayList<>();
+        tyypit.add("Kaikki");
         tyypit.add("Majoitus");
         tyypit.add("Lisäpalvelu");
         return tyypit;
