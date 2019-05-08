@@ -43,9 +43,6 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
     // Ladataan Service käyttöön
     private ToimipisteFXMLService tfxmls = new ToimipisteFXMLService();
     
-    // Ladataan ToimipisteTableController käyttöön
-    private ToimipisteTableController tableController = new ToimipisteTableController();
-    
     // Controllerille tuleva olio initData:ssa
     private Toimipiste selectedToimipiste;
     
@@ -170,7 +167,7 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
 
         // Laitetaan palvelut TableViewiin valitun toimipisteen palvelut
         try {
-            tableController.initializeTable(new Palvelu(), selectedToimipiste, palvelutTableView);
+            tfxmls.paivitaNakyma(selectedToimipiste, new Palvelu(), palvelutTableView);
         } catch (SQLException ex) {
             Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }   
@@ -231,7 +228,7 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
     @FXML
     private void palveluTabOnSelectionChanged(Event event) {
         try {
-            tableController.initializeTable(new Palvelu(), selectedToimipiste, palvelutTableView);
+            tfxmls.paivitaNakyma(selectedToimipiste, new Palvelu(), palvelutTableView);
             
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -240,14 +237,8 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
     
     @FXML
     private void palveluTyyppiComboBoxOnAction(ActionEvent event) {
-        palveluHakuTextField.clear();
-        try {
-            tableController.initializeTable(new Palvelu(), selectedToimipiste, palvelutTableView);
-        } catch (SQLException ex) {
-            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-        new ToimipisteFXMLSearchFilters().palveluTyyppiComboBoxFilter(tableController.getPalveluFilteredData(), palveluTyyppiComboBox.getSelectionModel().getSelectedItem());
+      
         
     }
     
@@ -295,7 +286,7 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
     @FXML
     private void varauksetTabOnSelectionChanged(Event event) {
         try {
-            tableController.initializeTable(new PalveluVaraus(), selectedToimipiste, varauksetTableView);
+            tfxmls.paivitaNakyma(selectedToimipiste, new PalveluVaraus(), varauksetTableView);
             
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -306,14 +297,8 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
     @FXML
     private void varausPalvelutyyppiComboBoxOnAction(ActionEvent event) {
         
-        varausHakuTextField.clear();
-        try {
-            tableController.initializeTable(new PalveluVaraus(), selectedToimipiste, varauksetTableView);
-        } catch (SQLException ex) {
-            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-        new ToimipisteFXMLSearchFilters().palveluVarausTyyppiComboBoxFilter(tableController.getPvFilteredData(), varausPalvelutyyppiComboBox.getSelectionModel().getSelectedItem());
+        
     }
 
     @FXML
@@ -391,14 +376,8 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
         
         //Palvelu Hakutoiminnon kuuntelija
         palveluHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                tableController.initializeTable(new Palvelu(), selectedToimipiste, palvelutTableView);
-            } catch (SQLException ex) {
-                Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
             
-            new ToimipisteFXMLSearchFilters().palveluHakuFilter(tableController.getPalveluFilteredData(), newValue);
-            palveluTyyppiComboBox.getSelectionModel().clearSelection();
             
         });
         
@@ -406,14 +385,7 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
         //PalveluVaraus hakutoiminnon kuuntelija
         varausHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             
-             try {
-                tableController.initializeTable(new PalveluVaraus(), selectedToimipiste, varauksetTableView);
-            } catch (SQLException ex) {
-                Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            }
             
-            new ToimipisteFXMLSearchFilters().palveluVarausHakuFilter(tableController.getPvFilteredData(), newValue);
-            varausPalvelutyyppiComboBox.getSelectionModel().clearSelection();
             
         });
     }

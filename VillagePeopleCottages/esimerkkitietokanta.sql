@@ -70,8 +70,8 @@ VALUES (7, 2, '2019-02-07 7:00:00', '2019-02-07 11:00:00');
 
 
 
-INSERT INTO Lasku (lasku_id, varaus_id, asiakas_id, tila, nimi, lahiosoite, postinro, postitoimipaikka, summa, alv)
-VALUES (1, 1, 1, 0, 'Essi Esimerkki', 'Asiakaskatu 12 b 45', '65432', 'Asiakkala', 1000, 240);
+INSERT INTO Lasku (lasku_id, varaus_id, asiakas_id, tila, nimi, lahiosoite, postinro, postitoimipaikka, summa, alv, paivays, toimipiste_id)
+VALUES (1, 1, 1, 0, 'Essi Esimerkki', 'Asiakaskatu 12 b 45', '65432', 'Asiakkala', 1000, 240, '2019-02-07', 1);
 
-INSERT INTO Lasku (lasku_id, varaus_id, asiakas_id, tila, nimi, lahiosoite, postinro, postitoimipaikka, summa, alv)
-VALUES (2, 2, 2, 1, 'Anssi Asiakas', 'Esimerkkikatu 22 a', '65443', 'Esimerkkilä', 2000, 480);
+INSERT INTO Lasku (lasku_id, varaus_id, asiakas_id, tila, nimi, lahiosoite, postinro, postitoimipaikka, summa, alv, paivays, toimipiste_id)
+VALUES (2, 2, 2, 1, 'Anssi Asiakas', 'Esimerkkikatu 22 a', '65443', 'Esimerkkilä', 2000, 480, '2019-02-06', 2);

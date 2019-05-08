@@ -16,7 +16,7 @@ import villagepeoplecottages.palveluvaraus.PalveluVaraus;
  */
 public class ToimipisteFXMLSearchFilters extends MainFXMLSearchFilters {
 
-    @Override
+    
     public void palveluHakuFilter(FilteredList<Palvelu> palveluFilteredData, String newValue) {
         palveluFilteredData.setPredicate(palvelu -> {
                 

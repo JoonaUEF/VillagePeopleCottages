@@ -12,7 +12,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import villagepeoplecottages.MainTableController;
 import villagepeoplecottages.asiakas.Asiakas;
 import villagepeoplecottages.asiakas.AsiakasDao;
 import villagepeoplecottages.asiakas.AsiakasFXMLController;
