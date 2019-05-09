@@ -6,10 +6,12 @@ import villagepeoplecottages.palvelu.Palvelu;
 import villagepeoplecottages.asiakas.Asiakas;
 import villagepeoplecottages.palveluvaraus.PalveluVaraus;
 import villagepeoplecottages.lasku.Lasku;
+import villagepeoplecottages.varaus.Varaus;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +26,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -421,30 +424,53 @@ public class MainFXMLController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetToimipisteComboBox, varauksetHakuTextField.getText());
+        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetPalvelutyyppiComboBox, varauksetMistaDatePicker, varauksetMihinDatePicker, varauksetHakuTextField.getText());
     }
     
     @FXML private void varauksetToimipisteComboBoxOnAction(ActionEvent event) {
-        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetToimipisteComboBox, varauksetHakuTextField.getText());
+        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetPalvelutyyppiComboBox, varauksetMistaDatePicker, varauksetMihinDatePicker, varauksetHakuTextField.getText());
     }
 
     @FXML private void varauksetPalvelutyyppiComboBoxOnAction(ActionEvent event) {
-        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetToimipisteComboBox, varauksetHakuTextField.getText());
+        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetPalvelutyyppiComboBox, varauksetMistaDatePicker, varauksetMihinDatePicker, varauksetHakuTextField.getText());
     }
 
     @FXML private void varauksetMistaDatePickerOnAction(ActionEvent event) {
+        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetPalvelutyyppiComboBox, varauksetMistaDatePicker, varauksetMihinDatePicker, varauksetHakuTextField.getText());
     }
 
     @FXML private void varauksetMihinDatePickerOnAction(ActionEvent event) {
+        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetPalvelutyyppiComboBox, varauksetMistaDatePicker, varauksetMihinDatePicker, varauksetHakuTextField.getText());
     }
 
     @FXML private void varauksetLisaaUusiButtonOnAction(ActionEvent event) {
+        try {
+            mfxmls.lisaaUusiButton(new Varaus(), varauksetTableView, mainPane);
+            mfxmls.paivitaNakyma(new Varaus(), varauksetTableView);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetPalvelutyyppiComboBox, varauksetMistaDatePicker, varauksetMihinDatePicker, varauksetHakuTextField.getText());
     }
 
     @FXML private void varauksetMuokkaaButtonOnAction(ActionEvent event) {
+        try {
+            mfxmls.muokkaaButton(varauksetTableView, mainPane);
+            mfxmls.paivitaNakyma(new Varaus(), varauksetTableView);
+            
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetPalvelutyyppiComboBox, varauksetMistaDatePicker, varauksetMihinDatePicker, varauksetHakuTextField.getText());
     }
 
     @FXML private void varauksetPoistaButtonOnAction(ActionEvent event) {
+        
+        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetPalvelutyyppiComboBox, varauksetMistaDatePicker, varauksetMihinDatePicker, varauksetHakuTextField.getText());
     }
 
     
@@ -459,27 +485,53 @@ public class MainFXMLController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        mfxmls.suodataNakyma(new Lasku(), laskutTableView, laskutToimipisteComboBox, laskutAlkaenDatePicker, laskutPaattyenDatePicker, laskutTilaComboBox, laskutHakuTextField.getText());
     }
     
     @FXML private void laskutToimipisteComboBoxOnAction(ActionEvent event) {
+        mfxmls.suodataNakyma(new Lasku(), laskutTableView, laskutToimipisteComboBox, laskutAlkaenDatePicker, laskutPaattyenDatePicker, laskutTilaComboBox, laskutHakuTextField.getText());
     } 
     
     @FXML private void laskutAlkaenDatePickerOnAction(ActionEvent event) {
+        mfxmls.suodataNakyma(new Lasku(), laskutTableView, laskutToimipisteComboBox, laskutAlkaenDatePicker, laskutPaattyenDatePicker, laskutTilaComboBox, laskutHakuTextField.getText());
     }
 
     @FXML private void laskutPaattyenDatePickerOnAction(ActionEvent event) {
+        mfxmls.suodataNakyma(new Lasku(), laskutTableView, laskutToimipisteComboBox, laskutAlkaenDatePicker, laskutPaattyenDatePicker, laskutTilaComboBox, laskutHakuTextField.getText());
     }
 
     @FXML private void laskutTilaComboBoxOnAction(ActionEvent event) {
+        mfxmls.suodataNakyma(new Lasku(), laskutTableView, laskutToimipisteComboBox, laskutAlkaenDatePicker, laskutPaattyenDatePicker, laskutTilaComboBox, laskutHakuTextField.getText());
     }
 
     @FXML private void laskutLisaaUusiButtonOnAction(ActionEvent event) {
+        try {
+            mfxmls.lisaaUusiButton(new Lasku(), laskutTableView, mainPane);
+            mfxmls.paivitaNakyma(new Lasku(), laskutTableView);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        mfxmls.suodataNakyma(new Lasku(), laskutTableView, laskutToimipisteComboBox, laskutAlkaenDatePicker, laskutPaattyenDatePicker, laskutTilaComboBox, laskutHakuTextField.getText());
     }
 
     @FXML private void laskutMuokkaaButtonOnAction(ActionEvent event) {
+        try {
+            mfxmls.muokkaaButton(laskutTableView, mainPane);
+            mfxmls.paivitaNakyma(new Lasku(), laskutTableView);
+            
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        mfxmls.suodataNakyma(new Lasku(), laskutTableView, laskutToimipisteComboBox, laskutAlkaenDatePicker, laskutPaattyenDatePicker, laskutTilaComboBox, laskutHakuTextField.getText());
     }
 
     @FXML private void laskutPoistaButtonOnAction(ActionEvent event) {
+        mfxmls.suodataNakyma(new Lasku(), laskutTableView, laskutToimipisteComboBox, laskutAlkaenDatePicker, laskutPaattyenDatePicker, laskutTilaComboBox, laskutHakuTextField.getText());
     }
 
     
@@ -560,7 +612,7 @@ public class MainFXMLController implements Initializable {
         });
         
         
-        //TODO haku- ja rajaustoimintojen kuuntelijat
+        
         
         //Toimipisteen Hakutoiminnon kuuntelija
         toimipisteetHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -568,21 +620,23 @@ public class MainFXMLController implements Initializable {
         });
         
         //Palvelu Hakutoiminnon kuuntelija
-        palvelutHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            
+        palvelutHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {   
             mfxmls.suodataNakyma(new Palvelu(), palvelutTableView, palvelutToimipisteComboBox, palvelutPalvelutyyppiComboBox, newValue);
         });
         
         //Asiakas Hakutoiminnon kuuntelija
         asiakasHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            new MainFXMLSearchFilters().asiakasHakuFilter(mfxmls.getAsiakkaatFiltered(), newValue);
             mfxmls.suodataNakyma(new Asiakas(), asiakkaatTableView, null, null, newValue);
         });
         
         //Varaukset Hakutoiminnon kuuntelija
         varauksetHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            new MainFXMLSearchFilters().palveluVarausHakuFilter(mfxmls.getPalveluvarauksetFiltered(), newValue);
-            mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, null, null, newValue);
+            mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetPalvelutyyppiComboBox, varauksetMistaDatePicker, varauksetMihinDatePicker, newValue);
+        });
+        
+        //Laskut hakutoiminnon kuuntelija
+        laskutHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            mfxmls.suodataNakyma(new Lasku(), laskutTableView, laskutToimipisteComboBox, laskutAlkaenDatePicker, laskutPaattyenDatePicker, laskutTilaComboBox, newValue);
         });
         
     }
@@ -638,7 +692,11 @@ public class MainFXMLController implements Initializable {
         laskutSummaColumn.setCellValueFactory(new PropertyValueFactory<Lasku, Double>("summa"));
         laskutAlvColumn.setCellValueFactory(new PropertyValueFactory<Lasku, Double>("alv"));
         laskutSummaAvlColumn.setCellValueFactory(new PropertyValueFactory<Lasku, Double>("summaAlv"));
-                
+        
+        
+        // Muunnetaan päiväykset kotimaiseen muotoon
+        paivayksienMuunnin();
+        
     }
 
     private void comboBoxit() {
@@ -658,6 +716,7 @@ public class MainFXMLController implements Initializable {
         }
         
         ObservableList<String> laskunTilat = FXCollections.observableArrayList();
+        laskunTilat.add("Kaikki");
         for (String string : new Lasku().getLaskunTila()) {
             laskunTilat.add(string);
         }
@@ -670,6 +729,99 @@ public class MainFXMLController implements Initializable {
         varauksetPalvelutyyppiComboBox.setItems(palvelutyypit);
         
         laskutTilaComboBox.setItems(laskunTilat);
+    }
+
+    // Muunnetaan päiväyksien muoto kotimaiseksi
+    private void paivayksienMuunnin() {
+        varausPalvelunAlkuColumn.setCellFactory(column -> {  
+            TableCell<PalveluVaraus, Date> cell = new TableCell<PalveluVaraus, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    }
+                    else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+            return cell;
+        });
+        
+        varausPalvelunLoppuColumn.setCellFactory(column -> {  
+            TableCell<PalveluVaraus, Date> cell = new TableCell<PalveluVaraus, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    }
+                    else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+            return cell;
+        });
+        
+        varausVarattuColumn.setCellFactory(column -> {  
+            TableCell<PalveluVaraus, Date> cell = new TableCell<PalveluVaraus, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    }
+                    else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+            return cell;
+        });
+        
+        varausVahvistettuColumn.setCellFactory(column -> {  
+            TableCell<PalveluVaraus, Date> cell = new TableCell<PalveluVaraus, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    }
+                    else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+            return cell;
+        });
+        
+        laskutPaivaysColumn.setCellFactory(column -> {  
+            TableCell<Lasku, Date> cell = new TableCell<Lasku, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    }
+                    else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+            return cell;
+        });
     }
     
     

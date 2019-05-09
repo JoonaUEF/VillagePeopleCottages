@@ -1,7 +1,6 @@
 package villagepeoplecottages.service;
 
 
-import villagepeoplecottages.palveluvaraus.PalveluVarausDao;
 import villagepeoplecottages.lasku.LaskuDao;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -25,7 +24,6 @@ import villagepeoplecottages.palveluvaraus.PalveluVarausFXMLController;
 import villagepeoplecottages.toimipiste.Toimipiste;
 import villagepeoplecottages.toimipiste.ToimipisteDao;
 import villagepeoplecottages.toimipiste.ToimipisteFXMLController;
-import villagepeoplecottages.toimipiste.ToimipisteTableController;
 import villagepeoplecottages.varaus.Varaus;
 import villagepeoplecottages.varaus.VarausDao;
 import villagepeoplecottages.varaus.VarausFXMLController;

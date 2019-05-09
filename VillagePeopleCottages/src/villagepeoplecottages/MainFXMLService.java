@@ -1,10 +1,12 @@
 package villagepeoplecottages;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
 import villagepeoplecottages.palvelu.Palvelu;
 import villagepeoplecottages.palvelu.PalveluDao;
@@ -120,20 +122,44 @@ public class MainFXMLService extends AbstractMainFXMLService {
             tv.setItems(asiakkaatSorted);
             
         }
+    }
+    
+    public void suodataNakyma(Object object, TableView tv, ComboBox<String> toimipisteComboBox, ComboBox<String> palvelutyyppiComboBox, DatePicker mistaDatePicker, DatePicker mihinDatePicker, String hakusana) {
+        Date mista = null;
+        Date mihin = null;
+        
+        if (mistaDatePicker.getValue() != null) {
+            mista = Date.valueOf(mistaDatePicker.getValue());
+        }
+        if (mihinDatePicker.getValue() != null) {
+            mihin = Date.valueOf(mihinDatePicker.getValue());
+        }
+        
         
         if (object instanceof PalveluVaraus) {
-           
+
+            new MainFXMLSearchFilters().palveluVarausHakuFilter(getPalveluvarauksetFiltered(), toimipisteComboBox.getSelectionModel().getSelectedItem(), palvelutyyppiComboBox.getSelectionModel().getSelectedItem(), mista, mihin, hakusana);
             tv.setItems(palveluvarauksetSorted);
             
         }
         
-        if (object instanceof Lasku) {
-           
-            tv.setItems(laskutSorted);
-            
-        }
     }
 
+    public void suodataNakyma(Lasku lasku, TableView tv, ComboBox<String> laskutToimipisteComboBox, DatePicker laskutAlkaenDatePicker, DatePicker laskutPaattyenDatePicker, ComboBox<String> laskutTilaComboBox, String hakusana) {
+        Date mista = null;
+        Date mihin = null;
+        
+        if (laskutAlkaenDatePicker.getValue() != null) {
+            mista = Date.valueOf(laskutAlkaenDatePicker.getValue());
+        }
+        if (laskutPaattyenDatePicker.getValue() != null) {
+            mihin = Date.valueOf(laskutPaattyenDatePicker.getValue());
+        }
+        
+        
+        new MainFXMLSearchFilters().laskuHakuFilter(getLaskutFiltered(), laskutToimipisteComboBox.getSelectionModel().getSelectedItem(), mista, mihin, laskutTilaComboBox.getSelectionModel().getSelectedItem(), hakusana);
+        tv.setItems(laskutSorted);
+    }
 
     public FilteredList<Toimipiste> getToimipisteetFiltered() {
         return toimipisteetFiltered;
@@ -155,10 +181,6 @@ public class MainFXMLService extends AbstractMainFXMLService {
         return laskutFiltered;
     }
 
-    
 
-    
-    
-    
-    
+       
 }
