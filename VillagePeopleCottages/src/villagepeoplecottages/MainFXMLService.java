@@ -19,7 +19,6 @@ import villagepeoplecottages.palveluvaraus.PalveluVaraus;
 import villagepeoplecottages.palveluvaraus.PalveluVarausDao;
 import villagepeoplecottages.lasku.Lasku;
 import villagepeoplecottages.lasku.LaskuDao;
-import villagepeoplecottages.toimipiste.ToimipisteFXMLSearchFilters;
 
 /**
  * MainFXMLService sisältää metodit MainFXMLController:le
@@ -85,10 +84,16 @@ public class MainFXMLService extends AbstractMainFXMLService {
         
         if (object instanceof PalveluVaraus) {
             palveluvaraukset = new PalveluVarausDao().list();
-            palveluvarauksetFiltered = new FilteredList<>(palveluvaraukset, p -> true);
-            palveluvarauksetSorted = new SortedList<>(palveluvarauksetFiltered);
-            palveluvarauksetSorted.comparatorProperty().bind(tv.comparatorProperty());
-            tv.setItems(palveluvarauksetSorted);
+            if (palveluvaraukset != null) {
+                palveluvarauksetFiltered = new FilteredList<>(palveluvaraukset, p -> true);
+                palveluvarauksetSorted = new SortedList<>(palveluvarauksetFiltered);
+                palveluvarauksetSorted.comparatorProperty().bind(tv.comparatorProperty());
+                tv.setItems(palveluvarauksetSorted);
+                
+            } else {
+                tv.setItems(palveluvaraukset);
+            }
+            
             
         }
         
@@ -111,8 +116,12 @@ public class MainFXMLService extends AbstractMainFXMLService {
         }
         
         if (object instanceof Palvelu) {
+            String toimipiste = "";
+            if (toimipisteComboBox != null) {
+                toimipiste = toimipisteComboBox.getSelectionModel().getSelectedItem();
+            } 
             
-            new MainFXMLSearchFilters().palveluFilter(getPalvelutFiltered(), toimipisteComboBox.getSelectionModel().getSelectedItem(), palvelutyyppiComboBox.getSelectionModel().getSelectedItem(), hakusana);
+            new MainFXMLSearchFilters().palveluFilter(getPalvelutFiltered(), toimipiste, palvelutyyppiComboBox.getSelectionModel().getSelectedItem(), hakusana);
             tv.setItems(palvelutSorted);
             
         }

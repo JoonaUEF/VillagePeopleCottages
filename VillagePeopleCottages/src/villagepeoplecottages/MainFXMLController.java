@@ -32,7 +32,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import villagepeoplecottages.toimipiste.ToimipisteFXMLSearchFilters;
 
 
 
@@ -339,7 +338,7 @@ public class MainFXMLController implements Initializable {
         
         try {
             mfxmls.poistaButton(palvelutTableView);
-            mfxmls.paivitaNakyma(new Toimipiste(), toimipisteetTableView);
+            mfxmls.paivitaNakyma(new Palvelu(), palvelutTableView);
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -469,7 +468,13 @@ public class MainFXMLController implements Initializable {
     }
 
     @FXML private void varauksetPoistaButtonOnAction(ActionEvent event) {
-        
+        try {
+            mfxmls.poistaButton(varauksetTableView);
+            mfxmls.paivitaNakyma(new PalveluVaraus(), varauksetTableView);
+ 
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetPalvelutyyppiComboBox, varauksetMistaDatePicker, varauksetMihinDatePicker, varauksetHakuTextField.getText());
     }
 
@@ -531,6 +536,13 @@ public class MainFXMLController implements Initializable {
     }
 
     @FXML private void laskutPoistaButtonOnAction(ActionEvent event) {
+        try {
+            mfxmls.poistaButton(laskutTableView);
+            mfxmls.paivitaNakyma(new Lasku(), laskutTableView);
+ 
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         mfxmls.suodataNakyma(new Lasku(), laskutTableView, laskutToimipisteComboBox, laskutAlkaenDatePicker, laskutPaattyenDatePicker, laskutTilaComboBox, laskutHakuTextField.getText());
     }
 
