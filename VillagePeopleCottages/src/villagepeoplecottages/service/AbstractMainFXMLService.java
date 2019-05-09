@@ -20,6 +20,7 @@ import villagepeoplecottages.palvelu.Palvelu;
 import villagepeoplecottages.palvelu.PalveluDao;
 import villagepeoplecottages.palvelu.PalveluFXMLController;
 import villagepeoplecottages.palveluvaraus.PalveluVaraus;
+import villagepeoplecottages.palveluvaraus.PalveluVarausDao;
 import villagepeoplecottages.palveluvaraus.PalveluVarausFXMLController;
 import villagepeoplecottages.toimipiste.Toimipiste;
 import villagepeoplecottages.toimipiste.ToimipisteDao;
@@ -343,7 +344,7 @@ public abstract class AbstractMainFXMLService {
         
         else if (object instanceof PalveluVaraus) {
             
-//            new PalveluVarausDao().delete();
+            new PalveluVarausDao().delete(((PalveluVaraus) object).getPalveluId());
             
         }
         
