@@ -6,6 +6,7 @@ import villagepeoplecottages.palvelu.Palvelu;
 import villagepeoplecottages.asiakas.Asiakas;
 import villagepeoplecottages.palveluvaraus.PalveluVaraus;
 import villagepeoplecottages.lasku.Lasku;
+import villagepeoplecottages.varaus.Varaus;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -443,12 +444,33 @@ public class MainFXMLController implements Initializable {
     }
 
     @FXML private void varauksetLisaaUusiButtonOnAction(ActionEvent event) {
+        try {
+            mfxmls.lisaaUusiButton(new Varaus(), varauksetTableView, mainPane);
+            mfxmls.paivitaNakyma(new Varaus(), varauksetTableView);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetPalvelutyyppiComboBox, varauksetMistaDatePicker, varauksetMihinDatePicker, varauksetHakuTextField.getText());
     }
 
     @FXML private void varauksetMuokkaaButtonOnAction(ActionEvent event) {
+        try {
+            mfxmls.muokkaaButton(varauksetTableView, mainPane);
+            mfxmls.paivitaNakyma(new Varaus(), varauksetTableView);
+            
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetPalvelutyyppiComboBox, varauksetMistaDatePicker, varauksetMihinDatePicker, varauksetHakuTextField.getText());
     }
 
     @FXML private void varauksetPoistaButtonOnAction(ActionEvent event) {
+        
+        mfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, varauksetToimipisteComboBox, varauksetPalvelutyyppiComboBox, varauksetMistaDatePicker, varauksetMihinDatePicker, varauksetHakuTextField.getText());
     }
 
     
@@ -483,10 +505,28 @@ public class MainFXMLController implements Initializable {
     }
 
     @FXML private void laskutLisaaUusiButtonOnAction(ActionEvent event) {
+        try {
+            mfxmls.lisaaUusiButton(new Lasku(), laskutTableView, mainPane);
+            mfxmls.paivitaNakyma(new Lasku(), laskutTableView);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         mfxmls.suodataNakyma(new Lasku(), laskutTableView, laskutToimipisteComboBox, laskutAlkaenDatePicker, laskutPaattyenDatePicker, laskutTilaComboBox, laskutHakuTextField.getText());
     }
 
     @FXML private void laskutMuokkaaButtonOnAction(ActionEvent event) {
+        try {
+            mfxmls.muokkaaButton(laskutTableView, mainPane);
+            mfxmls.paivitaNakyma(new Lasku(), laskutTableView);
+            
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         mfxmls.suodataNakyma(new Lasku(), laskutTableView, laskutToimipisteComboBox, laskutAlkaenDatePicker, laskutPaattyenDatePicker, laskutTilaComboBox, laskutHakuTextField.getText());
     }
 
