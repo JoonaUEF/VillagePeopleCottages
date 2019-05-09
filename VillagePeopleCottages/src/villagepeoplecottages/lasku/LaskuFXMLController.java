@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -21,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import villagepeoplecottages.interfaces.FXMLControllerInterface;
 
 /**
@@ -28,7 +30,8 @@ import villagepeoplecottages.interfaces.FXMLControllerInterface;
  * @author User
  */
 public class LaskuFXMLController implements Initializable, FXMLControllerInterface<Lasku> {
-
+	private Lasku vanhaLasku;
+	private LaskuFXMLService lfxmls = new LaskuFXMLService();
     @FXML
     private AnchorPane mainPane;
     @FXML
@@ -84,7 +87,19 @@ public class LaskuFXMLController implements Initializable, FXMLControllerInterfa
 
     @Override
     public void initData(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	this.vanhaLasku = (Lasku)object;
+    	asiakkaanNimiLabel.textProperty().set(vanhaLasku.getNimi());
+    	laskuIdLabel.textProperty().set(Integer.toString(vanhaLasku.getLaskuId()));
+    	varausIdLabel.textProperty().set(Integer.toString(vanhaLasku.getVarausId()));
+    	asiakasIdLabel.textProperty().set(Integer.toString(vanhaLasku.getAsiakasId()));
+    	laskuSummaLabel.textProperty().set(Double.toString(vanhaLasku.getSumma()));
+    	laskuAlvLabel.textProperty().set(Double.toString(vanhaLasku.getAlv()));
+    	laskuSummaAlvLabel.textProperty().set(Double.toString(vanhaLasku.getAlv() + vanhaLasku.getSumma()));
+    	//laskunTilaComboBox.setValue(vanhaLasku.get);
+    	
+    	
+    	
+    	
     }
 
     @Override
@@ -94,12 +109,19 @@ public class LaskuFXMLController implements Initializable, FXMLControllerInterfa
 
     @FXML
     private void tallennaButtonOnAction(ActionEvent event) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	lfxmls.tallennaButton(vanhaLasku, haeTietoLomakkeelta());
+        	
+        //sulje ikkuna
+        this.peruutaButtonOnAction(event);
     }
 
     @FXML
     private void peruutaButtonOnAction(ActionEvent event) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //sulkee ikkunan
+        
+        final Node source = (Node) event.getSource();
+        final Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 
     @Override
