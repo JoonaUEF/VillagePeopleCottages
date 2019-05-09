@@ -1,10 +1,12 @@
 package villagepeoplecottages.toimipiste;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
 import villagepeoplecottages.MainFXMLSearchFilters;
 import villagepeoplecottages.asiakas.Asiakas;
@@ -69,14 +71,43 @@ public class ToimipisteFXMLService extends AbstractSubFXMLService {
     public void suodataNakyma(Object object, TableView tv, ComboBox<String> toimipisteComboBox, ComboBox<String> palvelutyyppiComboBox, String hakusana) {
         
         if (object instanceof Palvelu) {
+            String toimipiste = null;
+            if (toimipisteComboBox != null) {
+                toimipiste = toimipisteComboBox.getSelectionModel().getSelectedItem();
+            } 
             
-            new MainFXMLSearchFilters().palveluFilter(getPalvelutFiltered(), toimipisteComboBox.getSelectionModel().getSelectedItem(), palvelutyyppiComboBox.getSelectionModel().getSelectedItem(), hakusana);
+            new MainFXMLSearchFilters().palveluFilter(getPalvelutFiltered(), toimipiste, palvelutyyppiComboBox.getSelectionModel().getSelectedItem(), hakusana);
             tv.setItems(palvelutSorted);
             
         }
         
         if (object instanceof PalveluVaraus) {
            
+            tv.setItems(palveluvarauksetSorted);
+            
+        }
+        
+    }
+    
+    public void suodataNakyma(Object object, TableView tv, ComboBox<String> toimipisteComboBox, ComboBox<String> palvelutyyppiComboBox, DatePicker mistaDatePicker, DatePicker mihinDatePicker, String hakusana) {
+        Date mista = null;
+        Date mihin = null;
+        
+        if (mistaDatePicker.getValue() != null) {
+            mista = Date.valueOf(mistaDatePicker.getValue());
+        }
+        if (mihinDatePicker.getValue() != null) {
+            mihin = Date.valueOf(mihinDatePicker.getValue());
+        }
+        
+        String toimipiste = null;
+        if (toimipisteComboBox != null) {
+            toimipiste = toimipisteComboBox.getSelectionModel().getSelectedItem();
+        } 
+        
+        if (object instanceof PalveluVaraus) {
+
+            new MainFXMLSearchFilters().palveluVarausHakuFilter(getPalveluvarauksetFiltered(), toimipiste, palvelutyyppiComboBox.getSelectionModel().getSelectedItem(), mista, mihin, hakusana);
             tv.setItems(palveluvarauksetSorted);
             
         }
