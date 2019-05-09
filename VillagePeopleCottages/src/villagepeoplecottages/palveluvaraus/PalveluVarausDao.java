@@ -130,7 +130,7 @@ public class PalveluVarausDao implements Dao<PalveluVaraus, Integer> {
     Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
 
     PreparedStatement stmt =
-        connection.prepareStatement("DELETE FROM PalveluVaraus" + " WHERE varaus_id = ?");
+        connection.prepareStatement("DELETE FROM PalveluVaraus" + " WHERE palvelu_id = ?");
 
     stmt.setInt(1, key);
 
@@ -165,7 +165,7 @@ public class PalveluVarausDao implements Dao<PalveluVaraus, Integer> {
           rs.getInt("palvelu_id"), rs.getInt("asiakas_id"), rs.getInt("tyyppi"),
           rs.getString("palvelun_nimi"), rs.getDate("alku"),
           rs.getDate("loppu"), rs.getDate("varattu_pvm"),
-          rs.getDate("vahvistettu_pvm")));
+          rs.getDate("vahvistus_pvm")));
 
 
     } while (rs.next());

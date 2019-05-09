@@ -6,13 +6,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.List;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -22,29 +21,32 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import villagepeoplecottages.MainFXMLSearchFilters;
 import villagepeoplecottages.MainFXMLController;
+import villagepeoplecottages.MainFXMLService;
 import villagepeoplecottages.interfaces.FXMLControllerInterface;
+import villagepeoplecottages.lasku.Lasku;
 
 /**
  * FXML Controller class
  *
  * 18.4.2019 Lassi Puurunen
  * 23.4.2019 Lisätty alavalikko ja taulukot. Lassi Puurunen
+ *  9.5.2019 Viimeistely. Lassi Puurunen
  */
 public class ToimipisteFXMLController implements Initializable, FXMLControllerInterface<Toimipiste> {
 
     // Ladataan Service käyttöön
     private ToimipisteFXMLService tfxmls = new ToimipisteFXMLService();
     
-    // Ladataan ToimipisteTableController käyttöön
-    private ToimipisteTableController tableController = new ToimipisteTableController();
+    // Ladataan MainFXMLService suodattimien käyttöön 
+    private MainFXMLService mfxmls = new MainFXMLService();
     
     // Controllerille tuleva olio initData:ssa
     private Toimipiste selectedToimipiste;
@@ -170,7 +172,7 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
 
         // Laitetaan palvelut TableViewiin valitun toimipisteen palvelut
         try {
-            tableController.initializeTable(new Palvelu(), selectedToimipiste, palvelutTableView);
+            tfxmls.paivitaNakyma(selectedToimipiste, new Palvelu(), palvelutTableView);
         } catch (SQLException ex) {
             Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }   
@@ -231,23 +233,20 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
     @FXML
     private void palveluTabOnSelectionChanged(Event event) {
         try {
-            tableController.initializeTable(new Palvelu(), selectedToimipiste, palvelutTableView);
+            tfxmls.paivitaNakyma(selectedToimipiste, new Palvelu(), palvelutTableView);
+            
             
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        tfxmls.suodataNakyma(new Palvelu(), palvelutTableView, null, palveluTyyppiComboBox, palveluHakuTextField.getText());
     }
     
     @FXML
     private void palveluTyyppiComboBoxOnAction(ActionEvent event) {
-        palveluHakuTextField.clear();
-        try {
-            tableController.initializeTable(new Palvelu(), selectedToimipiste, palvelutTableView);
-        } catch (SQLException ex) {
-            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        new ToimipisteFXMLSearchFilters().palveluTyyppiComboBoxFilter(tableController.getPalveluFilteredData(), palveluTyyppiComboBox.getSelectionModel().getSelectedItem());
+        tfxmls.suodataNakyma(new Palvelu(), palvelutTableView, null, palveluTyyppiComboBox, palveluHakuTextField.getText());
+      
         
     }
     
@@ -257,11 +256,12 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
             // Lisätään uusi palvelu toimipisteelle
 
             tfxmls.lisaaUusiButton(new Palvelu(), palvelutTableView, mainPane);
-            
+            tfxmls.paivitaNakyma(selectedToimipiste, new Palvelu(), palvelutTableView);
         } catch (SQLException | IOException ex) {
             Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
            
+        tfxmls.suodataNakyma(new Palvelu(), palvelutTableView, null, palveluTyyppiComboBox, palveluHakuTextField.getText());
     }
 
     @FXML
@@ -271,11 +271,14 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
             // Muokataan valittua palvelua
             
             tfxmls.muokkaaButton(selectedToimipiste, palvelutTableView, mainPane);
+            tfxmls.paivitaNakyma(selectedToimipiste, new Palvelu(), palvelutTableView);
         } catch (SQLException ex) {
             Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        tfxmls.suodataNakyma(new Palvelu(), palvelutTableView, null, palveluTyyppiComboBox, palveluHakuTextField.getText());
                
     }
 
@@ -283,9 +286,12 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
     private void palveluPoistaButtonOnAction(ActionEvent event) {
         try {
             tfxmls.poistaButton(palvelutTableView);
+            tfxmls.paivitaNakyma(selectedToimipiste, new Palvelu(), palvelutTableView);
         } catch (SQLException ex) {
             Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        tfxmls.suodataNakyma(new Palvelu(), palvelutTableView, null, palveluTyyppiComboBox, palveluHakuTextField.getText());
     }
 
     
@@ -295,45 +301,73 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
     @FXML
     private void varauksetTabOnSelectionChanged(Event event) {
         try {
-            tableController.initializeTable(new PalveluVaraus(), selectedToimipiste, varauksetTableView);
+            tfxmls.paivitaNakyma(selectedToimipiste, new PalveluVaraus(), varauksetTableView);
             
         } catch (SQLException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        tfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, null, varausPalvelutyyppiComboBox, varausMistaDatePicker, varausMihinDatePicker, varausHakuTextField.getText());
         
     }
     
     @FXML
     private void varausPalvelutyyppiComboBoxOnAction(ActionEvent event) {
-        
-        varausHakuTextField.clear();
-        try {
-            tableController.initializeTable(new PalveluVaraus(), selectedToimipiste, varauksetTableView);
-        } catch (SQLException ex) {
-            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        tfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, null, varausPalvelutyyppiComboBox, varausMistaDatePicker, varausMihinDatePicker, varausHakuTextField.getText());
 
-        new ToimipisteFXMLSearchFilters().palveluVarausTyyppiComboBoxFilter(tableController.getPvFilteredData(), varausPalvelutyyppiComboBox.getSelectionModel().getSelectedItem());
+        
     }
 
     @FXML
     private void varausMistaDatePickerOnAction(ActionEvent event) {
+        tfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, null, varausPalvelutyyppiComboBox, varausMistaDatePicker, varausMihinDatePicker, varausHakuTextField.getText());
     }
 
     @FXML
     private void varausMihinDatePickerOnAction(ActionEvent event) {
+        tfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, null, varausPalvelutyyppiComboBox, varausMistaDatePicker, varausMihinDatePicker, varausHakuTextField.getText());
     }
 
     @FXML
     private void varausLisaaUusiButtonOnAction(ActionEvent event) {
+        try {
+            tfxmls.lisaaUusiButton(new PalveluVaraus(), varauksetTableView, mainPane);
+            tfxmls.paivitaNakyma(selectedToimipiste, new PalveluVaraus(), varauksetTableView);
+        } catch (SQLException ex) {
+            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        tfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, null, varausPalvelutyyppiComboBox, varausMistaDatePicker, varausMihinDatePicker, varausHakuTextField.getText());
     }
 
     @FXML
     private void varausMuokkaaButtonOnAction(ActionEvent event) {
+        try {
+            // Muokataan valittua varausya
+            
+            tfxmls.muokkaaButton(selectedToimipiste, varauksetTableView, mainPane);
+            tfxmls.paivitaNakyma(selectedToimipiste, new PalveluVaraus(), varauksetTableView);
+        } catch (SQLException ex) {
+            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        tfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, null, varausPalvelutyyppiComboBox, varausMistaDatePicker, varausMihinDatePicker, varausHakuTextField.getText());
     }
 
     @FXML
     private void varausPoistaButtonOnAction(ActionEvent event) {
+        try {
+            tfxmls.poistaButton(varauksetTableView);
+            tfxmls.paivitaNakyma(selectedToimipiste, new PalveluVaraus(), varauksetTableView);
+        } catch (SQLException ex) {
+            Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        tfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, null, varausPalvelutyyppiComboBox, varausMistaDatePicker, varausMihinDatePicker, varausHakuTextField.getText());
     }
 
     
@@ -391,14 +425,8 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
         
         //Palvelu Hakutoiminnon kuuntelija
         palveluHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                tableController.initializeTable(new Palvelu(), selectedToimipiste, palvelutTableView);
-            } catch (SQLException ex) {
-                Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            new ToimipisteFXMLSearchFilters().palveluHakuFilter(tableController.getPalveluFilteredData(), newValue);
-            palveluTyyppiComboBox.getSelectionModel().clearSelection();
+
+            tfxmls.suodataNakyma(new Palvelu(), palvelutTableView, null, palveluTyyppiComboBox, newValue);
             
         });
         
@@ -406,14 +434,7 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
         //PalveluVaraus hakutoiminnon kuuntelija
         varausHakuTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             
-             try {
-                tableController.initializeTable(new PalveluVaraus(), selectedToimipiste, varauksetTableView);
-            } catch (SQLException ex) {
-                Logger.getLogger(ToimipisteFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            new ToimipisteFXMLSearchFilters().palveluVarausHakuFilter(tableController.getPvFilteredData(), newValue);
-            varausPalvelutyyppiComboBox.getSelectionModel().clearSelection();
+            tfxmls.suodataNakyma(new PalveluVaraus(), varauksetTableView, null, varausPalvelutyyppiComboBox, varausMistaDatePicker, varausMihinDatePicker, newValue);
             
         });
     }
@@ -439,6 +460,87 @@ public class ToimipisteFXMLController implements Initializable, FXMLControllerIn
         varausVarattuColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, Date>("varausVarattu"));
         varausVahvistettuColumn.setCellValueFactory(new PropertyValueFactory<PalveluVaraus, Date>("varausVahvistettu"));
 
-
+        // Muunnetaan päiväykset kotimaiseen muotoon
+        paivayksienMuunnin();
     }
+    
+    // Muunnetaan päiväyksien muoto kotimaiseksi
+    private void paivayksienMuunnin() {
+        varausPalvelunAlkuColumn.setCellFactory(column -> {  
+            TableCell<PalveluVaraus, Date> cell = new TableCell<PalveluVaraus, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    }
+                    else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+            return cell;
+        });
+        
+        varausPalvelunLoppuColumn.setCellFactory(column -> {  
+            TableCell<PalveluVaraus, Date> cell = new TableCell<PalveluVaraus, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    }
+                    else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+            return cell;
+        });
+        
+        varausVarattuColumn.setCellFactory(column -> {  
+            TableCell<PalveluVaraus, Date> cell = new TableCell<PalveluVaraus, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    }
+                    else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+            return cell;
+        });
+        
+        varausVahvistettuColumn.setCellFactory(column -> {  
+            TableCell<PalveluVaraus, Date> cell = new TableCell<PalveluVaraus, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    }
+                    else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+            return cell;
+        });
+        
+        
+    }
+    
+    
+    
 }

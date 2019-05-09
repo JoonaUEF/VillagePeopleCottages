@@ -18,6 +18,9 @@
 
 package villagepeoplecottages.lasku;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import villagepeoplecottages.asiakas.Asiakas;
 import villagepeoplecottages.varaus.Varaus;
 
@@ -33,12 +36,53 @@ public class Lasku {
     private String postinro;
     private double summa;
     private double alv;
+    private Date paivays;
+    
+    private String toimipiste;
     
     private Asiakas asiakas;
     private Varaus varaus;
+    
+    private List<String> laskunTila;
+    
+    //Laskun tilat Stringinä listan järjestyksessä
+    
+    public List<String> getLaskunTila() {
+        laskunTila = new ArrayList<>();
+        laskunTila.add("Luotu");
+        laskunTila.add("Laskutettu");
+        laskunTila.add("Maksettu");
+        return laskunTila;
+    }
+    
+    // Muuttaa tilan Stringiksi
+    public String getTilaString() {
+        return getLaskunTila().get(tila);
+    }
+    
+    public Double getSummaAlv() {
+        return summa + alv;
+    }
 
     public Lasku() {
     }
+
+    public Lasku(int laskuId, int varausId, int asiakasId, int tila, String nimi, String lahiosoite, String postitoimipaikka, String postinro, double summa, double alv, Date paivays, String toimipiste) {
+        this.laskuId = laskuId;
+        this.varausId = varausId;
+        this.asiakasId = asiakasId;
+        this.tila = tila;
+        this.nimi = nimi;
+        this.lahiosoite = lahiosoite;
+        this.postitoimipaikka = postitoimipaikka;
+        this.postinro = postinro;
+        this.summa = summa;
+        this.alv = alv;
+        this.paivays = paivays;
+        this.toimipiste = toimipiste;
+    }
+    
+    
 
     public Lasku(int varausId, int asiakasId, int tila, String nimi, String lahiosoite, String postitoimipaikka, String postinro, double summa, double alv) {
         this.varausId = varausId;
@@ -161,6 +205,14 @@ public class Lasku {
 
     public void setVaraus(Varaus varaus) {
         this.varaus = varaus;
+    }
+
+    public Date getPaivays() {
+        return paivays;
+    }
+
+    public String getToimipiste() {
+        return toimipiste;
     }
     
     

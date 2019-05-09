@@ -211,7 +211,9 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
         
         Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
 
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Palvelu WHERE toimipiste_id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT Palvelu.*, Toimipiste.nimi AS toimipiste_nimi FROM Palvelu \n" +
+                                                            "join Toimipiste on palvelu.toimipiste_id = toimipiste.toimipiste_id\n" +
+                                                            "WHERE palvelu.toimipiste_id = ?");
         
         stmt.setInt(1, toimipisteId);
         
@@ -224,9 +226,7 @@ public class PalveluDao implements Dao<Palvelu, Integer>{
         
         //Lisätään tietokannan taulun rivit listalle olioina
         do {
-            observablePalvelu.add(new Palvelu(rs.getInt("palvelu_id"), rs.getInt("toimipiste_id"), rs.getString("nimi"),
-                    rs.getInt("tyyppi"), rs.getString("kuvaus"),
-                    rs.getDouble("hinta"), rs.getDouble("alv")));
+            observablePalvelu.add(new Palvelu(rs.getInt("palvelu_id"), rs.getInt("toimipiste_id"), rs.getString("nimi"), rs.getInt("tyyppi"), rs.getString("kuvaus"), rs.getDouble("hinta"), rs.getDouble("alv"), rs.getString("toimipiste_nimi")));
         } while (rs.next());
         
         rs.close();

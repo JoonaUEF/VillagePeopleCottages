@@ -1,7 +1,6 @@
 package villagepeoplecottages.service;
 
 
-import villagepeoplecottages.palveluvaraus.PalveluVarausDao;
 import villagepeoplecottages.lasku.LaskuDao;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -12,7 +11,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import villagepeoplecottages.MainTableController;
 import villagepeoplecottages.asiakas.Asiakas;
 import villagepeoplecottages.asiakas.AsiakasDao;
 import villagepeoplecottages.asiakas.AsiakasFXMLController;
@@ -22,11 +20,11 @@ import villagepeoplecottages.palvelu.Palvelu;
 import villagepeoplecottages.palvelu.PalveluDao;
 import villagepeoplecottages.palvelu.PalveluFXMLController;
 import villagepeoplecottages.palveluvaraus.PalveluVaraus;
+import villagepeoplecottages.palveluvaraus.PalveluVarausDao;
 import villagepeoplecottages.palveluvaraus.PalveluVarausFXMLController;
 import villagepeoplecottages.toimipiste.Toimipiste;
 import villagepeoplecottages.toimipiste.ToimipisteDao;
 import villagepeoplecottages.toimipiste.ToimipisteFXMLController;
-import villagepeoplecottages.toimipiste.ToimipisteTableController;
 import villagepeoplecottages.varaus.Varaus;
 import villagepeoplecottages.varaus.VarausDao;
 import villagepeoplecottages.varaus.VarausFXMLController;
@@ -346,7 +344,7 @@ public abstract class AbstractMainFXMLService {
         
         else if (object instanceof PalveluVaraus) {
             
-//            new PalveluVarausDao().delete();
+            new PalveluVarausDao().delete(((PalveluVaraus) object).getPalveluId());
             
         }
         
