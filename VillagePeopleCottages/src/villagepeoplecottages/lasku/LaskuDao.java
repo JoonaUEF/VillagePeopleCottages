@@ -141,8 +141,9 @@ public class LaskuDao implements Dao<Lasku, Integer>{
         
         Connection connection = DriverManager.getConnection("jdbc:h2:./database", "sa", "");
 
-        PreparedStatement stmt = connection.prepareStatement("SELECT Lasku.*, Toimipiste.nimi AS toimipiste FROM Lasku\n" +
-                                                            "JOIN Toimipiste ON Lasku.toimipiste_id = Toimipiste.toimipiste_id;");
+        PreparedStatement stmt = connection.prepareStatement("SELECT Lasku.*, Varaus.Vahvistus_pvm AS paivays, Toimipiste.nimi AS toimipiste FROM Lasku\n"
+                                                            + "JOIN Varaus ON Lasku.varaus_id = Varaus.varaus_id\n"
+                                                            + "LEFT JOIN Toimipiste ON varaus.toimipiste_id = Toimipiste.toimipiste_id;");
         
         ResultSet rs = stmt.executeQuery();
         

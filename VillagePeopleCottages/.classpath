@@ -9,6 +9,5 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX11"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JDBC"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/H2/bin/h2-1.4.199.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
