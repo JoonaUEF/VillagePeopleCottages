@@ -146,27 +146,84 @@ public abstract class AbstractSubFXMLService extends AbstractMainFXMLService {
             
         
         if (object instanceof Asiakas) {
-            
+          Asiakas paivitettava = new AsiakasDao().read(((Asiakas) object).getAsiakasId());
+          Asiakas uudet = (Asiakas) uusi;
+          
+          paivitettava.setEtunimi(uudet.getEtunimi());
+          paivitettava.setSukunimi(uudet.getSukunimi());
+          paivitettava.setLahiosoite(uudet.getLahiosoite());
+          paivitettava.setPostinro(uudet.getPostinro());
+          paivitettava.setPostitoimipaikka(uudet.getPostitoimipaikka());
+          paivitettava.setPuhelinnro(uudet.getPuhelinnro());
+          paivitettava.setEmail(uudet.getEmail());
+          
+          new AsiakasDao().update(paivitettava);
+                      
         }
             
         
         if (object instanceof Lasku) {
-            
+          Lasku paivitettava = new LaskuDao().read(((Lasku) object).getLaskuId());
+          Lasku uudet = (Lasku) uusi;
+          
+          paivitettava.setVarausId(uudet.getVarausId());
+          paivitettava.setAsiakasId(uudet.getAsiakasId());
+          paivitettava.setNimi(uudet.getNimi());
+          paivitettava.setLahiosoite(uudet.getLahiosoite());
+          paivitettava.setPostinro(uudet.getPostinro());
+          paivitettava.setPostitoimipaikka(uudet.getPostitoimipaikka());
+          paivitettava.setSumma(uudet.getSumma());
+          paivitettava.setAlv(uudet.getAlv());
+          
+          new LaskuDao().update(paivitettava);  
+          
         }
             
         
         if (object instanceof Palvelu) {
-            
+          Palvelu paivitettava = new PalveluDao().read(((Palvelu) object).getPalveluId());
+          Palvelu uudet = (Palvelu) uusi;
+          
+          paivitettava.setNimi(uudet.getNimi());
+          paivitettava.setToimipisteId(uudet.getToimipisteId());
+          paivitettava.setTyyppi(uudet.getTyyppi());
+          paivitettava.setKuvaus(uudet.getKuvaus());
+          paivitettava.setHinta(uudet.getHinta());
+          paivitettava.setAlv(uudet.getAlv());
+          paivitettava.setToimipisteNimi(uudet.getToimipisteNimi());
+          
+          new PalveluDao().update(paivitettava);            
         }
             
         
         if (object instanceof PalveluVaraus) {
-            
+          PalveluVaraus paivitettava = new PalveluVarausDao().read(((PalveluVaraus) object).getVarausId());
+          PalveluVaraus uudet = (PalveluVaraus) uusi;
+          
+          paivitettava.setPalveluId(uudet.getVarausId());
+          paivitettava.setAsiakasId(uudet.getAsiakasId());
+          paivitettava.setPalvelunNimi(uudet.getPalvelunNimi());
+          paivitettava.setToimipiste(uudet.getToimipiste());
+          paivitettava.setPalveluTyyppi(uudet.getPalveluTyyppi());
+          paivitettava.setPalvelunVarausAlku(uudet.getPalvelunVarausAlku());
+          paivitettava.setPalvelunVarausLoppu(uudet.getPalvelunVarausLoppu());
+          paivitettava.setVarausVarattu(uudet.getVarausVarattu());
+          paivitettava.setVarausVahvistettu(uudet.getVarausVahvistettu());
+          
+          new PalveluVarausDao().update(paivitettava);   
         }
             
         
         if (object instanceof Varaus) {
-            
+          Varaus paivitettava = new VarausDao().read(((Varaus) object).getVarausId());
+          Varaus uudet = (Varaus) uusi;
+
+          paivitettava.setAsiakasId(uudet.getAsiakasId());
+          paivitettava.setToimipisteId(uudet.getToimipisteId());
+          paivitettava.setVarattuPvm(uudet.getVarattuPvm());
+          paivitettava.setVahvistusPvm(uudet.getVahvistusPvm());
+          
+          new VarausDao().update(paivitettava);    
         }
             
             
