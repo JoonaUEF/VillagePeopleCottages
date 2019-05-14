@@ -63,7 +63,7 @@ public class PalveluVarausDao implements Dao<PalveluVaraus, Integer> {
             + "varaus.asiakas_id as asiakasid, varaus.varattu_pvm as varausvarattu, varaus.vahvistus_pvm as varausvahvistettu "
             + "FROM PalveluVaraus LEFT JOIN Palvelu LEFT JOIN VARAUS LEFT JOIN Toimipiste "
             + "WHERE palveluvaraus.palvelu_id = palvelu.PALVELU_ID AND palveluvaraus.varaus_id = varaus.VARAUS_ID "
-            + "AND varaus.toimipiste_id = toimipiste.TOIMIPISTE_ID ND palveluvaraus.varaus_id = ?");
+            + "AND varaus.toimipiste_id = toimipiste.TOIMIPISTE_ID AND palveluvaraus.varaus_id = ?");
     stmt.setInt(1, key);
     ResultSet rs = stmt.executeQuery();
 
